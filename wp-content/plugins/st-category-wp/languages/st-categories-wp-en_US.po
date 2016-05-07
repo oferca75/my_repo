@@ -1,0 +1,94 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ST Categories WP v1\n"
+"POT-Creation-Date: 2014-10-21 17:39+0700\n"
+"PO-Revision-Date: 2014-10-21 17:40+0700\n"
+"Last-Translator: \n"
+"Language-Team: beautiful-templates <rizwankhan8079@gmail.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../st-categories-wp.php:70
+msgid "ST Categories WP"
+msgstr ""
+
+#: ../st-categories-wp.php:72 ../st-categories-wp.php:76
+msgid "Custom Css"
+msgstr "Custom Css"
+
+#: ../st-categories-wp.php:140
+msgid "You do not have sufficient permissions to edit plugin for this site."
+msgstr ""
+
+#: ../st-categories-wp.php:290
+msgid "Abouts"
+msgstr ""
+
+#: ../st-categories-wp.php:301
+msgid "Home"
+msgstr ""
+
+#: ../st-categories-wp.php:304
+msgid "Submit Ticket"
+msgstr ""
+
+#: ../st-categories-wp.php:307
+msgid "Forum"
+msgstr ""
+
+#: ../st-categories-wp.php:311
+msgid "Document"
+msgstr ""
+
+#: ../st-categories-wp.php:347
+#, php-format
+msgid "View all posts filed under %s"
+msgstr ""
+
+#: ../st-categories-wp.php:362
+#, php-format
+msgid "Feed for all posts filed under %s"
+msgstr ""
+
+#: ../widget.php:34
+msgid "Title:"
+msgstr ""
+
+#: ../widget.php:38
+msgid "Choose category :"
+msgstr ""
+
+#: ../widget.php:44
+msgid "Choose Template :"
+msgstr ""
+
+#: ../widget.php:53
+msgid "Limit:"
+msgstr ""
+
+#: ../widget.php:58
+msgid "Display as dropdown"
+msgstr ""
+
+#: ../widget.php:62
+msgid "Show post counts"
+msgstr ""
+
+#: ../widget.php:66
+msgid "Hide Empty Categories"
+msgstr ""
+
+#: ../widget.php:70
+msgid "Hide Hierarchy"
+msgstr ""
+
+#: ../widget.php:79
+msgid "categories"
+msgstr ""

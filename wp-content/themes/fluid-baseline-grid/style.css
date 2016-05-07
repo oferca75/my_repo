@@ -1,0 +1,224 @@
+/*
+Theme Name: Fluid Baseline Grid
+Author: dizzysoft
+Author URI: http://www.dizzysoft.com/
+Theme URI: http://www.dizzysoft.com/fluid-baseline-grid-wordpress-theme/
+Description: This theme is fundamentally about words. It's designed using the <strong>best-practices of typography for easier reading</strong>. This is especially important in a world where mobile is an important part of any blog's traffic. Speaking of which, this is designed from a mobile-first perspective. This means it is not only <strong>responsive</strong> but designed to provide maximum readability for mobile users across devices. It even handles images and embedded objects (i.e.: videos) in a mobile-friendly way. It is also built for maximum consistency across different browsers- using Respond.js (to allow older browsers to be responsive) and Normalize.css (so it should display consistently across Google Chrome, Mozilla Firefox 4+, Apple Safari 5+, Opera 12+, and Internet Explorer 8+). All these benefits come thanks to Josh Hopkins's Fluid Baseline Grid, from which this theme receives its name. In addition, the theme includes a couple <strong>SEO enhancements</strong> to cut-down on duplicated content and more clearly declare the intent of a particular page (including Schema.org markup for Blog posts as Articles). <strong>WordPress features it supports:</strong> menus (including a responsive menu for small screens), widgets, custom background image and colors, and featured images per post. You can also optionally add widgets to a sidebar of a post or page for a two-column look (without widgets, they will be displayed as one-column).
+Version: 0.95
+License: Expat License (aka MIT License)
+License URI: http://www.gnu.org/licenses/license-list.html#Expat
+Tags: responsive-layout, white, orange, featured-images, light, custom-background, custom-menu, translation-ready, sticky-post
+Text Domain: fluid-baseline-grid
+
+PLEASE NOTE: 
+To preserve the typographic enhancements, only change colors and fonts. If you change margins and padding, the typography will not appear as clean and consistent.
+*/
+body, button, input, select, textarea {
+    font-family: Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+    color: #333
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Futura, "Century Gothic", AppleGothic, sans-serif;
+    color: #222;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .10)
+}
+
+pre, code, kbd, samp {
+    font-family: Menlo, Consolas, 'DejaVu Sans Mono', Monaco, monospace
+}
+
+dt {
+    font-family: Futura, "Century Gothic", AppleGothic, sans-serif
+}
+
+a {
+    text-decoration: none;
+    color: #c47529
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+a:focus {
+    outline: thin dotted
+}
+
+a:hover, a:active {
+    outline: none
+}
+
+ins, mark {
+    text-decoration: none
+}
+
+mark {
+    background: #c47529
+}
+
+ins {
+    background: #d49855
+}
+
+del {
+    text-decoration: line-through
+}
+
+::-moz-selection {
+    background: #c47529;
+    color: #fff;
+    text-shadow: none
+}
+
+::selection {
+    background: #c47529;
+    color: #fff;
+    text-shadow: none
+}
+
+var, address {
+    font-style: normal
+}
+
+span.amp {
+    font-family: "Adobe Caslon Pro", Baskerville, "Goudy Old Style", "Palatino", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 110%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+.bypostauthor {
+    background: #eee
+}
+
+body {
+    width: 92%;
+    margin: 0 auto
+}
+
+.g1, .g2, .g3 {
+    display: block;
+    position: relative;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 98%
+}
+
+.screen-reader-text {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+/* menu */
+.sf-menu li {
+    background-color: #c47529;
+}
+
+.sf-menu a {
+    color: #fff;
+}
+
+nav label, .menu-item {
+    font-family: Futura, "Century Gothic", AppleGothic, sans-serif;
+}
+
+.menu-item:hover {
+    background-color: #d49855
+}
+
+.menu-item a:hover {
+    text-decoration: none
+}
+
+@media only screen and (min-width: 600px) {
+    #access {
+        background-color: #c47529
+    }
+
+    .menu-item a {
+        margin: 0 1em;
+    }
+
+}
+
+@media only screen and (min-width: 1024px) {
+    .g1, .g2, .g3 {
+        display: inline;
+        float: left
+    }
+
+    .g1 {
+        width: 31.333%
+    }
+
+    .g2 {
+        width: 64.667%
+    }
+
+    .g3 {
+        width: 98%
+    }
+}
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important;
+        text-shadow: none !important;
+        filter: none !important;
+        -ms-filter: none !important
+    }
+
+    a, a:visited {
+        color: #444 !important;
+        text-decoration: underline
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")"
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")"
+    }
+
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+        content: ""
+    }
+
+    pre, blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tr, img {
+        page-break-inside: avoid
+    }
+
+    img {
+        max-width: 100% !important
+    }
+
+    @page {
+        margin: .5cm
+    }
+
+    p, h2, h3 {
+        orphans: 3;
+        widows: 3
+    }
+
+    h2, h3 {
+        page-break-after: avoid
+    }
+}

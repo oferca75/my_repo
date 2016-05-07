@@ -1,0 +1,198 @@
+# Loco Gettext template
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Fluid Baseline Grid\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Mon Oct 12 2015 09:22:05 GMT-0400 (Eastern Daylight Time)\n"
+"POT-Revision-Date: Wed Feb 10 2016 10:28:34 GMT-0500 (Eastern Standard Time)\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: ../search.php:7
+#, php-format
+msgid "Found: %s"
+msgstr ""
+
+#: ../search.php:13
+#, php-format
+msgid "Not Found: %s"
+msgstr ""
+
+#: ../search.php:14
+msgid "Try another search&hellip;"
+msgstr ""
+
+#: ../header-archive.php:46
+msgid "Archive for "
+msgstr ""
+
+#: ../header-archive.php:53
+msgid "Page"
+msgstr ""
+
+#: ../header-archive.php:61 ../header.php:20 ../header-home.php:31
+msgid "Menu"
+msgstr ""
+
+#: ../404.php:4
+msgid "Page Not Found"
+msgstr ""
+
+#: ../404.php:5
+msgid "Sorry, but you are looking for something that doesn&apos;t exist."
+msgstr ""
+
+#: ../404.php:6
+msgid "Try searching for it&hellip;"
+msgstr ""
+
+#: ../page.php:14
+msgid "Edit this page"
+msgstr ""
+
+#: ../footer.php:5
+msgid "Search"
+msgstr ""
+
+#: ../footer.php:9
+msgid "Categories"
+msgstr ""
+
+#: ../footer.php:15
+msgid "Tags"
+msgstr ""
+
+#: ../comments.php:10
+msgid "No comments about "
+msgstr ""
+
+#: ../comments.php:10
+msgid "1 comment about "
+msgstr ""
+
+#: ../comments.php:10
+#, php-format
+msgid "% comments about "
+msgstr ""
+
+#: ../comments.php:30
+msgctxt "noun"
+msgid "Comment"
+msgstr ""
+
+#: ../functions.php:60
+msgid "Header Menu"
+msgstr ""
+
+#: ../functions.php:96
+msgid "Homepage Header"
+msgstr ""
+
+#: ../functions.php:98
+msgid ""
+"This widget appears on the top-right corner of the homepage. RECOMMENDATIONS:"
+" this is a great place for unique homepage text to describe your website by "
+"using a text widget; only put one widget here."
+msgstr ""
+
+#: ../functions.php:106
+msgid "Sitewide Footer"
+msgstr ""
+
+#: ../functions.php:108
+msgid ""
+"These widgets will appear in the footer of the homepage. RECOMMENDATION: add "
+"widgets in multiples of 3."
+msgstr ""
+
+#: ../functions.php:116
+msgid "Sidebar for Page (optional)"
+msgstr ""
+
+#: ../functions.php:123
+msgid "Sidebar for Post (optional)"
+msgstr ""
+
+#: ../loop.php:24 ../loop.php:28 ../single.php:27
+msgid " in "
+msgstr ""
+
+#: ../loop.php:25 ../loop.php:29 ../single.php:28
+msgid " by "
+msgstr ""
+
+#: ../single.php:31
+msgid "Edit this post"
+msgstr ""
+
+#: ../single.php:45
+msgid "Tags: "
+msgstr ""
+
+#: ../header-home.php:21
+msgid ""
+"This theme uses the Fluid Baseline Grid and was adapted for WordPress by "
+"dizzysoft."
+msgstr ""
+
+#: ../header-home.php:22
+msgid ""
+"You can add your own content here using the Text Widget, or insert any other "
+"Widget here to replace this content."
+msgstr ""
+
+#. Name of the theme
+msgid "Fluid Baseline Grid"
+msgstr ""
+
+#. Theme URI of the theme
+msgid "http://www.dizzysoft.com/fluid-baseline-grid-wordpress-theme/"
+msgstr ""
+
+#. Description of the theme
+msgid ""
+"This theme is fundamentally about words. It's designed using the "
+"<strong>best-practices of typography for easier reading</strong>. This is "
+"especially important in a world where mobile is an important part of any "
+"blog's traffic. Speaking of which, this is designed from a mobile-first "
+"perspective. This means it is not only <strong>responsive</strong> but "
+"designed to provide maximum readability for mobile users across devices. It "
+"even handles images and embedded objects (i.e.: videos) in a mobile-friendly "
+"way. It is also built for maximum consistency across different browsers- "
+"using Respond.js (to allow older browsers to be responsive) and Normalize."
+"css (so it should display consistently across Google Chrome, Mozilla Firefox "
+"4+, Apple Safari 5+, Opera 12+, and Internet Explorer 8+). All these "
+"benefits come thanks to Josh Hopkins's Fluid Baseline Grid, from which this "
+"theme receives its name. In addition, the theme includes a couple "
+"<strong>SEO enhancements</strong> to cut-down on duplicated content and more "
+"clearly declare the intent of a particular page (including Schema.org markup "
+"for Blog posts as Articles). <strong>WordPress features it supports:"
+"</strong> menus (including a responsive menu for small screens), widgets, "
+"custom background image and colors, and featured images per post. You can "
+"also optionally add widgets to a sidebar of a post or page for a two-column "
+"look (without widgets, they will be displayed as one-column)."
+msgstr ""
+
+#. Author of the theme
+msgid "dizzysoft"
+msgstr ""
+
+#. Author URI of the theme
+msgid "http://www.dizzysoft.com/"
+msgstr ""

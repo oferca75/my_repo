@@ -1,0 +1,137 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Random image gallery with pretty photo zoom\n"
+"POT-Creation-Date: 2015-11-21 22:36+0800\n"
+"PO-Revision-Date: 2015-11-21 22:36+0800\n"
+"Last-Translator: \n"
+"Language-Team: www.gopiplus.com\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:221
+msgid "Random image gallery with pretty photo zoom (R I G W PP Z)"
+msgstr "Galeria zdjęć losowych z ładne zdjęcie zoom (R I G W PP Z)"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:266
+msgid "Details successfully updated."
+msgstr "Szczegóły pomyślnie zaktualizowane."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:272
+msgid "Plugin configuration (Widget)"
+msgstr "Konfiguracja wtyczki (Widget)"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:273
+msgid "Widget title"
+msgstr "Tytuł widgetu"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:275
+msgid "Please enter your widget title."
+msgstr "Podaj widget tytuł."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:277
+msgid "Width (Only for widget)"
+msgstr "Szerokość"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:279
+msgid "Please enter your width, this option is only for widget."
+msgstr "Proszę podać swojej szerokości, ta opcja jest tylko dla widżetu."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:281
+msgid "Theme (Only for widget)"
+msgstr "Temat (tylko dla widget)"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:290
+msgid "Please select your theme, this option is only for widget."
+msgstr "Proszę wybrać temat, ta opcja jest tylko dla widżetu."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:292
+msgid "Display sidebar title"
+msgstr "Wyświetlacz tytuł pod okienko."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:297
+msgid ""
+"Do you want to show title on your sidebar, this option is only for widget."
+msgstr ""
+"Czy chcesz Pokaż tytuł na pasku bocznym, ta opcja jest tylko dla widżetu."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:299
+msgid "Image directory (Widget)"
+msgstr "Katalog obrazu (Widget)"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:301
+msgid "Please enter your image directory, this option is only for widget."
+msgstr ""
+"Proszę wprowadzić swój katalog obrazu, ta opcja jest tylko dla widżetu."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:305
+msgid "Plugin configuration (Short Code)"
+msgstr "Konfiguracja wtyczki (krótki kod)"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:307
+#: ../random-image-gallery-with-pretty-photo-zoom.php:311
+#: ../random-image-gallery-with-pretty-photo-zoom.php:315
+#: ../random-image-gallery-with-pretty-photo-zoom.php:319
+#: ../random-image-gallery-with-pretty-photo-zoom.php:323
+msgid "Image directory"
+msgstr "Szczegóły obrazu"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:309
+#: ../random-image-gallery-with-pretty-photo-zoom.php:313
+#: ../random-image-gallery-with-pretty-photo-zoom.php:317
+#: ../random-image-gallery-with-pretty-photo-zoom.php:321
+#: ../random-image-gallery-with-pretty-photo-zoom.php:325
+msgid "Please enter your image directory."
+msgstr "Wprowadź swój"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:333
+msgid "Plugin configuration option"
+msgstr "Opcja konfiguracji plugin"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:335
+msgid "Add the plugin in the posts or pages using short code."
+msgstr "Dodaj wtyczki na stanowiskach lub stron za pomocą krótkiego kodu."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:336
+msgid "Add directly in to the theme using PHP code."
+msgstr "Dodaj bezpośrednio do tematu z wykorzystaniem kodu PHP."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:337
+msgid "Drag and drop the widget to your sidebar."
+msgstr "Przeciągnij i upuść widżet (Wyświetlenie całej strony)"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:340
+#: ../random-image-gallery-with-pretty-photo-zoom.php:353
+msgid "Check official website for more information"
+msgstr "Sprawdzić oficjalną stronę internetową, aby uzyskać więcej informacji"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:341
+#: ../random-image-gallery-with-pretty-photo-zoom.php:354
+msgid "click here"
+msgstr "kliknij tutaj"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:342
+msgid ""
+"Note: Dont upload your original images into the defult folder (or) Plugin "
+"folder."
+msgstr ""
+"Uwaga: Dont wgraj oryginalne obrazy na defult folder (lub) folderu wtyczki."
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:351
+msgid "Random image gallery"
+msgstr "Galeria zdjęć losowych"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:361
+#: ../random-image-gallery-with-pretty-photo-zoom.php:366
+#: ../random-image-gallery-with-pretty-photo-zoom.php:378
+msgid "R I G W PP Z"
+msgstr "R I G W PP Z"
+
+#: ../random-image-gallery-with-pretty-photo-zoom.php:377
+msgid "Random image gallery with pretty photo zoom - R I G W PP Z"
+msgstr "Galeria zdjęć losowych z ładne zdjęcie zoom - R I W G Z PP"

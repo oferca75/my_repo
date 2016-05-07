@@ -1,0 +1,291 @@
+#st-categories {
+    margin: auto;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    line-height: 18px;
+    width: 100%;
+    font: 14px/1.6 "Open Sans", sans-serif;
+}
+
+#st-categories > h2 {
+    font-size: 23px;
+    font-weight: 400;
+    padding: 9px 15px 4px 0;
+    line-height: 29px;
+    margin: 5px 0;
+}
+
+#st-categories .main.box {
+    float: left;
+    box-sizing: border-box;
+    margin-right: 3%;
+}
+
+#st-categories .box.left {
+    background-color: transparent;
+    box-shadow: none;
+    border: 0 none;
+    padding-top: 0;
+}
+
+#st-categories .left {
+    width: 58%;
+}
+
+#st-categories .right {
+    width: 37%;
+    margin-right: 0 !important;
+    padding: 0;
+    background: transparent;
+    border: 0 none;
+    box-shadow: none;
+}
+
+#st-categories .box-title {
+    position: relative;
+    font-size: 14px;
+    padding: 8px 12px;
+    line-height: 1.4;
+    background: #7ac0a8;
+    color: #FFF;
+    font-weight: bold;
+    border-radius: 2px 2px 0px 0px;
+    cursor: pointer;
+    margin: 0;
+}
+
+#st-categories .dashicons {
+    padding-right: 5px;
+}
+
+#st-categories {
+    clear: both;
+}
+
+#st-categories .box.left .content {
+    overflow: hidden;
+    background: #FEFEFE;
+    outline: 0;
+    border-radius: 0 0 3px 3px;
+    border: 1px solid #ddd;
+    border-top: 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    padding: 30px 10px;
+}
+
+#st-categories .left legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 27px;
+    font-size: 19.5px;
+    line-height: 36px;
+    color: #333333;
+    border: 0;
+    border-bottom: 1px solid #eee;
+}
+
+#st-categories .left fieldset > div {
+    margin: 20px 0;
+}
+
+#st-categories .put-big {
+    width: 50%;
+    padding: 3px 10px;
+}
+
+#st-categories .label {
+    float: left;
+    clear: left;
+    display: block;
+    margin: 0;
+    width: 20%;
+    line-height: 26px;
+    height: 26px;
+}
+
+#st-categories .main .sts-actions {
+    padding: 17px 20px 18px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+}
+
+#st-categories .sts-button {
+    padding: 4px 50px 4px;
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid #7ac0a8;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #4F9E83;
+    color: #ffffff;
+}
+
+#st-categories .main .box-button {
+    text-align: center;
+}
+
+#st-categories .right .st-box {
+    position: relative;
+    border: 1px solid #dfdfdf;
+    border-radius: 0px 0px 3px 3px;
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border-top: 0px;
+    top: -1px;
+}
+
+#st-categories .right .box-content {
+    padding: 10px;
+    overflow: hidden;
+}
+
+#st-categories .right .st-row {
+    margin: 10px 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#st-categories .right .st-rss {
+    top: 1px;
+    border-top: 1px solid #dfdfdf;
+}
+
+#st-categories .right .st-links {
+    border-top: 1px solid #dfdfdf;
+    margin: 0;
+}
+
+#st-categories .main.right .col {
+    margin: 0;
+    padding: 0;
+    float: left;
+    box-sizing: border-box;
+}
+
+#st-categories .right .col-8 {
+    width: 80%;
+}
+
+#st-categories .right .st-links .links > ul > li {
+    margin: 0;
+    float: left;
+    padding: 0;
+    text-align: center;
+    width: 25%;
+}
+
+#st-categories .right .st-links .links a {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 12px 0;
+    border-right: 1px solid #dfdfdf;
+    overflow: hidden;
+    display: block;
+    font-size: 12px;
+}
+
+#st-categories .right .st-links .links li:last-child a {
+    border: 0;
+}
+
+#st-categories .right .st-links .links > ul > li:first-child {
+    width: 15%;
+}
+
+#st-categories .right .st-links .links > ul > li:nth-child(2) {
+    width: 35%;
+}
+
+#st-categories .right .col-2 {
+    width: 20%;
+}
+
+#st-categories .right .social > ul {
+    float: right;
+    width: 100%;
+}
+
+#st-categories .right .st-links .social > ul > li {
+    float: left;
+    margin: 0;
+    text-align: center;
+    width: 50%;
+}
+
+#st-categories ul {
+    margin: 0;
+}
+
+#st-categories .right .st-links .links li:last-child a {
+    border: 0;
+}
+
+#st-categories .right .st-links .social a {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 11px 0px 10px;
+    border-left: 1px solid #dfdfdf;
+    background: #FFFFFF;
+    overflow: hidden;
+    display: block;
+    color: #000;
+}
+
+#st-categories textarea {
+    width: 75%;
+    height: 300px;
+    padding: 10px;
+}
+
+#st-categories .label p {
+    margin: 0;
+}
+
+#st-categories .right .st-links .social .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+#st-categories .st-row.st_load_rss {
+    margin: 0;
+}
+
+#st-categories .st-row.st_load_rss ul {
+    list-style: inside;
+    list-style-type: circle;
+}
+
+#st-categories .st-row.st_load_rss a {
+    text-decoration: none;
+}
+
+/*responsive*/
+@media (min-width: 1200px) {
+    #st-categories {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    #st-categories .box.left,
+    #st-categories .box.right {
+        width: 100%;
+    }
+}
