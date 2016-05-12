@@ -15,61 +15,61 @@ wp_oembed_add_provider('!https?://(www\.)?ted.com/talks/[a-zA-Z\-\_]+\.html!i', 
 
 function jetpack_shortcode_get_ted_id($atts)
 {
-    return (!empty($atts['id']) ? $atts['id'] : 0);
+	return (!empty($atts['id']) ? $atts['id'] : 0);
 }
 
 add_shortcode('ted', 'shortcode_ted');
 function shortcode_ted($atts)
 {
-    global $wp_embed;
+	global $wp_embed;
 
-    $defaults = array(
-        'id' => '',
-        'width' => '',
-        'height' => '',
-        'lang' => 'en',
-    );
-    $atts = shortcode_atts($defaults, $atts, 'ted');
+	$defaults = array(
+		'id' => '',
+		'width' => '',
+		'height' => '',
+		'lang' => 'en',
+	);
+	$atts = shortcode_atts($defaults, $atts, 'ted');
 
-    if (empty($atts['id'])) {
-        return '<!-- Missing TED ID -->';
-    }
+	if (empty($atts['id'])) {
+		return '<!-- Missing TED ID -->';
+	}
 
-    $url = '';
-    if (preg_match('#^[\d]+$#', $atts['id'], $matches)) {
-        $url = 'http://ted.com/talks/view/id/' . $matches[0];
-    } elseif (preg_match('#^https?://(www\.)?ted\.com/talks/view/id/[0-9]+$#', $atts['id'], $matches)) {
-        $url = $matches[0];
-    }
+	$url = '';
+	if (preg_match('#^[\d]+$#', $atts['id'], $matches)) {
+		$url = 'http://ted.com/talks/view/id/' . $matches[0];
+	} elseif (preg_match('#^https?://(www\.)?ted\.com/talks/view/id/[0-9]+$#', $atts['id'], $matches)) {
+		$url = $matches[0];
+	}
 
-    unset($atts['id']);
+	unset($atts['id']);
 
-    $args = array();
-    if (is_numeric($atts['width'])) {
-        $args['width'] = $atts['width'];
-    } else if ($embed_size_w = get_option('embed_size_w')) {
-        $args['width'] = $embed_size_w;
-    } else if (!empty($GLOBALS['content_width'])) {
-        $args['width'] = (int)$GLOBALS['content_width'];
-    } else {
-        $args['width'] = 500;
-    }
+	$args = array();
+	if (is_numeric($atts['width'])) {
+		$args['width'] = $atts['width'];
+	} else if ($embed_size_w = get_option('embed_size_w')) {
+		$args['width'] = $embed_size_w;
+	} else if (!empty($GLOBALS['content_width'])) {
+		$args['width'] = (int)$GLOBALS['content_width'];
+	} else {
+		$args['width'] = 500;
+	}
 
-    // Default to a 16x9 aspect ratio if there's no height set
-    if (is_numeric($atts['height'])) {
-        $args['height'] = $atts['height'];
-    } else {
-        $args['height'] = $args['width'] * 0.5625;
-    }
+	// Default to a 16x9 aspect ratio if there's no height set
+	if (is_numeric($atts['height'])) {
+		$args['height'] = $atts['height'];
+	} else {
+		$args['height'] = $args['width'] * 0.5625;
+	}
 
-    if (!empty($atts['lang'])) {
-        $args['lang'] = sanitize_key($atts['lang']);
-        add_filter('oembed_fetch_url', 'ted_filter_oembed_fetch_url', 10, 3);
-    }
-    $retval = $wp_embed->shortcode($args, $url);
-    remove_filter('oembed_fetch_url', 'ted_filter_oembed_fetch_url', 10);
+	if (!empty($atts['lang'])) {
+		$args['lang'] = sanitize_key($atts['lang']);
+		add_filter('oembed_fetch_url', 'ted_filter_oembed_fetch_url', 10, 3);
+	}
+	$retval = $wp_embed->shortcode($args, $url);
+	remove_filter('oembed_fetch_url', 'ted_filter_oembed_fetch_url', 10);
 
-    return $retval;
+	return $retval;
 }
 
 /**
@@ -77,5 +77,5 @@ function shortcode_ted($atts)
  */
 function ted_filter_oembed_fetch_url($provider, $url, $args)
 {
-    return add_query_arg('lang', $args['lang'], $provider);
+	return add_query_arg('lang', $args['lang'], $provider);
 }

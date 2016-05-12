@@ -110,12 +110,10 @@ if (isset($_POST[$hidden_field_name]) && $_POST[$hidden_field_name] == 'Y') {
 
     // Put a "settings updated" message on the screen
     ?>
-    <div class="updated"><p><strong><?php _e('Your FTP details have been saved.', 'backupbreeze-menu'); ?></strong>
-        </p></div>
+    <div class="updated"><p><strong><?php _e('Your FTP details have been saved.', 'backupbreeze-menu'); ?></strong></p>
+    </div>
     <?php
 } // end if
-
-
 //
 // BUTTON 2: 
 // TEST SETTINGS
@@ -152,7 +150,8 @@ if (isset($_POST[$hidden_field_name]) && $_POST[$hidden_field_name] == 'Test Con
     $result = backupbreeze_test_ftp();
     // echo "<h2>$result</h2>";
 
-    if ($result != 'OK') { ?>
+    if ($result != 'OK') {
+        ?>
         <div class="error"><p><strong>connection has failed!<br/></strong></p>
             <?php echo $result . '<br /><br />'; ?>
         </div>
@@ -163,53 +162,66 @@ if (isset($_POST[$hidden_field_name]) && $_POST[$hidden_field_name] == 'Test Con
         <?php
     } // end if 
 } // end if
-
 ?>
 <style>td, th {
         padding: 5px;
     }</style>
 <p>Enter your FTP details for your offsite backup repository. Leave these blank for local backups.</p>
-<form name="form1" method="post" action="">
+<form class="form-group" name="form1" method="post" action="">
     <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
     <input name="wpdbbackup_update_setting" type="hidden"
            value="<?php echo wp_create_nonce('wpdbbackup-update-setting'); ?>"/>
 
-    <table width="700" border="0" cellspacing="10">
-        <tr>
-            <td>FTP Host:</td>
-            <td><input type="text" name="<?php echo $data_field_name; ?>" value="<?php echo $opt_val; ?>" size="25"
-                       placeholder="e.g. ftp.yoursite.com"></td>
 
-        </tr>
-        <tr>
-            <td>FTP Port:</td>
-            <td><input type="text" name="<?php echo $data_field_name9; ?>" value="<?php echo $opt_val9; ?>" size="4">
-            </td>
-            <td><em>defaults to 21 if left blank </em></td>
-        </tr>
-        <tr>
-            <td>FTP User:</td>
-            <td><input type="text" name="<?php echo $data_field_name2; ?>" value="<?php echo $opt_val2; ?>" size="25">
-            </td>
-            <td>&nbsp;      </td>
-        </tr>
-        <tr>
-            <td>FTP Password:</td>
-            <td><input type="password" name="<?php echo $data_field_name3; ?>" value="<?php echo $opt_val3; ?>"
-                       size="25"></td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>Subdirectory:</td>
-            <td><input type="text" name="<?php echo $data_field_name4; ?>" value="<?php echo $opt_val4; ?>" size="25">
-            </td>
-            <td><em>e.g. /httpdocs/backups or leave blank</em></td>
-        </tr>
+    <div class="row form-group">
+        <label class="col-sm-2" for="FTP_host">FTP Host:</label>
+        <div class="col-sm-6">
+            <input type="text" id="FTP_host" class="form-control" name="<?php echo $data_field_name; ?>"
+                   value="<?php echo $opt_val; ?>" size="25" placeholder="e.g. ftp.yoursite.com">
+        </div>
+    </div>
 
+    <div class="row form-group">
+        <label class="col-sm-2" for="FTP_port">FTP Port:</label>
+        <div class="col-sm-2">
+            <input type="text" id="FTP_port" class="form-control" name="<?php echo $data_field_name9; ?>"
+                   value="<?php echo $opt_val9; ?>" size="4">
+        </div>
+        <div class="col-sm-4">
+            <em>defaults to 21 if left blank </em>
+        </div>
+    </div>
 
-    </table>
-    <p><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save FTP Details') ?>"/>&nbsp;
-        <input type="submit" name="<?php echo $hidden_field_name; ?>" class="button-secondary" value="Test Connection"/>
+    <div class="row form-group">
+        <label class="col-sm-2" for="FTP_user">FTP User:</label>
+        <div class="col-sm-6">
+            <input type="text" id="FTP_user" class="form-control" name="<?php echo $data_field_name2; ?>"
+                   value="<?php echo $opt_val2; ?>" size="25">
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <label class="col-sm-2" for="FTP_password">FTP Password:</label>
+        <div class="col-sm-6">
+            <input type="password" id="FTP_password" class="form-control" name="<?php echo $data_field_name3; ?>"
+                   value="<?php echo $opt_val3; ?>" size="25">
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <label class="col-sm-2" for="FTP_dir">Subdirectory:</label>
+        <div class="col-sm-6">
+            <input type="text" id="FTP_dir" placeholder="e.g. /httpdocs/backups" class="form-control"
+                   name="<?php echo $data_field_name4; ?>" value="<?php echo $opt_val4; ?>" size="25">
+        </div>
+        <div class="col-sm-4">
+            <em>e.g. /httpdocs/backups or leave blank</em>
+        </div>
+    </div>
+
+    <p><input type="submit" name="Submit" class="btn btn-primary" value="<?php esc_attr_e('Save FTP Details') ?>"/>&nbsp;
+        <input type="submit" name="<?php echo $hidden_field_name; ?>" class="btn btn-secondary"
+               value="Test Connection"/>
 
         <br/>
     </p>

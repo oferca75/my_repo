@@ -14,16 +14,12 @@ class WPDB_Admin
         add_filter('cron_schedules', array($this, 'wp_db_backup_cron_schedules'));
         add_action('wp_db_backup_event', array($this, 'wp_db_backup_event_process'));
         add_action('wp', array($this, 'wp_db_backup_scheduler_activation'));
-
-
     }
 
     public function admin_menu()
     {
 
         $page = add_management_page('WP-DB Backup', 'WP-DB Backup ', 'manage_options', 'wp-database-backup', array($this, 'wp_db_backup_settings_page'));
-
-
     }
 
     function wp_db_backup_admin_init()
@@ -69,7 +65,6 @@ class WPDB_Admin
                 // Close the directory
                 closedir($dirHandle);
                 wp_redirect(site_url() . '/wp-admin/tools.php?page=wp-database-backup');
-
             }
             if (isset($_GET['action']) && current_user_can('manage_options')) {
                 switch ((string)$_GET['action']) {
@@ -135,15 +130,15 @@ class WPDB_Admin
 
 
                         if ((trim((string)$database_name) != '') && (trim((string)$database_user) != '') && (trim((string)$datadase_password) != '') && (trim((string)$database_host) != '') && ($conn = @mysql_connect((string)$database_host, (string)$database_user, (string)$datadase_password))) {
-                            /*BEGIN: Select the Database*/
+                            /* BEGIN: Select the Database */
                             if (!mysql_select_db((string)$database_name, $conn)) {
                                 $sql = "CREATE DATABASE IF NOT EXISTS `" . (string)$database_name . "`";
                                 mysql_query($sql, $conn);
                                 mysql_select_db((string)$database_name, $conn);
                             }
-                            /*END: Select the Database*/
+                            /* END: Select the Database */
 
-                            /*BEGIN: Remove All Tables from the Database*/
+                            /* BEGIN: Remove All Tables from the Database */
                             $found_tables = null;
                             if ($result = mysql_query("SHOW TABLES FROM `{" . (string)$database_name . "}`", $conn)) {
                                 while ($row = mysql_fetch_row($result)) {
@@ -155,9 +150,9 @@ class WPDB_Admin
                                     }
                                 }
                             }
-                            /*END: Remove All Tables from the Database*/
+                            /* END: Remove All Tables from the Database */
 
-                            /*BEGIN: Restore Database Content*/
+                            /* BEGIN: Restore Database Content */
                             if (isset($database_file)) {
 
                                 $database_file = $database_file;
@@ -169,8 +164,6 @@ class WPDB_Admin
                                 for ($i = 0; $i < count($sql_queries); $i++) {
                                     mysql_query($sql_queries[$i], $conn);
                                 }
-
-
                             }
                         }
                         if (isset($options[$index]['sqlfile']) && file_exists($options[$index]['sqlfile'])) { //Added for extract zip file V.3.3.0
@@ -184,8 +177,7 @@ class WPDB_Admin
                         wp_redirect(site_url() . '/wp-admin/tools.php?page=wp-database-backup&notification=restore');
                         break;
 
-                    /*END: Restore Database Content*/
-
+                    /* END: Restore Database Content */
                 }
             }
 
@@ -196,6 +188,11 @@ class WPDB_Admin
 
     function wp_db_backup_event_process()
     {
+        //added in v.3.9.5
+        ini_set("max_execution_time", "5000");
+        ini_set("max_input_time", "5000");
+        ini_set('memory_limit', '1000M');
+        set_time_limit(0);
 
         $details = $this->wp_db_backup_create_archive();
         $options = get_option('wp_db_backup_backups');
@@ -239,6 +236,7 @@ class WPDB_Admin
             $filename = $details['filename'];
             $filesze = $details['size'];
             $site_url = site_url();
+            $logMessageAttachment = "";
 
             include('template_email_notification.php');
 
@@ -267,12 +265,11 @@ class WPDB_Admin
             'size' => $details['size']
         );
         update_option('wp_db_backup_backups', $options);
-
     }
 
     function wp_db_backup_create_archive()
     {
-        /*Begin : Setup Upload Directory, Secure it and generate a random file name*/
+        /* Begin : Setup Upload Directory, Secure it and generate a random file name */
 
         $source_directory = $this->wp_db_backup_wp_config_path();
 
@@ -285,7 +282,7 @@ class WPDB_Admin
         // $f = fopen($path_info['basedir'].'/db-backup/.htaccess', "w");
         //  fwrite($f, "IndexIgnore *");
         //  fclose($f);         
-        /*Begin : Generate SQL DUMP and save to file database.sql*/
+        /* Begin : Generate SQL DUMP and save to file database.sql */
         $siteName = preg_replace('/[^A-Za-z0-9\_]/', '_', get_bloginfo('name'));
         $WPDBFileName = $siteName . '_' . Date("Y_m_d") . '_' . Time("H:M:S") . rand(9, 9999) . '_database';
         $SQLfilename = $WPDBFileName . '.sql';
@@ -310,7 +307,7 @@ class WPDB_Admin
         /* End : Generate SQL DUMP using cmd 06-03-2016 */
 
 
-        /*End : Generate SQL DUMP and save to file database.sql*/
+        /* End : Generate SQL DUMP and save to file database.sql */
         $upload_path = array(
             'filename' => ($filename),
             'dir' => ($path_info['basedir'] . '/db-backup/' . $filename),
@@ -323,10 +320,8 @@ class WPDB_Admin
             $zip->addFile($path_info['basedir'] . '/db-backup/' . $SQLfilename, $SQLfilename);
             $zip->close();
             //    @unlink($path_info['basedir']."/db-backup/".$SQLfilename.".sql");
-
         } else {
             error_log("Class ZipArchive Not Present");
-
         }
 
         $logMessage = "Database File Name :" . $filename;
@@ -362,7 +357,6 @@ class WPDB_Admin
                     $index = $i;
 
                     $newoptions[] = $options[$index];
-
                 }
 
                 update_option('wp_db_backup_backups', $newoptions);
@@ -370,7 +364,6 @@ class WPDB_Admin
         }
         @unlink($path_info['basedir'] . '/db-backup/' . $SQLfilename);
         return $upload_path;
-
     }
 
     function wp_db_backup_wp_config_path()
@@ -578,7 +571,6 @@ class WPDB_Admin
             return;
 
         $this->errors[$context][$_key = md5(implode(':', (array)$error))] = $error;
-
     }
 
     public function get_mysqldump_method()
@@ -621,12 +613,12 @@ class WPDB_Admin
     function wp_db_backup_create_mysql_backup()
     {
         global $wpdb;
-        /*BEGIN : Prevent saving backup plugin settings in the database dump*/
+        /* BEGIN : Prevent saving backup plugin settings in the database dump */
         $options_backup = get_option('wp_db_backup_backups');
         $settings_backup = get_option('wp_db_backup_options');
         delete_option('wp_db_backup_backups');
         delete_option('wp_db_backup_options');
-        /*END : Prevent saving backup plugin settings in the database dump*/
+        /* END : Prevent saving backup plugin settings in the database dump */
         $wp_db_exclude_table = array();
         $wp_db_exclude_table = get_option('wp_db_exclude_table');
         $tables = $wpdb->get_col('SHOW TABLES');
@@ -652,10 +644,10 @@ class WPDB_Admin
             }
         }
         $wpdb->flush();
-        /*BEGIN : Prevent saving backup plugin settings in the database dump*/
+        /* BEGIN : Prevent saving backup plugin settings in the database dump */
         add_option('wp_db_backup_backups', $options_backup);
         add_option('wp_db_backup_options', $settings_backup);
-        /*END : Prevent saving backup plugin settings in the database dump*/
+        /* END : Prevent saving backup plugin settings in the database dump */
         return $output;
     }
 
@@ -699,33 +691,53 @@ class WPDB_Admin
     {
         $options = get_option('wp_db_backup_backups');
         $settings = get_option('wp_db_backup_options');
-        include('admin_header_notification.php');
         ?>
+        <div class="bootstrap-wrapper"><?php
+            include('admin_header_notification.php');
 
+            $upload_dir = wp_upload_dir();
+            $dir = $upload_dir['basedir'] . '/db-backup';
+            if (!is_dir($dir)) {
+                $dir = $upload_dir['basedir'];
+            }
+            if (is_dir($dir) && !is_writable($dir)) {
+                ?>
+                <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                        <h4>WP Database Backup</h4>
+                        <p>Error: Permission denied, make sure you have write permission for <?php echo $dir ?>
+                            folder</p>
+                    </div>
+                    </button>
+                </div>
+                </div><?php } ?>
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h4><a href="http://walkeprashant.wordpress.com" target="blank"><img
+                <h3><a href="http://walkeprashant.wordpress.com" target="blank"><img
                             src="<?php echo WPDB_PLUGIN_URL . '/assets/images/wp-database-backup.png'; ?>"></a>Database
                     Backup Settings <a href="http://www.wpseeds.com/product/wp-all-backup/" target="_blank"><span
-                            style='float:right'
-                            class="label label-success">Get Pro 'WP All Backup' Plugin</span></a></h4>
+                            style='float:right' class="label label-success">Get Pro 'WP All Backup' Plugin</span></a>
+                </h3>
             </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class=""><a href="#db_home" data-toggle="tab">Database Backups</a></li>
                     <li><a href="#db_schedul" data-toggle="tab">Scheduler</a></li>
                     <li><a href="#db_setting" data-toggle="tab">Settings</a></li>
-                    <li><a href="#db_help" data-toggle="tab">Help</a></li>
-                    <li><a href="#db_info" data-toggle="tab">Database Information</a></li>
                     <li><a href="#db_destination" data-toggle="tab">Destination</a></li>
-                    <li><a href="#db_advanced" data-toggle="tab">Advance Feature</a></li>
+                    <li><a href="#db_info" data-toggle="tab">System Information</a></li>
+                    <li><a href="#db_help" data-toggle="tab">Help</a></li>
+                    <li><a href="#db_advanced" data-toggle="tab">Pro Feature</a></li>
                 </ul>
 
                 <?php
                 echo '<div class="tab-content">';
                 echo '<div class="tab-pane active"  id="db_home">';
                 echo '<p class="submit">';
-                echo '<a href="' . site_url() . '/wp-admin/tools.php?page=wp-database-backup&action=createdbbackup" class="button-primary"><span class="glyphicon glyphicon-plus-sign"></span> Create New Database Backup</a>';
+                echo '<a href="' . site_url() . '/wp-admin/tools.php?page=wp-database-backup&action=createdbbackup" class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Create New Database Backup</a>';
                 echo '</p>';
                 ?>
 
@@ -763,8 +775,8 @@ class WPDB_Admin
                         echo '<a href="' . $option['url'] . '" style="color: #21759B;">';
                         echo '<span class="glyphicon glyphicon-download-alt"></span> Download</a></td>';
                         echo '<td>' . $this->wp_db_backup_format_bytes($option['size']) . '</td>';
-                        echo '<td><a href="' . site_url() . '/wp-admin/tools.php?page=wp-database-backup&action=removebackup&index=' . ($count - 1) . '" class="button-secondary"><span style="color:red" class="glyphicon glyphicon-remove"></span> Remove Database Backup<a/></td>';
-                        echo '<td><a href="' . site_url() . '/wp-admin/tools.php?page=wp-database-backup&action=restorebackup&index=' . ($count - 1) . '" class="button-secondary"><span class="glyphicon glyphicon-refresh" style="color:blue"></span> Restore Database Backup<a/></td>';
+                        echo '<td><a href="' . site_url() . '/wp-admin/tools.php?page=wp-database-backup&action=removebackup&index=' . ($count - 1) . '" class="btn btn-default"><span style="color:red" class="glyphicon glyphicon-remove"></span> Remove Database Backup<a/></td>';
+                        echo '<td><a href="' . site_url() . '/wp-admin/tools.php?page=wp-database-backup&action=restorebackup&index=' . ($count - 1) . '" class="btn btn-default"><span class="glyphicon glyphicon-refresh" style="color:blue"></span> Restore Database Backup<a/></td>';
                         echo '</tr>';
                         $count++;
                     }
@@ -777,7 +789,10 @@ class WPDB_Admin
                     echo '<p>No Database Backups Created!</p>';
                 }
                 echo "<div class='alert alert-success' role='alert'><h4>$coupon</h4></div>";
-                echo '<p>If you like this plugin then Give <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/wp-database-backup" title="Rating" sl-processed="1"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> rating </a></p>
+                echo '<p>If you like this plugin then Give <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/wp-database-backup" title="Rating" sl-processed="1"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> rating </a><button style="float:right" type="button" class="btn btn-default"><a target="_blank" class="text-right" href="http://www.wpseeds.com/support/">Support</a></button>
+                                        <button style="float:right" type="button" class="btn btn-default"><a target="_blank" href="http://www.wpseeds.com/wp-database-backup/">Documentation</a></button>
+                                        <button style="float:right" type="button" class="btn btn-default"><a target="_blank" href="http://www.wpseeds.com/product/wp-all-backup/">Premium</a></button>
+                                        <button style="float:right" type="button" class="btn btn-default"><a target="_blank" href="http://www.wpseeds.com/shop/">More plugins</a></button></p>
 	 ';
                 echo '</div>';
 
@@ -786,21 +801,21 @@ class WPDB_Admin
                 settings_fields('wp_db_backup_options');
                 do_settings_sections('wp-database-backup');
 
-                echo '<p>Enable Auto Backups&nbsp;';
-                echo '<input type="checkbox" name="wp_db_backup_options[enable_autobackups]" value="1" ' . @checked(1, $settings['enable_autobackups'], false) . '/>';
-                echo '</p>';
-                echo '<p>Auto Database Backup Frequency<br />';
-                echo '<select name="wp_db_backup_options[autobackup_frequency]" style="width: 100%; margin: 5px 0 0;">';
+                echo '<div class="row form-group"><label class="col-sm-2" for="enable_autobackups">Enable Auto Backups</label>';
+                echo '<div class="col-sm-2"><input type="checkbox" id="enable_autobackups" name="wp_db_backup_options[enable_autobackups]" value="1" ' . @checked(1, $settings['enable_autobackups'], false) . '/></div>';
+                echo '</div>';
+                echo '<div class="row form-group"><label class="col-sm-2" for="wp_db_backup_options">Auto Database Backup Frequency</label>';
+                echo '<div class="col-sm-2"><select id="wp_db_backup_options" class="form-control" name="wp_db_backup_options[autobackup_frequency]">';
                 echo '<option value="hourly" ' . selected('hourly', @$settings['autobackup_frequency'], false) . '>Hourly</option>';
                 echo '<option value="twicedaily" ' . selected('twicedaily', @$settings['autobackup_frequency'], false) . '>Twice Daily</option>';
                 echo '<option value="daily" ' . selected('daily', @$settings['autobackup_frequency'], false) . '>Daily</option>';
                 echo '<option value="weekly" ' . selected('weekly', @$settings['autobackup_frequency'], false) . '>Weekly</option>';
                 echo '<option value="monthly" ' . selected('monthly', @$settings['autobackup_frequency'], false) . '>Monthly</option>';
                 echo '</select>';
-                echo '</p>';
+                echo '</div></div>';
 
                 echo '<p class="submit">';
-                echo '<input type="submit" name="Submit" class="button-primary" value="Save Settings" />';
+                echo '<input type="submit" name="Submit" class="btn btn-primary" value="Save Settings" />';
                 echo '</p>';
                 echo '</form>';
                 echo '</div>';
@@ -816,47 +831,19 @@ class WPDB_Admin
                         var table = $j('#example').DataTable();
                     });
                 </script>
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                    Create Backup
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <p>Step 1) Click on Create New Database Backup</p>
-                                <p>Step 2) Download Database Backup file.</p>
-                            </div>
-                        </div>
-                    </div>
-
-
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                        Restore Backup
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                        Create Backup
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseTwo" class="panel-collapse collapse in">
+                            <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">
-                                    <p>Click on Restore Database Backup </p>
-                                    <p>OR</p>
-
-                                    <p>Step 1) Login to phpMyAdmin.</p>
-                                    <p>Step 2) Click Databases and select the database that you will be importing your
-                                        data into.</p>
-                                    <p>Step 3) Across the top of the screen will be a row of tabs. Click the Import
-                                        tab.</p>
-                                    <p>Step 4) On the next screen will be a location of text file box, and next to that
-                                        a button named Browse.</p>
-                                    <p>Step 5) Click Browse. Locate the backup file stored on your computer.</p>
-                                    <p>Step 6) Click the Go button.</p>
+                                    <p>Step 1) Click on Create New Database Backup</p>
+                                    <p>Step 2) Download Database Backup file.</p>
                                 </div>
                             </div>
                         </div>
@@ -866,52 +853,259 @@ class WPDB_Admin
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                            Support
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                            Restore Backup
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseThree" class="panel-collapse collapse in">
+                                <div id="collapseTwo" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <button type="button" class="btn btn-default"><a
-                                                href='http://www.wpseeds.com/support/'>Support</a></button>
-                                        <button type="button" class="btn btn-default"><a
-                                                href='http://www.wpseeds.com/wp-database-backup/'>Documentation</a>
-                                        </button>
-                                        <p>If you want more feature or any suggestion then drop me mail we are try to
-                                            implement in our wp-database-backup plugin and also try to make it more user
-                                            friendly</p>
-                                        <p><span class="glyphicon glyphicon-envelope"></span> Drop Mail
-                                            :walke.prashant28@gmail.com</p>
-                                        If you like this plugin then Give <a target="_blank"
-                                                                             href="http://wordpress.org/support/view/plugin-reviews/wp-database-backup"
-                                                                             title="Rating" sl-processed="1">rating </a>on
-                                        <a target="_blank"
-                                           href="http://wordpress.org/support/view/plugin-reviews/wp-database-backup"
-                                           title="Rating" sl-processed="1">WordPress.org</a></p>
-                                        <p></br><a title="WP-DB-Backup"
-                                                   href="http://walkeprashant.wordpress.com/wp-database-backup/"
-                                                   target="_blank">More Information</a></p>
-                                        <p>Support us to improve plugin. your idea and support are always welcome.<br>
-                                            <a target="_blank"
-                                               href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=387BZU5UNQ4LA"
-                                               sl-processed="1"><img alt="donate"
-                                                                     src="http://walkeprashant.files.wordpress.com/2014/09/donate.jpg?w=940"
-                                                                     class="alignleft wp-image-304 size-full"></a></p>
+                                        <p>Click on Restore Database Backup </p>
+                                        <p>OR</p>
 
-
+                                        <p>Step 1) Login to phpMyAdmin.</p>
+                                        <p>Step 2) Click Databases and select the database that you will be importing
+                                            your data into.</p>
+                                        <p>Step 3) Across the top of the screen will be a row of tabs. Click the Import
+                                            tab.</p>
+                                        <p>Step 4) On the next screen will be a location of text file box, and next to
+                                            that a button named Browse.</p>
+                                        <p>Step 5) Click Browse. Locate the backup file stored on your computer.</p>
+                                        <p>Step 6) Click the Go button.</p>
                                     </div>
                                 </div>
+                            </div>
+
+
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                Support
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <button type="button" class="btn btn-default"><a
+                                                    href='http://www.wpseeds.com/support/'>Support</a></button>
+                                            <button type="button" class="btn btn-default"><a
+                                                    href='http://www.wpseeds.com/wp-database-backup/'>Documentation</a>
+                                            </button>
+                                            <p>If you want more feature or any suggestion then drop me mail we are try
+                                                to implement in our wp-database-backup plugin and also try to make it
+                                                more user friendly</p>
+                                            <p><span class="glyphicon glyphicon-envelope"></span> Drop Mail
+                                                :walke.prashant28@gmail.com</p>
+                                            If you like this plugin then Give <a target="_blank"
+                                                                                 href="http://wordpress.org/support/view/plugin-reviews/wp-database-backup"
+                                                                                 title="Rating"
+                                                                                 sl-processed="1">rating </a>on <a
+                                                target="_blank"
+                                                href="http://wordpress.org/support/view/plugin-reviews/wp-database-backup"
+                                                title="Rating" sl-processed="1">WordPress.org</a></p>
+                                            <p></br><a title="WP-DB-Backup"
+                                                       href="http://walkeprashant.wordpress.com/wp-database-backup/"
+                                                       target="_blank">More Information</a></p>
+                                            <p>Support us to improve plugin. your idea and support are always
+                                                welcome.<br>
+                                                <a target="_blank"
+                                                   href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=387BZU5UNQ4LA"
+                                                   sl-processed="1"><img alt="donate"
+                                                                         src="http://walkeprashant.files.wordpress.com/2014/09/donate.jpg?w=940"
+                                                                         class="alignleft wp-image-304 size-full"></a>
+                                            </p>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+
+            <div class="tab-pane" id="db_info">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsedb">
+                                <?php _e('System Check', 'wpdbbk') ?>
+
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapsedb" class="panel-collapse collapse in">
+                        <div class="panel-body list-group">
+
+                            <div class="row list-group-item">
+                                <?php
+                                /* get disk space free (in bytes) */
+                                $df = disk_free_space(WPDB_ROOTPATH);
+                                /* and get disk space total (in bytes)  */
+                                $dt = disk_total_space(WPDB_ROOTPATH);
+                                /* now we calculate the disk space used (in bytes) */
+                                $du = $dt - $df;
+                                /* percentage of disk used - this will be used to also set the width % of the progress bar */
+                                $dp = sprintf('%.2f', ($du / $dt) * 100);
+
+                                /* and we formate the size from bytes to MB, GB, etc. */
+                                $df = $this->wp_db_backup_format_bytes($df);
+                                $du = $this->wp_db_backup_format_bytes($du);
+                                $dt = $this->wp_db_backup_format_bytes($dt);
+                                ?>
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3">Disk Space</div>
+                                <div class="col-md-5">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar"
+                                             aria-valuenow="<?php echo trim($dp) ?>" aria-valuemin="0"
+                                             aria-valuemax="100" style="width:<?php echo trim($dp) ?>%">
+                                            <?php echo $dp ?>%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-5">
+                                    <div class='prginfo'>
+                                        <p><?php echo "$du of $dt used"; ?></p>
+                                        <p><?php echo "$df of $dt free"; ?></p>
+                                        <p>
+                                            <small>
+                                                <?php _e("Note: This value is the physical servers hard-drive allocation.", 'wpdbbkp'); ?>
+                                                <br/>
+                                                <?php _e("On shared hosts check your control panel for the 'TRUE' disk space quota value.", 'wpdbbkp'); ?>
+                                            </small>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3">Root Path</div>
+                                <div class="col-md-5"><?php echo $_SERVER['DOCUMENT_ROOT'] ?></div>
+                            </div>
+
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3">ABSPATH</div>
+                                <div class="col-md-5"><?php echo ABSPATH ?></div>
+                            </div>
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3"><?php _e('Upload directory URL', 'wpdbbk') ?></div>
+                                <div class="col-md-5"><?php
+                                    $upload_dir = wp_upload_dir();
+                                    echo $upload_dir['baseurl']
+                                    ?></div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3"><?php _e('Upload directory', 'wpdbbk') ?></div>
+                                <div class="col-md-5"><?php echo $upload_dir['basedir']; ?></div>
+                                <div class="col-md-1">
+                                    <?php echo substr(sprintf('%o', fileperms($upload_dir['basedir'])), -4);
+                                    ?></div>
+                                <div
+                                    class="col-md-2"><?php echo (!is_writable($upload_dir['basedir'])) ? '<p class="text-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Not writable </p>' : '<p class="text-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> writable</p>';
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3">Loaded PHP INI</div>
+                                <div class="col-md-5"><?php echo php_ini_loaded_file(); ?></div>
+                            </div>
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3">Memory Limit</div>
+                                <div class="col-md-5"><?php
+                                    echo WP_MEMORY_LIMIT;
+                                    echo '(Max &nbsp;' . WP_MAX_MEMORY_LIMIT;
+                                    ?>)
+                                </div>
+                            </div>
+
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3"><?php _e('Max Execution Time', 'wpdbbk') ?></div>
+                                <div class="col-md-5"> <?php echo ini_get('max_execution_time'); ?></div>
+                                <div class="col-md-1"></div>
+                                <div
+                                    class="col-md-2"><?php echo ini_get('max_execution_time') < 60 ? '<p class="text-danger"  data-toggle="tooltip" data-placement="left" title="For large site set high"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Low </p>' : '' ?></div>
+                            </div>
+                            <div class="row  list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3"><?php _e('Database backup directory', 'wpdbbk') ?></div>
+                                <div
+                                    class="col-md-5"> <?php _e($upload_dir['basedir'] . '/db-backup', 'wpdbbk'); ?></div>
+                                <div
+                                    class="col-md-1"><?php echo substr(sprintf('%o', fileperms($upload_dir['basedir'] . '/db-backup')), -4);
+                                    ?></div>
+                                <div
+                                    class="col-md-2"><?php echo (!is_writable($upload_dir['basedir'] . '/db-backup')) ? '<p class="text-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Not writable </p>' : '<p class="text-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> writable</p>';
+                                    ?></div>
+                            </div>
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3"><?php _e('Class ZipArchive Present : ', 'wpdbbk') ?></div>
+                                <div class="col-md-5"> <?php
+                                    echo (class_exists('ZipArchive')) ? 'Yes </p>' : '<p class="">No</p>';
+                                    ?></div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+                            <div class="row list-group-item">
+                                <div class="col-md-1"><a href="" target="_blank" title="Help"><span
+                                            class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="col-md-3"><?php _e('mysqldump (cmd) Present : ', 'wpdbbk') ?></div>
+                                <div class="col-md-5"> <?php
+                                    $WPDB_Admin = new WPDB_Admin();
+                                    echo ($WPDB_Admin->get_mysqldump_command_path()) ? 'Yes </p>' : '<p class="">No</p>';
+                                    ?></div>
+                                <div class="col-md-3"></div>
                             </div>
 
                         </div>
                     </div>
                 </div>
 
-
-            </div>
-
-            <div class="tab-pane" id="db_info">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -921,6 +1115,7 @@ class WPDB_Admin
                             </a>
                         </h4>
                     </div>
+
                     <div id="collapsedb" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <table class="table table-condensed">
@@ -1013,7 +1208,7 @@ class WPDB_Admin
 
                         </div>
                     </div>
-                </div>
+                    </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -1052,7 +1247,7 @@ class WPDB_Admin
 
                         </div>
                     </div>
-                </div>
+                    </div>
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1070,20 +1265,23 @@ class WPDB_Admin
                                     <th>Plugin Name</th>
                                     <th>Version</th>
                                 </tr>
-                                <?php $plugins = get_plugins();
+                                <?php
+                                $plugins = get_plugins();
                                 foreach ($plugins as $plugin) {
                                     echo "<tr>
                                            <td>" . $plugin['Name'] . "</td>
                                            <td>" . $plugin['Version'] . "</td>                                         
                                         </tr>";
-                                } ?>
+                                }
+                                ?>
                             </table>
                             <table class="table table-condensed">
                                 <tr class="success">
                                     <th>Active Theme Name</th>
                                     <th>Version</th>
                                 </tr>
-                                <?php $my_theme = wp_get_theme();
+                                <?php
+                                $my_theme = wp_get_theme();
 
                                 echo "<tr>
                                            <td>" . $my_theme->get('Name') . "</td>
@@ -1093,37 +1291,45 @@ class WPDB_Admin
                             </table>
                             <div class="row">
                                 <button class="btn btn-primary" type="button">
-                                    Drafts Post Count <span class="badge"><?php $count_posts = wp_count_posts();
-                                        echo $count_posts->draft; ?></span>
+                                    Drafts Post Count <span class="badge"><?php
+                                        $count_posts = wp_count_posts();
+                                        echo $count_posts->draft;
+                                        ?></span>
                                 </button>
                                 <button class="btn btn-primary" type="button">
-                                    Publish Post Count <span class="badge"><?php ;
-                                        echo $count_posts->publish; ?></span>
+                                    Publish Post Count <span class="badge"><?php
+                                        ;
+                                        echo $count_posts->publish;
+                                        ?></span>
                                 </button>
                                 <button class="btn btn-primary" type="button">
-                                    Drafts Pages Count <span
-                                        class="badge"><?php $count_pages = wp_count_posts('page');
-                                        echo $count_pages->draft; ?></span>
+                                    Drafts Pages Count <span class="badge"><?php
+                                        $count_pages = wp_count_posts('page');
+                                        echo $count_pages->draft;
+                                        ?></span>
                                 </button>
                                 <button class="btn btn-primary" type="button">
-                                    Publish Pages Count <span class="badge"><?php ;
-                                        echo $count_pages->publish; ?></span>
+                                    Publish Pages Count <span class="badge"><?php
+                                        ;
+                                        echo $count_pages->publish;
+                                        ?></span>
                                 </button>
                                 <button class="btn btn-primary" type="button">
-                                    Approved Comments Count <span
-                                        class="badge"><?php $comments_count = wp_count_comments();
-                                        echo $comments_count->approved; ?></span>
+                                    Approved Comments Count <span class="badge"><?php
+                                        $comments_count = wp_count_comments();
+                                        echo $comments_count->approved;
+                                        ?></span>
                                 </button>
                             </div>
                         </div>
+                        </div>
                     </div>
-                </div>
 
 
             </div>
             <div class="tab-pane" id="db_advanced">
                 <h4>A 'WP ALL Backup' Plugin will backup and restore your entire site at will,
-                    complete with FTP & S3 integration.</h4>
+                    complete with FTP & Dropbox integration.</h4>
                 <h2>Pro Features </h2><h4><?php echo $coupon ?></h4>
                 <div class="row">
                     <div class="col-md-3"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Complete
@@ -1170,7 +1376,7 @@ class WPDB_Admin
                     <div class="col-md-3"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
                         Automatically remove oldest backup
                     </div>
-                    <div class="col-md-3"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Amazon S3
+                    <div class="col-md-3"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Dropbox
                         integration
                     </div>
                     <div class="col-md-3"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> FTP and
@@ -1212,7 +1418,7 @@ class WPDB_Admin
                         <h4>Integration</h4>
                         <p class="bg-success">
                             Tie directly into other destination.
-                            Save directly to your favorite cloud services including Amazon S3,
+                            Save directly to your favorite cloud services including Dropbox,
                             by FTP/SFTP for added security.
                         </p>
                     </div>
@@ -1316,7 +1522,7 @@ class WPDB_Admin
                             <hr>
 
 
-                            <input class="btn button-primary" type="submit" name="wpsetting" value="Save">
+                            <input class="btn btn-primary" type="submit" name="wpsetting" value="Save">
                         </form>
                     </div>
                 </div>
@@ -1355,7 +1561,8 @@ class WPDB_Admin
                 <div id="collapseII" class="panel-collapse collapse in">
                     <div class="panel-body">
 
-                        <?php echo '<form name="wp-email_form" method="post" action="" >';
+                        <?php
+                        echo '<form name="wp-email_form" method="post" action="" >';
 
                         $wp_db_backup_email_id = "";
                         $wp_db_backup_email_id = get_option('wp_db_backup_email_id');
@@ -1363,34 +1570,37 @@ class WPDB_Admin
                         $wp_db_backup_email_attachment = get_option('wp_db_backup_email_attachment');
                         echo '<p>';
                         echo '<span class="glyphicon glyphicon-envelope"></span> Send Email Notification</br></p>';
-                        echo '<p>Email Id : ';
-                        echo '<input type="text" name="wp_db_backup_email_id" value="' . $wp_db_backup_email_id . '" placeholder="Your Email Id">';
-                        echo '<p>Leave blank if you don\'t want use this feature</p>';
-                        echo '<p>Attach backup file : ';
+                        echo '<div class="row form-group"><label class="col-sm-2" for="wp_db_backup_email_id">Email Id</label>';
+                        echo '<div class="col-sm-6"><input type="text" id="wp_db_backup_email_id" class="form-control" name="wp_db_backup_email_id" value="' . $wp_db_backup_email_id . '" placeholder="Your Email Id"></div>';
+                        echo '<div class="col-sm-4">Leave blank if you don\'t want use this feature</div></div>';
+                        echo '<div class="row form-group"><label class="col-sm-2" for="lead-theme">Attach backup file </label> ';
                         $selected_option = get_option('wp_db_backup_email_attachment');
 
-                        if ($selected_option == "yes") $selected_yes = "selected=\"selected\"";
+                        if ($selected_option == "yes")
+                            $selected_yes = "selected=\"selected\"";
                         else
                             $selected_yes = "";
-                        if ($selected_option == "no") $selected_no = "selected=\"selected\"";
+                        if ($selected_option == "no")
+                            $selected_no = "selected=\"selected\"";
                         else
                             $selected_no = "";
-                        echo '<select id="lead-theme" name="wp_db_backup_email_attachment">';
+                        echo '<div class="col-sm-2"><select id="lead-theme" class="form-control" name="wp_db_backup_email_attachment">';
                         echo '<option value="none">Select</option>';
 
                         echo '<option  value="yes"' . $selected_yes . '>Yes</option>';
                         echo '<option  value="no" ' . $selected_no . '>No</option>';
 
 
-                        echo '</select></p>';
+                        echo '</select></div>';
 
-                        echo '<p>If you want attache backup file to email then select "yes" (File attached only when backup file size <=25MB)</p>';
+                        echo '<div class="col-sm-8">If you want attache backup file to email then select "yes" (File attached only when backup file size <=25MB)</div>';
 
-                        echo '</p>';
+                        echo '</div>';
                         echo '<p class="submit">';
-                        echo '<input type="submit" name="Submit" class="button-primary" value="Save Settings" />';
+                        echo '<input type="submit" name="Submit" class="btn btn-primary" value="Save Settings" />';
                         echo '</p>';
-                        echo '</form>'; ?>
+                        echo '</form>';
+                        ?>
                     </div>
                 </div>
             </div>
@@ -1422,11 +1632,9 @@ class WPDB_Admin
         <div class="panel panel-footer">Thank you for using the <a
                 href="http://walkeprashant.wordpress.com/wp-database-backup/" target="_blank">WP Database Backup</a>.
         </div>
-
+        </div>
 
         <?php
-
-
     }
 
     function wp_db_backup_format_bytes($bytes, $precision = 2)
@@ -1497,12 +1705,9 @@ class WPDB_Admin
 
                 wp_enqueue_style('wpdbcss', WPDB_PLUGIN_URL . "/assets/css/wpdb_admin.css");
                 wp_enqueue_style('wpdbcss');
-
-
             }
         }
     }
-
 
 }
 

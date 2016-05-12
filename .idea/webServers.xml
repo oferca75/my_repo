@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="048fa385-ea0f-4416-b400-c0c30542c703" name="ipage" url="http://ftp.ipage.com">
+        <fileTransfer host="ftp.ipage.com" port="21" password="dfe5dfccdfcfdfd8dfd9dfecdffedffadf9bdf98df99df8b" username="jjtechniquescom">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

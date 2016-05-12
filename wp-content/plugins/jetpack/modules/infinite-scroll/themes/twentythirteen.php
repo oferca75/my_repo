@@ -10,11 +10,11 @@
  */
 function twentythirteen_infinite_scroll_init()
 {
-    add_theme_support('infinite-scroll', array(
-        'container' => 'content',
-        'footer' => 'page',
-        'footer_widgets' => array('sidebar-1')
-    ));
+	add_theme_support('infinite-scroll', array(
+		'container' => 'content',
+		'footer' => 'page',
+		'footer_widgets' => array('sidebar-1')
+	));
 }
 
 add_action('after_setup_theme', 'twentythirteen_infinite_scroll_init');
@@ -24,7 +24,7 @@ add_action('after_setup_theme', 'twentythirteen_infinite_scroll_init');
  */
 function twentythirteen_infinite_scroll_enqueue_styles()
 {
-    wp_enqueue_style('infinity-twentythirteen', plugins_url('twentythirteen.css', __FILE__), array('the-neverending-homepage'), '20130409');
+	wp_enqueue_style('infinity-twentythirteen', plugins_url('twentythirteen.css', __FILE__), array('the-neverending-homepage'), '20130409');
 }
 
 add_action('wp_enqueue_scripts', 'twentythirteen_infinite_scroll_enqueue_styles', 25);

@@ -8,11 +8,11 @@
  */
 function twentyfourteen_featured_content_post_ids($featured_ids)
 {
-    if (empty($featured_ids)) {
-        $featured_ids = array_slice(get_option('sticky_posts', array()), 0, 6);
-    }
+	if (empty($featured_ids)) {
+		$featured_ids = array_slice(get_option('sticky_posts', array()), 0, 6);
+	}
 
-    return $featured_ids;
+	return $featured_ids;
 }
 
 add_action('featured_content_post_ids', 'twentyfourteen_featured_content_post_ids');
@@ -25,7 +25,7 @@ add_action('featured_content_post_ids', 'twentyfourteen_featured_content_post_id
  */
 function twentyfourteen_customizer_default($wp_customize)
 {
-    $wp_customize->get_setting('featured-content[tag-name]')->default = 'featured';
+	$wp_customize->get_setting('featured-content[tag-name]')->default = 'featured';
 }
 
 add_action('customize_register', 'twentyfourteen_customizer_default');
@@ -38,9 +38,9 @@ add_action('customize_register', 'twentyfourteen_customizer_default');
  */
 function twentyfourteen_featured_content_default_settings($settings)
 {
-    $settings['tag-name'] = 'featured';
+	$settings['tag-name'] = 'featured';
 
-    return $settings;
+	return $settings;
 }
 
 add_action('featured_content_default_settings', 'twentyfourteen_featured_content_default_settings');
@@ -55,27 +55,27 @@ add_action('featured_content_default_settings', 'twentyfourteen_featured_content
  */
 function twentyfourteen_mute_content_filters($show, $post)
 {
-    $formats = get_theme_support('post-formats');
-    if (!in_the_loop() && has_post_format($formats[0], $post)) {
-        $show = false;
-    }
-    return $show;
+	$formats = get_theme_support('post-formats');
+	if (!in_the_loop() && has_post_format($formats[0], $post)) {
+		$show = false;
+	}
+	return $show;
 }
 
 add_filter('sharing_show', 'twentyfourteen_mute_content_filters', 10, 2);
 
 function twentyfourteen_init_jetpack()
 {
-    /**
-     * Add our compat CSS file for custom widget stylings and such.
-     * Set the version equal to filemtime for development builds, and the JETPACK__VERSION for production.
-     */
-    $version = false;
-    if (method_exists('Jetpack', 'is_development_version')) {
-        $version = Jetpack::is_development_version() ? filemtime(plugin_dir_path(__FILE__) . 'twentyfourteen.css') : JETPACK__VERSION;
-    }
-    wp_enqueue_style('twentyfourteen-jetpack', plugins_url('twentyfourteen.css', __FILE__), array(), $version);
-    wp_style_add_data('twentyfourteen-jetpack', 'rtl', 'replace');
+	/**
+	 * Add our compat CSS file for custom widget stylings and such.
+	 * Set the version equal to filemtime for development builds, and the JETPACK__VERSION for production.
+	 */
+	$version = false;
+	if (method_exists('Jetpack', 'is_development_version')) {
+		$version = Jetpack::is_development_version() ? filemtime(plugin_dir_path(__FILE__) . 'twentyfourteen.css') : JETPACK__VERSION;
+	}
+	wp_enqueue_style('twentyfourteen-jetpack', plugins_url('twentyfourteen.css', __FILE__), array(), $version);
+	wp_style_add_data('twentyfourteen-jetpack', 'rtl', 'replace');
 }
 
 add_action('init', 'twentyfourteen_init_jetpack');

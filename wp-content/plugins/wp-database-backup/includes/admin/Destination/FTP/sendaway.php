@@ -31,7 +31,7 @@ $wp_upload_dir = wp_upload_dir();
 $wp_upload_dir['basedir'] = str_replace('\\', '/', $wp_upload_dir['basedir']);
 $remotefile = $subdir . '/' . $filename;
 $localfile = trailingslashit($wp_upload_dir['basedir'] . '/db-backup') . $filename;
-
+if (isset($host) && !empty($host) && isset($user) && !empty($user) && isset($pass) && !empty($pass)) {
 // see if port option is blank and set it to 21 if it isn't
 if (!get_option('backupbreeze_ftp_port')) {
     $port = '21';
@@ -46,7 +46,7 @@ if (!get_option('backupbreeze_ftp_port')) {
 // If user has WP manage options permissions
 // if ( current_user_can('manage_options')) {
 // connect to host ONLY if the 2 security conditions are valid / met
-$conn = @ftp_connect($host, $port);
+    $conn = @ftp_connect($host, $port);
 // }
 // }
 
@@ -79,5 +79,5 @@ if (!$conn) {
 @ftp_quit($conn);
 
 // echo "... Done!";
-
+}
 ?>

@@ -11,7 +11,7 @@
  */
 
 Jetpack::dns_prefetch(array(
-    '//v0.wordpress.com',
+	'//v0.wordpress.com',
 ));
 
 /**

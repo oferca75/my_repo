@@ -15,24 +15,24 @@
  */
 function jetpack_load_infinite_scroll_annotation()
 {
-    if (is_admin() && isset($_GET['page']) && 'jetpack' == $_GET['page']) {
-        $theme = function_exists('wp_get_theme') ? wp_get_theme() : get_theme(get_current_theme());
+	if (is_admin() && isset($_GET['page']) && 'jetpack' == $_GET['page']) {
+		$theme = function_exists('wp_get_theme') ? wp_get_theme() : get_theme(get_current_theme());
 
-        if (!is_a($theme, 'WP_Theme') && !is_array($theme))
-            return;
+		if (!is_a($theme, 'WP_Theme') && !is_array($theme))
+			return;
 
-        /** This filter is already documented in modules/infinite-scroll/infinity.php */
-        $customization_file = apply_filters('infinite_scroll_customization_file', dirname(__FILE__) . "/infinite-scroll/themes/{$theme['Stylesheet']}.php", $theme['Stylesheet']);
+		/** This filter is already documented in modules/infinite-scroll/infinity.php */
+		$customization_file = apply_filters('infinite_scroll_customization_file', dirname(__FILE__) . "/infinite-scroll/themes/{$theme['Stylesheet']}.php", $theme['Stylesheet']);
 
-        if (is_readable($customization_file)) {
-            require_once($customization_file);
-        } elseif (!empty($theme['Template'])) {
-            $customization_file = dirname(__FILE__) . "/infinite-scroll/themes/{$theme['Template']}.php";
+		if (is_readable($customization_file)) {
+			require_once($customization_file);
+		} elseif (!empty($theme['Template'])) {
+			$customization_file = dirname(__FILE__) . "/infinite-scroll/themes/{$theme['Template']}.php";
 
-            if (is_readable($customization_file))
-                require_once($customization_file);
-        }
-    }
+			if (is_readable($customization_file))
+				require_once($customization_file);
+		}
+	}
 }
 
 add_action('setup_theme', 'jetpack_load_infinite_scroll_annotation');
@@ -46,7 +46,7 @@ add_action('setup_theme', 'jetpack_load_infinite_scroll_annotation');
  */
 function jetpack_can_activate_infinite_scroll()
 {
-    return (bool)current_theme_supports('infinite-scroll');
+	return (bool)current_theme_supports('infinite-scroll');
 }
 
 add_filter('jetpack_can_activate_infinite-scroll', 'jetpack_can_activate_infinite_scroll');

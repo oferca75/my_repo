@@ -137,3 +137,18 @@
 .entry-content > h3 {
     line-height: 2.2em;
 }
+
+#featured-content.layout-three .hentry {
+    width: 50%;
+}
+
+.featured-homepage-image {
+    text-align: center;
+}
+
+.recentviewed_post {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+}

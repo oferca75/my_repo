@@ -17,24 +17,24 @@ define('GROFILES__CACHE_BUSTER', gmdate('YM') . 'aa'); // Break CDN cache, incre
 
 function grofiles_hovercards_init()
 {
-    add_filter('get_avatar', 'grofiles_get_avatar', 10, 2);
-    add_action('wp_enqueue_scripts', 'grofiles_attach_cards');
-    add_action('wp_footer', 'grofiles_extra_data');
-    add_action('admin_init', 'grofiles_add_settings');
+	add_filter('get_avatar', 'grofiles_get_avatar', 10, 2);
+	add_action('wp_enqueue_scripts', 'grofiles_attach_cards');
+	add_action('wp_footer', 'grofiles_extra_data');
+	add_action('admin_init', 'grofiles_add_settings');
 
-    add_action('load-index.php', 'grofiles_admin_cards');
-    add_action('load-users.php', 'grofiles_admin_cards');
-    add_action('load-edit-comments.php', 'grofiles_admin_cards');
-    add_action('load-options-discussion.php', 'grofiles_admin_cards_forced');
+	add_action('load-index.php', 'grofiles_admin_cards');
+	add_action('load-users.php', 'grofiles_admin_cards');
+	add_action('load-edit-comments.php', 'grofiles_admin_cards');
+	add_action('load-options-discussion.php', 'grofiles_admin_cards_forced');
 
-    Jetpack::enable_module_configurable(__FILE__);
-    Jetpack::module_configuration_load(__FILE__, 'gravatar_hovercards_configuration_load');
+	Jetpack::enable_module_configurable(__FILE__);
+	Jetpack::module_configuration_load(__FILE__, 'gravatar_hovercards_configuration_load');
 }
 
 function gravatar_hovercards_configuration_load()
 {
-    wp_safe_redirect(admin_url('options-discussion.php#show_avatars'));
-    exit;
+	wp_safe_redirect(admin_url('options-discussion.php#show_avatars'));
+	exit;
 }
 
 add_action('jetpack_modules_loaded', 'grofiles_hovercards_init');
@@ -48,11 +48,11 @@ add_action('jetpack_modules_loaded', 'grofiles_hovercards_init');
  */
 function grofiles_add_settings()
 {
-    if (!get_option('show_avatars'))
-        return;
+	if (!get_option('show_avatars'))
+		return;
 
-    add_settings_field('gravatar_disable_hovercards', __('Gravatar Hovercards', 'jetpack'), 'grofiles_setting_callback', 'discussion', 'avatars');
-    register_setting('discussion', 'gravatar_disable_hovercards', 'grofiles_hovercard_option_sanitize');
+	add_settings_field('gravatar_disable_hovercards', __('Gravatar Hovercards', 'jetpack'), 'grofiles_setting_callback', 'discussion', 'avatars');
+	register_setting('discussion', 'gravatar_disable_hovercards', 'grofiles_hovercard_option_sanitize');
 }
 
 /**
@@ -60,43 +60,43 @@ function grofiles_add_settings()
  */
 function grofiles_setting_callback()
 {
-    global $current_user;
+	global $current_user;
 
-    $checked = 'disabled' == get_option('gravatar_disable_hovercards') ? '' : 'checked="checked" ';
+	$checked = 'disabled' == get_option('gravatar_disable_hovercards') ? '' : 'checked="checked" ';
 
-    echo "<label id='gravatar-hovercard-options'><input {$checked}name='gravatar_disable_hovercards' id='gravatar_disable_hovercards' type='checkbox' value='enabled' class='code' /> " . __("View people's profiles when you mouse over their Gravatars", 'jetpack') . "</label>";
-    ?>
-    <style type="text/css">
-        #grav-profile-example img {
-            float: left;
-        }
+	echo "<label id='gravatar-hovercard-options'><input {$checked}name='gravatar_disable_hovercards' id='gravatar_disable_hovercards' type='checkbox' value='enabled' class='code' /> " . __("View people's profiles when you mouse over their Gravatars", 'jetpack') . "</label>";
+	?>
+	<style type="text/css">
+		#grav-profile-example img {
+			float: left;
+		}
 
-        #grav-profile-example span {
-            padding: 0 1em;
-        }
-    </style>
-    <script type="text/javascript">
-        // <![CDATA[
-        jQuery(function ($) {
-            var tr = $('#gravatar_disable_hovercards').change(function () {
-                if ($(this).is(':checked')) {
-                    $('#grav-profile-example').slideDown('fast');
-                } else {
-                    $('#grav-profile-example').slideUp('fast');
-                }
-            }).parents('tr');
-            var ftr = tr.parents('table').find('tr:first');
-            if (ftr.size() && !ftr.find('#gravatar_disable_hovercards').size()) {
-                ftr.after(tr);
-            }
-        });
-        // ]]>
-    </script>
-    <p id="grav-profile-example"
-       class="hide-if-no-js"<?php if (!$checked) echo ' style="display:none"'; ?>><?php echo get_avatar($current_user->ID, 64); ?>
-        <span><?php _e('Put your mouse over your Gravatar to check out your profile.', 'jetpack'); ?> <br
-                class="clear"/></span></p>
-    <?php
+		#grav-profile-example span {
+			padding: 0 1em;
+		}
+	</style>
+	<script type="text/javascript">
+		// <![CDATA[
+		jQuery(function ($) {
+			var tr = $('#gravatar_disable_hovercards').change(function () {
+				if ($(this).is(':checked')) {
+					$('#grav-profile-example').slideDown('fast');
+				} else {
+					$('#grav-profile-example').slideUp('fast');
+				}
+			}).parents('tr');
+			var ftr = tr.parents('table').find('tr:first');
+			if (ftr.size() && !ftr.find('#gravatar_disable_hovercards').size()) {
+				ftr.after(tr);
+			}
+		});
+		// ]]>
+	</script>
+	<p id="grav-profile-example"
+	   class="hide-if-no-js"<?php if (!$checked) echo ' style="display:none"'; ?>><?php echo get_avatar($current_user->ID, 64); ?>
+		<span><?php _e('Put your mouse over your Gravatar to check out your profile.', 'jetpack'); ?> <br
+				class="clear"/></span></p>
+	<?php
 }
 
 /**
@@ -104,11 +104,11 @@ function grofiles_setting_callback()
  */
 function grofiles_hovercard_option_sanitize($val)
 {
-    if ('disabled' == $val) {
-        return $val;
-    }
+	if ('disabled' == $val) {
+		return $val;
+	}
 
-    return $val ? 'enabled' : 'disabled';
+	return $val ? 'enabled' : 'disabled';
 }
 
 
@@ -125,20 +125,20 @@ function grofiles_hovercard_option_sanitize($val)
  */
 function grofiles_gravatars_to_append($author = null)
 {
-    static $authors = array();
+	static $authors = array();
 
-    // Get
-    if (is_null($author)) {
-        return array_keys($authors);
-    }
+	// Get
+	if (is_null($author)) {
+		return array_keys($authors);
+	}
 
-    // Set
+	// Set
 
-    if (is_numeric($author)) {
-        $author = (int)$author;
-    }
+	if (is_numeric($author)) {
+		$author = (int)$author;
+	}
 
-    $authors[$author] = true;
+	$authors[$author] = true;
 }
 
 /**
@@ -153,29 +153,29 @@ function grofiles_gravatars_to_append($author = null)
  */
 function grofiles_get_avatar($avatar, $author)
 {
-    if (is_numeric($author)) {
-        grofiles_gravatars_to_append($author);
-    } else if (is_string($author)) {
-        if (false !== strpos($author, '@')) {
-            grofiles_gravatars_to_append($author);
-        } else {
-            if ($user = get_user_by('slug', $author))
-                grofiles_gravatars_to_append($user->ID);
-        }
-    } else if (isset($author->comment_type)) {
-        if ('' != $author->comment_type && 'comment' != $author->comment_type)
-            return $avatar;
-        if ($author->user_id)
-            grofiles_gravatars_to_append($author->user_id);
-        else
-            grofiles_gravatars_to_append($author->comment_author_email);
-    } else if (isset($author->user_login)) {
-        grofiles_gravatars_to_append($author->ID);
-    } else if (isset($author->post_author)) {
-        grofiles_gravatars_to_append($author->post_author);
-    }
+	if (is_numeric($author)) {
+		grofiles_gravatars_to_append($author);
+	} else if (is_string($author)) {
+		if (false !== strpos($author, '@')) {
+			grofiles_gravatars_to_append($author);
+		} else {
+			if ($user = get_user_by('slug', $author))
+				grofiles_gravatars_to_append($user->ID);
+		}
+	} else if (isset($author->comment_type)) {
+		if ('' != $author->comment_type && 'comment' != $author->comment_type)
+			return $avatar;
+		if ($author->user_id)
+			grofiles_gravatars_to_append($author->user_id);
+		else
+			grofiles_gravatars_to_append($author->comment_author_email);
+	} else if (isset($author->user_login)) {
+		grofiles_gravatars_to_append($author->ID);
+	} else if (isset($author->post_author)) {
+		grofiles_gravatars_to_append($author->post_author);
+	}
 
-    return $avatar;
+	return $avatar;
 }
 
 /**
@@ -185,62 +185,62 @@ function grofiles_get_avatar($avatar, $author)
  */
 function grofiles_attach_cards()
 {
-    global $blog_id;
+	global $blog_id;
 
-    // Is the display of Avatars disabled?
-    if (!get_option('show_avatars')) {
-        return;
-    }
+	// Is the display of Avatars disabled?
+	if (!get_option('show_avatars')) {
+		return;
+	}
 
-    // Is the display of Gravatar Hovercards disabled?
-    if ('disabled' == get_option('gravatar_disable_hovercards')) {
-        return;
-    }
+	// Is the display of Gravatar Hovercards disabled?
+	if ('disabled' == get_option('gravatar_disable_hovercards')) {
+		return;
+	}
 
-    wp_enqueue_script('grofiles-cards', (is_ssl() ? 'https://secure' : 'http://s') . '.gravatar.com/js/gprofiles.js', array('jquery'), GROFILES__CACHE_BUSTER, true);
-    wp_enqueue_script('wpgroho', plugins_url('wpgroho.js', __FILE__), array('grofiles-cards'), false, true);
-    if (is_user_logged_in()) {
-        $cu = wp_get_current_user();
-        $my_hash = md5($cu->user_email);
-    } else if (!empty($_COOKIE['comment_author_email_' . COOKIEHASH])) {
-        $my_hash = md5($_COOKIE['comment_author_email_' . COOKIEHASH]);
-    } else {
-        $my_hash = '';
-    }
-    wp_localize_script('wpgroho', 'WPGroHo', compact('my_hash'));
+	wp_enqueue_script('grofiles-cards', (is_ssl() ? 'https://secure' : 'http://s') . '.gravatar.com/js/gprofiles.js', array('jquery'), GROFILES__CACHE_BUSTER, true);
+	wp_enqueue_script('wpgroho', plugins_url('wpgroho.js', __FILE__), array('grofiles-cards'), false, true);
+	if (is_user_logged_in()) {
+		$cu = wp_get_current_user();
+		$my_hash = md5($cu->user_email);
+	} else if (!empty($_COOKIE['comment_author_email_' . COOKIEHASH])) {
+		$my_hash = md5($_COOKIE['comment_author_email_' . COOKIEHASH]);
+	} else {
+		$my_hash = '';
+	}
+	wp_localize_script('wpgroho', 'WPGroHo', compact('my_hash'));
 }
 
 function grofiles_attach_cards_forced()
 {
-    add_filter('pre_option_gravatar_disable_hovercards', 'grofiles_force_gravatar_enable_hovercards');
-    grofiles_attach_cards();
+	add_filter('pre_option_gravatar_disable_hovercards', 'grofiles_force_gravatar_enable_hovercards');
+	grofiles_attach_cards();
 }
 
 function grofiles_force_gravatar_enable_hovercards()
 {
-    return 'enabled';
+	return 'enabled';
 }
 
 function grofiles_admin_cards_forced()
 {
-    add_action('admin_footer', 'grofiles_attach_cards_forced');
+	add_action('admin_footer', 'grofiles_attach_cards_forced');
 }
 
 function grofiles_admin_cards()
 {
-    add_action('admin_footer', 'grofiles_attach_cards');
+	add_action('admin_footer', 'grofiles_attach_cards');
 }
 
 function grofiles_extra_data()
 {
-    ?>
-    <div style="display:none">
-        <?php
-        foreach (grofiles_gravatars_to_append() as $author)
-            grofiles_hovercards_data_html($author);
-        ?>
-    </div>
-    <?php
+	?>
+	<div style="display:none">
+		<?php
+		foreach (grofiles_gravatars_to_append() as $author)
+			grofiles_hovercards_data_html($author);
+		?>
+	</div>
+	<?php
 }
 
 /**
@@ -250,20 +250,20 @@ function grofiles_extra_data()
  */
 function grofiles_hovercards_data_html($author)
 {
-    $data = grofiles_hovercards_data($author);
-    if (is_numeric($author)) {
-        $user = get_userdata($author);
-        $hash = md5($user->user_email);
-    } else {
-        $hash = md5($author);
-    }
-    ?>
-    <div class="grofile-hash-map-<?php echo $hash; ?>">
-        <?php foreach ($data as $key => $value) : ?>
-            <span class="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></span>
-        <?php endforeach; ?>
-    </div>
-    <?php
+	$data = grofiles_hovercards_data($author);
+	if (is_numeric($author)) {
+		$user = get_userdata($author);
+		$hash = md5($user->user_email);
+	} else {
+		$hash = md5($author);
+	}
+	?>
+	<div class="grofile-hash-map-<?php echo $hash; ?>">
+		<?php foreach ($data as $key => $value) : ?>
+			<span class="<?php echo esc_attr($key); ?>"><?php echo esc_html($value); ?></span>
+		<?php endforeach; ?>
+	</div>
+	<?php
 }
 
 
@@ -278,16 +278,16 @@ function grofiles_hovercards_data_html($author)
  */
 function grofiles_hovercards_data_callbacks()
 {
-    /**
-     * Filter the Gravatar Hovercard PHP callbacks.
-     *
-     * @module gravatar-hovercards
-     *
-     * @since 1.1.0
-     *
-     * @param array $args Array of data callbacks.
-     */
-    return apply_filters('grofiles_hovercards_data_callbacks', array());
+	/**
+	 * Filter the Gravatar Hovercard PHP callbacks.
+	 *
+	 * @module gravatar-hovercards
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array $args Array of data callbacks.
+	 */
+	return apply_filters('grofiles_hovercards_data_callbacks', array());
 }
 
 /**
@@ -299,14 +299,14 @@ function grofiles_hovercards_data_callbacks()
  */
 function grofiles_hovercards_data($author)
 {
-    $r = array();
-    foreach (grofiles_hovercards_data_callbacks() as $key => $callback) {
-        if (!is_callable($callback))
-            continue;
-        $data = call_user_func($callback, $author, $key);
-        if (!is_null($data))
-            $r[$key] = $data;
-    }
+	$r = array();
+	foreach (grofiles_hovercards_data_callbacks() as $key => $callback) {
+		if (!is_callable($callback))
+			continue;
+		$data = call_user_func($callback, $author, $key);
+		if (!is_null($data))
+			$r[$key] = $data;
+	}
 
-    return $r;
+	return $r;
 }

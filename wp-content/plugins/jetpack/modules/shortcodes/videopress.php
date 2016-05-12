@@ -8,16 +8,16 @@
 
 if (!Jetpack::is_module_active('videopress')) {
 
-    Jetpack::dns_prefetch(array(
-        '//v0.wordpress.com',
-    ));
+	Jetpack::dns_prefetch(array(
+		'//v0.wordpress.com',
+	));
 
-    /**
-     * We won't have any videos less than sixty pixels wide. That would be silly.
-     */
-    define('VIDEOPRESS_MIN_WIDTH', 60);
+	/**
+	 * We won't have any videos less than sixty pixels wide. That would be silly.
+	 */
+	define('VIDEOPRESS_MIN_WIDTH', 60);
 
-    include_once JETPACK__PLUGIN_DIR . 'modules/videopress/utility-functions.php';
-    include_once JETPACK__PLUGIN_DIR . 'modules/videopress/shortcode.php';
+	include_once JETPACK__PLUGIN_DIR . 'modules/videopress/utility-functions.php';
+	include_once JETPACK__PLUGIN_DIR . 'modules/videopress/shortcode.php';
 
 }

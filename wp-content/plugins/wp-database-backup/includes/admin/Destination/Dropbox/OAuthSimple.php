@@ -1,6 +1,6 @@
 <?php
 
-/**
+/** 
  * OAuthSimple - A simpler version of OAuth
  */
 class OAuthSimple

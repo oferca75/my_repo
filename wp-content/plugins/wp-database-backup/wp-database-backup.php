@@ -3,7 +3,7 @@
 Plugin Name: WP Database Backup
 Plugin URI:http://www.wpseeds.com/wp-database-backup
 Description: This plugin helps you to create/restore wordpress database backup. (Tools->WP-DB-Backup)
-Version: 3.9.2
+Version: 4.0
 Author:Prashant Walke
 Author URI:walkeprashant.in
 Text Domain: wpdbbkp
@@ -27,76 +27,77 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+	exit; // Exit if accessed directly
 }
 
 if (!class_exists('WPDatabaseBackup')) :
 
-    /**
-     * Main WPDatabaseBackup Class
-     *
-     * @class WPDatabaseBackup
-     * @version    1.1
-     */
-    final class WPDatabaseBackup
-    {
+	/**
+	 * Main WPDatabaseBackup Class
+	 *
+	 * @class WPDatabaseBackup
+	 * @version    1.1
+	 */
+	final class WPDatabaseBackup
+	{
 
-        public $version = '3.8';
+		public $version = '3.8';
 
-        protected static $_instance = null;
+		protected static $_instance = null;
 
-        public $query = null;
+		public $query = null;
 
-        public static function instance()
-        {
-            if (is_null(self::$_instance)) {
-                self::$_instance = new self();
-            }
-            return self::$_instance;
-        }
+		public static function instance()
+		{
+			if (is_null(self::$_instance)) {
+				self::$_instance = new self();
+			}
+			return self::$_instance;
+		}
 
-        public function __clone()
-        {
-            _doing_it_wrong(__FUNCTION__, __('Cheatin&#8217; huh?'), '1.0');
-        }
+		public function __clone()
+		{
+			_doing_it_wrong(__FUNCTION__, __('Cheatin&#8217; huh?'), '1.0');
+		}
 
-        public function __construct()
-        {
-            // Define constants
-            $this->define_constants();
-            // Include required files
-            $this->includes();
+		public function __construct()
+		{
+			// Define constants
+			$this->define_constants();
+			// Include required files
+			$this->includes();
 
-        }
+		}
 
 
-        /**
-         * Define Constants
-         */
-        private function define_constants()
-        {
-            if (!defined('WPDB_PLUGIN_URL'))
-                define('WPDB_PLUGIN_URL', WP_CONTENT_URL . '/plugins/wp-database-backup');
-            define('WPDB_PLUGIN_FILE', __FILE__);
-            define('WPDB_VERSION', $this->version);
-            define('WPDBPLUGIN_VERSION', WPDB_VERSION); // Backwards compat
-            define('NOTIFIER_XML_FILE_WPDB', 'http://wpseeds.com/notifier/wp-database-backup.xml');
+		/**
+		 * Define Constants
+		 */
+		private function define_constants()
+		{
+			if (!defined('WPDB_PLUGIN_URL'))
+				define('WPDB_PLUGIN_URL', WP_CONTENT_URL . '/plugins/wp-database-backup');
+			define('WPDB_PLUGIN_FILE', __FILE__);
+			define('WPDB_ROOTPATH', str_replace("\\", "/", ABSPATH));
+			define('WPDB_VERSION', $this->version);
+			define('WPDBPLUGIN_VERSION', WPDB_VERSION); // Backwards compat
+			define('NOTIFIER_XML_FILE_WPDB', 'http://wpseeds.com/notifier/wp-database-backup.xml');
 
-        }
+		}
 
-        private function includes()
-        {
-            include_once('includes/admin/class-wpdb-admin.php');
+		private function includes()
+		{
+			include_once('includes/admin/class-wpdb-admin.php');
 
-        }
+		}
 
-        public function logger()
-        {
-            _deprecated_function('Wpekaplugin->logger', '1.0', 'new WPDB_Logger()');
-            return new WPDB_Logger();
-        }
+		public function logger()
+		{
+			_deprecated_function('Wpekaplugin->logger', '1.0', 'new WPDB_Logger()');
+			return new WPDB_Logger();
+		}
 
-    }
+	}
 
 endif;
 
@@ -105,7 +106,7 @@ endif;
  */
 function WPDB()
 {
-    return WPDatabaseBackup::instance();
+	return WPDatabaseBackup::instance();
 }
 
 // Global for backwards compatibility.

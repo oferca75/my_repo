@@ -9,11 +9,11 @@ add_action('init', 'jetpack_bbpress_compat', 11); // Priority 11 needed to ensur
  */
 function jetpack_bbpress_compat()
 {
-    if (function_exists('sharing_display')) {
-        add_filter('bbp_get_topic_content', 'sharing_display', 19);
-        add_action('bbp_template_after_single_forum', 'jetpack_sharing_bbpress');
-        add_action('bbp_template_after_single_topic', 'jetpack_sharing_bbpress');
-    }
+	if (function_exists('sharing_display')) {
+		add_filter('bbp_get_topic_content', 'sharing_display', 19);
+		add_action('bbp_template_after_single_forum', 'jetpack_sharing_bbpress');
+		add_action('bbp_template_after_single_topic', 'jetpack_sharing_bbpress');
+	}
 }
 
 /**
@@ -26,5 +26,5 @@ function jetpack_bbpress_compat()
  */
 function jetpack_sharing_bbpress()
 {
-    sharing_display(null, true);
+	sharing_display(null, true);
 }

@@ -16,16 +16,16 @@ wp_oembed_add_provider('#https?://(.+?\.)?houzz\.(com|co\.uk|com\.au|de|fr|ru|jp
 // Create Shortcode
 function jetpack_houzz_shortcode($atts, $content = null)
 {
-    $url = substr($atts[0], 1);
-    $args = array();
-    if (isset($atts['w']) && is_numeric($atts['w'])) {
-        $args['width'] = $atts['w'];
-    }
-    if (isset($atts['h']) && is_numeric($atts['h'])) {
-        $args['height'] = $atts['h'];
-    }
-    $oembed = _wp_oembed_get_object();
-    return $oembed->get_html($url, $args);
+	$url = substr($atts[0], 1);
+	$args = array();
+	if (isset($atts['w']) && is_numeric($atts['w'])) {
+		$args['width'] = $atts['w'];
+	}
+	if (isset($atts['h']) && is_numeric($atts['h'])) {
+		$args['height'] = $atts['h'];
+	}
+	$oembed = _wp_oembed_get_object();
+	return $oembed->get_html($url, $args);
 }
 
 add_shortcode('houzz', 'jetpack_houzz_shortcode');

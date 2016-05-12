@@ -18,11 +18,11 @@ include dirname(__FILE__) . '/markdown/easy-markdown.php';
 add_filter('pre_option_' . WPCom_Markdown::POST_OPTION, '__return_true');
 function jetpack_markdown_posting_always_on()
 {
-    // why oh why isn't there a remove_settings_field?
-    global $wp_settings_fields;
-    if (isset($wp_settings_fields['writing']['default'][WPCom_Markdown::POST_OPTION])) {
-        unset($wp_settings_fields['writing']['default'][WPCom_Markdown::POST_OPTION]);
-    }
+	// why oh why isn't there a remove_settings_field?
+	global $wp_settings_fields;
+	if (isset($wp_settings_fields['writing']['default'][WPCom_Markdown::POST_OPTION])) {
+		unset($wp_settings_fields['writing']['default'][WPCom_Markdown::POST_OPTION]);
+	}
 }
 
 add_action('admin_init', 'jetpack_markdown_posting_always_on', 11);

@@ -24,8 +24,8 @@ add_shortcode('gist', 'github_gist_shortcode');
  */
 function github_gist_embed_handler($matches, $attr, $url, $rawattr)
 {
-    // Let the shortcode callback do all the work
-    return github_gist_shortcode($matches, $url);
+	// Let the shortcode callback do all the work
+	return github_gist_shortcode($matches, $url);
 }
 
 /**
@@ -41,43 +41,43 @@ function github_gist_embed_handler($matches, $attr, $url, $rawattr)
 function github_gist_shortcode($atts, $content = '')
 {
 
-    if (empty($atts[0]) && empty($content)) {
-        return '<!-- Missing Gist ID -->';
-    }
+	if (empty($atts[0]) && empty($content)) {
+		return '<!-- Missing Gist ID -->';
+	}
 
-    $id = (!empty($content)) ? $content : $atts[0];
+	$id = (!empty($content)) ? $content : $atts[0];
 
-    // Parse a URL
-    if (!is_numeric($id)) {
-        $id = preg_replace('#https?://gist.github.com/([a-zA-Z0-9]+)#', '$1', $id);
-    }
+	// Parse a URL
+	if (!is_numeric($id)) {
+		$id = preg_replace('#https?://gist.github.com/([a-zA-Z0-9]+)#', '$1', $id);
+	}
 
-    if (!$id) {
-        return '<!-- Invalid Gist ID -->';
-    }
+	if (!$id) {
+		return '<!-- Invalid Gist ID -->';
+	}
 
-    wp_enqueue_script('jetpack-gist-embed', plugins_url('js/gist.js', __FILE__), array('jquery'), false, true);
+	wp_enqueue_script('jetpack-gist-embed', plugins_url('js/gist.js', __FILE__), array('jquery'), false, true);
 
-    if (false !== strpos($id, '#file-')) {
-        // URL points to a specific file in the gist
-        $id = str_replace('#file-', '.json?file=', $id);
-        $id = preg_replace('/\-(?!.*\-)/', '.', $id);
-    } else {
-        $file = (!empty($atts['file'])) ? '?file=' . urlencode($atts['file']) : '';
-        // URL points to the entire gist
-        $id .= ".json$file";
-    }
+	if (false !== strpos($id, '#file-')) {
+		// URL points to a specific file in the gist
+		$id = str_replace('#file-', '.json?file=', $id);
+		$id = preg_replace('/\-(?!.*\-)/', '.', $id);
+	} else {
+		$file = (!empty($atts['file'])) ? '?file=' . urlencode($atts['file']) : '';
+		// URL points to the entire gist
+		$id .= ".json$file";
+	}
 
-    // inline style to prevent the bottom margin to the embed that themes like TwentyTen, et al., add to tables
-    $return = '<style>.gist table { margin-bottom: 0; }</style><div class="gist-oembed" data-gist="' . esc_attr($id) . '"></div>';
+	// inline style to prevent the bottom margin to the embed that themes like TwentyTen, et al., add to tables
+	$return = '<style>.gist table { margin-bottom: 0; }</style><div class="gist-oembed" data-gist="' . esc_attr($id) . '"></div>';
 
-    if (isset($_POST['type']) && 'embed' === $_POST['type'] &&
-        isset($_POST['action']) && 'parse-embed' === $_POST['action']
-    ) {
-        return github_gist_simple_embed($id);
-    }
+	if (isset($_POST['type']) && 'embed' === $_POST['type'] &&
+		isset($_POST['action']) && 'parse-embed' === $_POST['action']
+	) {
+		return github_gist_simple_embed($id);
+	}
 
-    return $return;
+	return $return;
 }
 
 /**
@@ -91,6 +91,6 @@ function github_gist_shortcode($atts, $content = '')
  */
 function github_gist_simple_embed($id)
 {
-    $id = str_replace('json', 'js', $id);
-    return '<script type="text/javascript" src="https://gist.github.com/' . $id . '"></script>';
+	$id = str_replace('json', 'js', $id);
+	return '<script type="text/javascript" src="https://gist.github.com/' . $id . '"></script>';
 }

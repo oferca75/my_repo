@@ -27,7 +27,7 @@ if (!empty($xml)) {
     @$changelogMsg = '';
     if (!empty($xml->message)) {
 
-        @$changeMessage = $xml->message;
+        @$changeMessage = $xml->message; 
     }
     if (!empty($xml->coupon)) {
         $coupon = $xml->coupon;
@@ -100,7 +100,7 @@ $changelogMsg .= "<li class='list-group-item'>" . $coupon . "<li>";
                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <?php _e($changelogMsg, 'wpdbbkp'); ?>
+                <?php _e($changelogMsg, 'wpdbbkp'); ?>   
             </ul>
         </div>
         <!-- Single button -->
@@ -195,9 +195,10 @@ $changelogMsg .= "<li class='list-group-item'>" . $coupon . "<li>";
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="https://walkeprashant.wordpress.com/about-me/" target="_blank">
+                    <a href="http://walkeprashant.in" target="_blank">
                         <h5><?php _e('Plugin Author', 'wpdbbkp'); ?></h5>
                         <p><?php _e('Prashant Walke', 'wpdbbkp'); ?></p>
+                        <p><?php _e('(Sr. PHP Developer)', 'wpdbbkp'); ?></p>
                     </a>
                 </li>
                 <li role="separator" class="divider"></li>

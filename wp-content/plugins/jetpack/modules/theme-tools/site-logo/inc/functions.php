@@ -16,19 +16,19 @@
  */
 function jetpack_get_site_logo($show = 'url')
 {
-    $logo = site_logo()->logo;
+	$logo = site_logo()->logo;
 
-    // Return false if no logo is set
-    if (!isset($logo['id']) || 0 == $logo['id']) {
-        return false;
-    }
+	// Return false if no logo is set
+	if (!isset($logo['id']) || 0 == $logo['id']) {
+		return false;
+	}
 
-    // Return the ID if specified, otherwise return the URL by default
-    if ('id' == $show) {
-        return $logo['id'];
-    } else {
-        return esc_url_raw(set_url_scheme($logo['url']));
-    }
+	// Return the ID if specified, otherwise return the URL by default
+	if ('id' == $show) {
+		return $logo['id'];
+	} else {
+		return esc_url_raw(set_url_scheme($logo['url']));
+	}
 }
 
 /**
@@ -50,31 +50,31 @@ function jetpack_get_site_logo($show = 'url')
  */
 function jetpack_get_site_logo_dimensions()
 {
-    // Get the image size to use with the logo.
-    $size = site_logo()->theme_size();
+	// Get the image size to use with the logo.
+	$size = site_logo()->theme_size();
 
-    // If the size is the default `thumbnail`, get its dimensions. Otherwise, get them from $_wp_additional_image_sizes
-    if (empty($size)) {
-        return false;
-    } else if ('thumbnail' == $size) {
-        $dimensions = array(
-            'width' => get_option('thumbnail_size_w'),
-            'height' => get_option('thumbnail_size_h'),
-        );
-    } else {
-        global $_wp_additional_image_sizes;
+	// If the size is the default `thumbnail`, get its dimensions. Otherwise, get them from $_wp_additional_image_sizes
+	if (empty($size)) {
+		return false;
+	} else if ('thumbnail' == $size) {
+		$dimensions = array(
+			'width' => get_option('thumbnail_size_w'),
+			'height' => get_option('thumbnail_size_h'),
+		);
+	} else {
+		global $_wp_additional_image_sizes;
 
-        if (!isset($_wp_additional_image_sizes[$size])) {
-            return false;
-        }
+		if (!isset($_wp_additional_image_sizes[$size])) {
+			return false;
+		}
 
-        $dimensions = array(
-            'width' => $_wp_additional_image_sizes[$size]['width'],
-            'height' => $_wp_additional_image_sizes[$size]['height'],
-        );
-    }
+		$dimensions = array(
+			'width' => $_wp_additional_image_sizes[$size]['width'],
+			'height' => $_wp_additional_image_sizes[$size]['height'],
+		);
+	}
 
-    return $dimensions;
+	return $dimensions;
 }
 
 /**
@@ -85,7 +85,7 @@ function jetpack_get_site_logo_dimensions()
  */
 function jetpack_has_site_logo()
 {
-    return site_logo()->has_site_logo();
+	return site_logo()->has_site_logo();
 }
 
 /**
@@ -105,49 +105,49 @@ function jetpack_has_site_logo()
  */
 function jetpack_the_site_logo()
 {
-    $logo = site_logo()->logo;
-    $logo_id = get_theme_mod('custom_logo'); // Check for WP 4.5 Site Logo
-    $logo_id = $logo_id ? $logo_id : $logo['id']; // Use WP Core logo if present, otherwise use Jetpack's.
-    $size = site_logo()->theme_size();
-    $html = '';
+	$logo = site_logo()->logo;
+	$logo_id = get_theme_mod('custom_logo'); // Check for WP 4.5 Site Logo
+	$logo_id = $logo_id ? $logo_id : $logo['id']; // Use WP Core logo if present, otherwise use Jetpack's.
+	$size = site_logo()->theme_size();
+	$html = '';
 
-    // If no logo is set, but we're in the Customizer, leave a placeholder (needed for the live preview).
-    if (!jetpack_has_site_logo()) {
-        if (jetpack_is_customize_preview()) {
-            $html = sprintf('<a href="%1$s" class="site-logo-link" style="display:none;"><img class="site-logo" data-size="%2$s" /></a>',
-                esc_url(home_url('/')),
-                esc_attr($size)
-            );
-        }
-    } // We have a logo. Logo is go.
-    else {
-        $html = sprintf('<a href="%1$s" class="site-logo-link" rel="home" itemprop="url">%2$s</a>',
-            esc_url(home_url('/')),
-            wp_get_attachment_image(
-                $logo_id,
-                $size,
-                false,
-                array(
-                    'class' => "site-logo attachment-$size",
-                    'data-size' => $size,
-                    'itemprop' => "logo"
-                )
-            )
-        );
-    }
+	// If no logo is set, but we're in the Customizer, leave a placeholder (needed for the live preview).
+	if (!jetpack_has_site_logo()) {
+		if (jetpack_is_customize_preview()) {
+			$html = sprintf('<a href="%1$s" class="site-logo-link" style="display:none;"><img class="site-logo" data-size="%2$s" /></a>',
+				esc_url(home_url('/')),
+				esc_attr($size)
+			);
+		}
+	} // We have a logo. Logo is go.
+	else {
+		$html = sprintf('<a href="%1$s" class="site-logo-link" rel="home" itemprop="url">%2$s</a>',
+			esc_url(home_url('/')),
+			wp_get_attachment_image(
+				$logo_id,
+				$size,
+				false,
+				array(
+					'class' => "site-logo attachment-$size",
+					'data-size' => $size,
+					'itemprop' => "logo"
+				)
+			)
+		);
+	}
 
-    /**
-     * Filter the Site Logo output.
-     *
-     * @module theme-tools
-     *
-     * @since 3.2.0
-     *
-     * @param string $html Site Logo HTML output.
-     * @param array $logo Array of Site Logo details.
-     * @param string $size Size specified in add_theme_support declaration, or 'thumbnail' default.
-     */
-    echo apply_filters('jetpack_the_site_logo', $html, $logo, $size);
+	/**
+	 * Filter the Site Logo output.
+	 *
+	 * @module theme-tools
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $html Site Logo HTML output.
+	 * @param array $logo Array of Site Logo details.
+	 * @param string $size Size specified in add_theme_support declaration, or 'thumbnail' default.
+	 */
+	echo apply_filters('jetpack_the_site_logo', $html, $logo, $size);
 }
 
 /**
@@ -159,9 +159,9 @@ function jetpack_the_site_logo()
  */
 function jetpack_is_customize_preview()
 {
-    global $wp_customize;
+	global $wp_customize;
 
-    return is_a($wp_customize, 'WP_Customize_Manager') && $wp_customize->is_preview();
+	return is_a($wp_customize, 'WP_Customize_Manager') && $wp_customize->is_preview();
 }
 
 /**
@@ -172,7 +172,7 @@ function jetpack_is_customize_preview()
  */
 function jetpack_sanitize_header_text_classes($classes)
 {
-    $classes = preg_replace('/[^A-Za-z0-9\,\ ._-]/', '', $classes);
+	$classes = preg_replace('/[^A-Za-z0-9\,\ ._-]/', '', $classes);
 
-    return $classes;
+	return $classes;
 }

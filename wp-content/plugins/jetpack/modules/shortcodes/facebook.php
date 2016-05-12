@@ -30,37 +30,37 @@ wp_embed_register_handler('facebook-alternate-video', JETPACK_FACEBOOK_VIDEO_ALT
 
 function jetpack_facebook_embed_handler($matches, $attr, $url)
 {
-    if (false !== strpos($url, 'video.php') || false !== strpos($url, '/videos/')) {
-        $embed = sprintf('<div class="fb-video" data-allowfullscreen="true" data-href="%s"></div>', esc_url($url));
-    } else {
-        $embed = sprintf('<fb:post href="%s"></fb:post>', esc_url($url));
-    }
+	if (false !== strpos($url, 'video.php') || false !== strpos($url, '/videos/')) {
+		$embed = sprintf('<div class="fb-video" data-allowfullscreen="true" data-href="%s"></div>', esc_url($url));
+	} else {
+		$embed = sprintf('<fb:post href="%s"></fb:post>', esc_url($url));
+	}
 
-    // since Facebook is a faux embed, we need to load the JS SDK in the wpview embed iframe
-    if (defined('DOING_AJAX') && DOING_AJAX && !empty($_POST['action']) && 'parse-embed' == $_POST['action']) {
-        return $embed . wp_scripts()->do_items(array('jetpack-facebook-embed'));
-    } else {
-        wp_enqueue_script('jetpack-facebook-embed');
-        return $embed;
-    }
+	// since Facebook is a faux embed, we need to load the JS SDK in the wpview embed iframe
+	if (defined('DOING_AJAX') && DOING_AJAX && !empty($_POST['action']) && 'parse-embed' == $_POST['action']) {
+		return $embed . wp_scripts()->do_items(array('jetpack-facebook-embed'));
+	} else {
+		wp_enqueue_script('jetpack-facebook-embed');
+		return $embed;
+	}
 }
 
 add_shortcode('facebook', 'jetpack_facebook_shortcode_handler');
 
 function jetpack_facebook_shortcode_handler($atts)
 {
-    global $wp_embed;
+	global $wp_embed;
 
-    if (empty($atts['url']))
-        return;
+	if (empty($atts['url']))
+		return;
 
-    if (!preg_match(JETPACK_FACEBOOK_EMBED_REGEX, $atts['url'])
-        && !preg_match(JETPACK_FACEBOOK_PHOTO_EMBED_REGEX, $atts['url'])
-        && !preg_match(JETPACK_FACEBOOK_VIDEO_EMBED_REGEX, $atts['url'])
-        && !preg_match(JETPACK_FACEBOOK_VIDEO_ALTERNATE_EMBED_REGEX, $atts['url'])
-    ) {
-        return;
-    }
+	if (!preg_match(JETPACK_FACEBOOK_EMBED_REGEX, $atts['url'])
+		&& !preg_match(JETPACK_FACEBOOK_PHOTO_EMBED_REGEX, $atts['url'])
+		&& !preg_match(JETPACK_FACEBOOK_VIDEO_EMBED_REGEX, $atts['url'])
+		&& !preg_match(JETPACK_FACEBOOK_VIDEO_ALTERNATE_EMBED_REGEX, $atts['url'])
+	) {
+		return;
+	}
 
-    return $wp_embed->shortcode($atts, $atts['url']);
+	return $wp_embed->shortcode($atts, $atts['url']);
 }

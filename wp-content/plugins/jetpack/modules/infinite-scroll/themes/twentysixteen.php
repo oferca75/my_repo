@@ -10,11 +10,11 @@
  */
 function twentysixteen_infinite_scroll_init()
 {
-    add_theme_support('infinite-scroll', array(
-        'container' => 'main',
-        'render' => 'twentysixteen_infinite_scroll_render',
-        'footer' => 'content',
-    ));
+	add_theme_support('infinite-scroll', array(
+		'container' => 'main',
+		'render' => 'twentysixteen_infinite_scroll_render',
+		'footer' => 'content',
+	));
 }
 
 add_action('after_setup_theme', 'twentysixteen_infinite_scroll_init');
@@ -24,14 +24,14 @@ add_action('after_setup_theme', 'twentysixteen_infinite_scroll_init');
  */
 function twentysixteen_infinite_scroll_render()
 {
-    while (have_posts()) {
-        the_post();
-        if (is_search()) {
-            get_template_part('template-parts/content', 'search');
-        } else {
-            get_template_part('template-parts/content', get_post_format());
-        }
-    }
+	while (have_posts()) {
+		the_post();
+		if (is_search()) {
+			get_template_part('template-parts/content', 'search');
+		} else {
+			get_template_part('template-parts/content', get_post_format());
+		}
+	}
 }
 
 /**
@@ -39,8 +39,8 @@ function twentysixteen_infinite_scroll_render()
  */
 function twentysixteen_infinite_scroll_enqueue_styles()
 {
-    wp_enqueue_style('infinity-twentysixteen', plugins_url('twentysixteen.css', __FILE__), array('the-neverending-homepage'), '20151102');
-    wp_style_add_data('infinity-twentysixteen', 'rtl', 'replace');
+	wp_enqueue_style('infinity-twentysixteen', plugins_url('twentysixteen.css', __FILE__), array('the-neverending-homepage'), '20151102');
+	wp_style_add_data('infinity-twentysixteen', 'rtl', 'replace');
 }
 
 add_action('wp_enqueue_scripts', 'twentysixteen_infinite_scroll_enqueue_styles', 25);

@@ -72,7 +72,8 @@ if (have_posts()) {
         $output .= '</a>' . "\n";
 
     }
-    $output .= "</div>\n";
+    //Ofer Begin commant out following line - causes bug
+    //$output .= "</div>\n";
 } else {
     $output .= $no_results;
 }
