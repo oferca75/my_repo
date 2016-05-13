@@ -30,8 +30,8 @@ if (!function_exists("eliminateKeywords")) {
 if (have_posts()) {
     $postTitle = get_the_title();
     if ($postTitle !== "Front") {
-
-        $dispStr = "<img class='next-arrow' src='" . get_stylesheet_directory_uri() . "/img/ra1.png'/>";
+        global $arrowSVG;
+        $dispStr = '<div class="next-arrow">'.$arrowSVG."</div>";
         if ((endsWith($postTitle, "sitions") || endsWith($postTitle, "sition"))) {
             $dispStr .= "Attacks And Defences From The " . eliminateKeywords($postTitle);
         } else {
@@ -72,10 +72,10 @@ if (have_posts()) {
         $output .= '</a>' . "\n";
 
     }
-    //Ofer Begin commant out following line - causes bug
+    //Ofer Begin comment out following line - causes bug
       $output .= "</div>\n";
 } else {
     $output .= $no_results;
 }
 
-//$this->enqueue_thumbnails($dimensions);
+$this->enqueue_thumbnails($dimensions);
