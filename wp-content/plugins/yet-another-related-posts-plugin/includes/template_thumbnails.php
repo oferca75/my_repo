@@ -73,9 +73,9 @@ if (have_posts()) {
 
     }
     //Ofer Begin commant out following line - causes bug
-    //$output .= "</div>\n";
+      $output .= "</div>\n";
 } else {
     $output .= $no_results;
 }
 
-$this->enqueue_thumbnails($dimensions);
+//$this->enqueue_thumbnails($dimensions);

@@ -1,44 +1,44 @@
 <?php
 
-unset($GLOBALS['csstidy']['all_properties']['binding']);
+unset( $GLOBALS['csstidy']['all_properties']['binding'] );
 
 $GLOBALS['csstidy']['all_properties']['text-size-adjust'] = 'CSS3.0';
 
 // Support browser prefixes for properties only in the latest CSS draft
-foreach ($GLOBALS['csstidy']['all_properties'] as $property => $levels) {
-    if (strpos($levels, ",") === false) {
-        $GLOBALS['csstidy']['all_properties']['-moz-' . $property] = $levels;
-        $GLOBALS['csstidy']['all_properties']['-webkit-' . $property] = $levels;
-        $GLOBALS['csstidy']['all_properties']['-ms-' . $property] = $levels;
-        $GLOBALS['csstidy']['all_properties']['-o-' . $property] = $levels;
-        $GLOBALS['csstidy']['all_properties']['-khtml-' . $property] = $levels;
+foreach ( $GLOBALS['csstidy']['all_properties'] as $property => $levels ) {
+	if ( strpos( $levels, "," ) === false ) {
+		$GLOBALS['csstidy']['all_properties']['-moz-' . $property] = $levels;
+		$GLOBALS['csstidy']['all_properties']['-webkit-' . $property] = $levels;
+		$GLOBALS['csstidy']['all_properties']['-ms-' . $property] = $levels;
+		$GLOBALS['csstidy']['all_properties']['-o-' . $property] = $levels;
+		$GLOBALS['csstidy']['all_properties']['-khtml-' . $property] = $levels;
 
-        if (in_array($property, $GLOBALS['csstidy']['unit_values'])) {
-            $GLOBALS['csstidy']['unit_values'][] = '-moz-' . $property;
-            $GLOBALS['csstidy']['unit_values'][] = '-webkit-' . $property;
-            $GLOBALS['csstidy']['unit_values'][] = '-ms-' . $property;
-            $GLOBALS['csstidy']['unit_values'][] = '-o-' . $property;
-            $GLOBALS['csstidy']['unit_values'][] = '-khtml-' . $property;
-        }
+		if ( in_array( $property, $GLOBALS['csstidy']['unit_values'] ) ) {
+			$GLOBALS['csstidy']['unit_values'][] = '-moz-' . $property;
+			$GLOBALS['csstidy']['unit_values'][] = '-webkit-' . $property;
+			$GLOBALS['csstidy']['unit_values'][] = '-ms-' . $property;
+			$GLOBALS['csstidy']['unit_values'][] = '-o-' . $property;
+			$GLOBALS['csstidy']['unit_values'][] = '-khtml-' . $property;
+		}
 
-        if (in_array($property, $GLOBALS['csstidy']['color_values'])) {
-            $GLOBALS['csstidy']['color_values'][] = '-moz-' . $property;
-            $GLOBALS['csstidy']['color_values'][] = '-webkit-' . $property;
-            $GLOBALS['csstidy']['color_values'][] = '-ms-' . $property;
-            $GLOBALS['csstidy']['color_values'][] = '-o-' . $property;
-            $GLOBALS['csstidy']['color_values'][] = '-khtml-' . $property;
-        }
-    }
+		if ( in_array( $property, $GLOBALS['csstidy']['color_values'] ) ) {
+			$GLOBALS['csstidy']['color_values'][] = '-moz-' . $property;
+			$GLOBALS['csstidy']['color_values'][] = '-webkit-' . $property;
+			$GLOBALS['csstidy']['color_values'][] = '-ms-' . $property;
+			$GLOBALS['csstidy']['color_values'][] = '-o-' . $property;
+			$GLOBALS['csstidy']['color_values'][] = '-khtml-' . $property;
+		}
+	}
 }
 
-foreach ($GLOBALS['csstidy']['multiple_properties'] as $property) {
-    if ('-' != $property[0]) {
-        $GLOBALS['csstidy']['multiple_properties'][] = '-o-' . $property;
-        $GLOBALS['csstidy']['multiple_properties'][] = '-ms-' . $property;
-        $GLOBALS['csstidy']['multiple_properties'][] = '-webkit-' . $property;
-        $GLOBALS['csstidy']['multiple_properties'][] = '-moz-' . $property;
-        $GLOBALS['csstidy']['multiple_properties'][] = '-khtml-' . $property;
-    }
+foreach ( $GLOBALS['csstidy']['multiple_properties'] as $property ) {
+	if ( '-' != $property[0] ) {
+		$GLOBALS['csstidy']['multiple_properties'][] = '-o-' . $property;
+		$GLOBALS['csstidy']['multiple_properties'][] = '-ms-' . $property;
+		$GLOBALS['csstidy']['multiple_properties'][] = '-webkit-' . $property;
+		$GLOBALS['csstidy']['multiple_properties'][] = '-moz-' . $property;
+		$GLOBALS['csstidy']['multiple_properties'][] = '-khtml-' . $property;
+	}
 }
 
 /**

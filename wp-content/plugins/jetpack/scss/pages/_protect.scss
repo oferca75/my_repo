@@ -1,280 +1,261 @@
 /* 'Pages' is a temporary location for these styles, until we can break them up into their proper atmoic locations */
-
+ 
 // ==========================================================================
 // Jetpack Protect Config Page
 //==========================================================================
 
+
 .configure-module p {
-  font-size: 14px;
+	font-size: 14px;
 
-  &.success, &.error {
-    color: $white;
-    padding: 10px;
-  }
+	&.success, &.error {
+		color: $white;
+		padding: 10px;
+	}
 
-  &.success {
-    background-color: $green;
-  }
+	&.success {
+		background-color: $green;
+	}
 
-  &.error {
-    background-color: $red;
-  }
+	&.error {
+		background-color: $red;
+	}
 }
 
 .protect-status {
 
-  p {
-    font-size: 16px;
-  }
+	p {
+		font-size: 16px;
+	}
 
-  strong {
-    display: inline-block;
-    margin-top: 10px;
-    background: #fff;
-    padding: 10px;
-    border: 1px #ddd solid;
-    font-size: 16px;
-    color: #000;
-    max-width: 100%;
-  }
+	strong {
+		display: inline-block;
+		margin-top: 10px;
+		background: #fff;
+		padding: 10px;
+		border: 1px #ddd solid;
+		font-size: 16px;
+		color: #000;
+		max-width: 100%;
+	}
 
-  &.attn {
-    color: $red;
-  }
+	&.attn {
+		color: $red;
+	}
 
-  &.working {
-    color: $green;
-  }
-}
-
-// .protect-status
+	&.working {
+		color: $green;
+	}
+} // .protect-status
 
 /* Whitelisting */
 #non-editable-whitelist {
-  margin-top: 15px;
+	margin-top: 15px;
 }
 
 .protect-whitelist {
 
-  textarea {
-    width: 100%;
-    min-height: 150px;
-  }
+	textarea {
+		width: 100%; 
+		min-height: 150px;
+	}
 }
 
 #editable-whitelist .whitelist-table {
-  width: 100%;
+	width: 100%;
 }
 
 /* btns + inputs */
 
 .configure-module {
 
-  input[disabled] {
-    opacity: .5;
-  }
+	input[disabled] {
+		opacity: .5;
+	}
 
-  input.button-primary {
-    font-weight: bold;
-  }
+	input.button-primary {
+		font-weight: bold;
+	}	
 }
 
 /* whitelist table */
 
 .whitelist-table {
-  border-top: 1px solid;
-  border-right: 1px solid;
-  border-color: #ddd;
-  background-color: #fff;
+	border-top: 1px solid;
+	border-right: 1px solid;
+	border-color: #ddd;
+	background-color: #fff;
 
-  td, th {
-    padding: 10px;
-    margin: 0;
-    border-bottom: 1px solid;
-    border-left: 1px solid;
-    border-color: #ddd;
-    font-size: 14px;
-  }
+	td, th {
+		padding: 10px;
+		margin: 0;
+		border-bottom: 1px solid;
+		border-left: 1px solid;
+		border-color: #ddd;
+		font-size: 14px;
+	}
 
-  th.heading {
-    font-weight: bold;
-    color: #5d6d74;
-    text-align: left;
-    background-color: #eee;
-  }
+	th.heading {
+		font-weight: bold;
+		color: #5d6d74;
+		text-align: left;
+		background-color: #eee;
+	}
 
-  td.item-actions {
-    border-left: none;
-    text-align: right;
-  }
+	td.item-actions {
+		border-left: none;
+		text-align: right;
+	}
 
-  .toolbar {
-    padding: 0;
-  }
+	.toolbar {
+		padding: 0;
+	}
 
-  .add-btn {
-    text-align: center;
-    width: 10%;
-    border-left: 1px #ddd solid;
-  }
-}
-
-// whitelist-table
+	.add-btn {
+		text-align: center;
+		width: 10%;
+		border-left: 1px #ddd solid;
+	}
+} // whitelist-table
 
 .ip-address, .enter-ip {
-  width: 90%;
-  text-align: left;
-  vertical-align: middle;
+	width: 90%;
+	text-align: left;
+	vertical-align: middle;
 }
 
 .delete-ip-address {
-  text-align: center;
-  border: 0;
-  background: transparent;
-  color: #6f7476;
-  box-shadow: none;
-  font-size: 20px;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-  border-radius: 2px;
+	text-align: center;
+	border: 0;
+	background: transparent;
+	color: #6f7476;
+	box-shadow: none;
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	border-radius: 2px;
 
-  &:hover {
-    background: #eee;
-  }
+	&:hover {
+		background: #eee;
+	}
 }
 
 .toolbar div {
-  float: left;
-  padding: 10px;
+	float: left;
+	padding: 10px;
 }
 
-@media only screen and (min-width: 1100px) {
+@media only screen and (min-width : 1100px) {
 
-  #non-editable-whitelist {
-    width: 28%;
-    float: right;
-    margin-top: 0;
-  }
+	#non-editable-whitelist {
+		width: 28%;
+		float: right;
+		margin-top: 0;
+	}
 
-  .protect-whitelist {
-    width: 65%;
-    float: left;
-  }
+	.protect-whitelist {
+		width: 65%;
+		float: left;
+	}
 
-}
+} /* end > 1065px */
 
-/* end > 1065px */
+@media only screen and (max-width : 1130px) {
 
-@media only screen and (max-width: 1130px) {
+	.enter-ip input[type="text"] {
+		max-width: 175px;
+	}
 
-  .enter-ip input[type="text"] {
-    max-width: 175px;
-  }
+} /* end < 1130px */
 
-}
+@media only screen and (max-width : 1250px) and (min-width : 1065px), (max-width : 730px) and (min-width : 600px) {
 
-/* end < 1130px */
+	.enter-ip {
+		width: 85%;
+	}
 
-@media only screen and (max-width: 1250px) and (min-width: 1065px), (max-width: 730px) and (min-width: 600px) {
+	.add-btn {
+		width: 15%;
+	}
 
-  .enter-ip {
-    width: 85%;
-  }
+} /* end < 1250px & > 1065px */
 
-  .add-btn {
-    width: 15%;
-  }
+@media only screen and (max-width : 782px) {
 
-}
+	.add-btn {
+		text-align: right;
+	}
 
-/* end < 1250px & > 1065px */
+	.add-btn .ip-add {
+		margin-top: 4px;
+		margin-bottom: 3px;
+	}
 
-@media only screen and (max-width: 782px) {
+} /* end < 782px */
 
-  .add-btn {
-    text-align: right;
-  }
+@media only screen and (max-width : 730px) {
 
-  .add-btn .ip-add {
-    margin-top: 4px;
-    margin-bottom: 3px;
-  }
+	.add-btn {
+		text-align: center;
+	}
 
-}
+} /* end < 730px */
 
-/* end < 782px */
+@media only screen and (max-width : 665px) and (min-width : 600px) {
 
-@media only screen and (max-width: 730px) {
+	.enter-ip input[type="text"] {
+		max-width: 165px;
+	}
 
-  .add-btn {
-    text-align: center;
-  }
+} /* end < 665px & > 600px */
 
-}
+@media only screen and (max-width : 600px) {
 
-/* end < 730px */
+	.toolbar div {
+		width: 100%;
+	}
 
-@media only screen and (max-width: 665px) and (min-width: 600px) {
+	.add-btn {
+		border-top: 1px #ddd solid;
+	}
 
-  .enter-ip input[type="text"] {
-    max-width: 165px;
-  }
+	.enter-ip {
+		text-align: center;
+	}
 
-}
+	.enter-ip strong {
+		display: block;
+		margin-bottom: 5px;
+	}
 
-/* end < 665px & > 600px */
+	.enter-ip input[type="text"] {
+		width: 100%;
+		max-width: 100%;
+	}
 
-@media only screen and (max-width: 600px) {
+	.add-btn input,
+	.enter-ip .button {
+		width: 50%;
+		margin: 0 auto;
+	}
 
-  .toolbar div {
-    width: 100%;
-  }
+	.enter-ip .button {
+		margin-top: 10px;
+	}
 
-  .add-btn {
-    border-top: 1px #ddd solid;
-  }
+} /* end > 600px */
 
-  .enter-ip {
-    text-align: center;
-  }
+@media only screen and (max-width : 400px) {
 
-  .enter-ip strong {
-    display: block;
-    margin-bottom: 5px;
-  }
+	.protect-status strong {
+		font-size: 12px;
+		overflow: auto;
+	}
 
-  .enter-ip input[type="text"] {
-    width: 100%;
-    max-width: 100%;
-  }
+	.add-btn input,
+	.enter-ip .button {
+		width: 100%;
+	}
 
-  .add-btn input,
-  .enter-ip .button {
-    width: 50%;
-    margin: 0 auto;
-  }
-
-  .enter-ip .button {
-    margin-top: 10px;
-  }
-
-}
-
-/* end > 600px */
-
-@media only screen and (max-width: 400px) {
-
-  .protect-status strong {
-    font-size: 12px;
-    overflow: auto;
-  }
-
-  .add-btn input,
-  .enter-ip .button {
-    width: 100%;
-  }
-
-}
-
-/* end < 400px */
+} /* end < 400px */

@@ -8,5 +8,5 @@
 // 1. font-size: em(14px);
 // 2. font-size: em(30px/14px);
 @function em($value, $context: map-get($root-font, font-size)) {
-  @return ($value / $context * 1em);
+	@return ($value / $context * 1em);
 }

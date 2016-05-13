@@ -16,45 +16,42 @@
  * @return array
  */
 
-function jetpack_register_css_preprocessors($preprocessors)
-{
-    $preprocessors['less'] = array(
-        'name' => 'LESS',
-        'callback' => 'jetpack_less_css_preprocess'
-    );
+function jetpack_register_css_preprocessors( $preprocessors ) {
+	$preprocessors['less'] = array(
+		'name' => 'LESS',
+		'callback' => 'jetpack_less_css_preprocess'
+	);
 
-    $preprocessors['sass'] = array(
-        'name' => 'Sass (SCSS Syntax)',
-        'callback' => 'jetpack_sass_css_preprocess'
-    );
+	$preprocessors['sass'] = array(
+		'name' => 'Sass (SCSS Syntax)',
+		'callback' => 'jetpack_sass_css_preprocess'
+	);
 
-    return $preprocessors;
+	return $preprocessors;
 }
 
-add_filter('jetpack_custom_css_preprocessors', 'jetpack_register_css_preprocessors');
+add_filter( 'jetpack_custom_css_preprocessors', 'jetpack_register_css_preprocessors' );
 
-function jetpack_less_css_preprocess($less)
-{
-    require_once(dirname(__FILE__) . '/preprocessors/lessc.inc.php');
+function jetpack_less_css_preprocess( $less ) {
+	require_once( dirname( __FILE__ ) . '/preprocessors/lessc.inc.php' );
 
-    $compiler = new lessc();
+	$compiler = new lessc();
 
-    try {
-        return $compiler->compile($less);
-    } catch (Exception $e) {
-        return $less;
-    }
+	try {
+		return $compiler->compile( $less );
+	} catch ( Exception $e ) {
+		return $less;
+	}
 }
 
-function jetpack_sass_css_preprocess($sass)
-{
-    require_once(dirname(__FILE__) . '/preprocessors/scss.inc.php');
+function jetpack_sass_css_preprocess( $sass ) {
+	require_once( dirname( __FILE__ ) . '/preprocessors/scss.inc.php' );
 
-    $compiler = new scssc();
+	$compiler = new scssc();
 
-    try {
-        return $compiler->compile($sass);
-    } catch (Exception $e) {
-        return $sass;
-    }
+	try {
+		return $compiler->compile( $sass );
+	} catch ( Exception $e ) {
+		return $sass;
+	}
 }

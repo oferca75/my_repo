@@ -2,6 +2,6 @@
 // ie__gradient--vertical
 // ==========================================================================
 
-@mixin ie__gradient--vertical($start, $end) {
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#{$start}', EndColorStr='#{$end}');
+@mixin ie__gradient--vertical($start, $end){
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{$start}', EndColorStr='#{$end}');
 }

@@ -46,7 +46,7 @@
     cursor: pointer;
 }
 
-.yarpp-related .next-overlay {
+.yarpp-related .next-overlay,.history .next-overlay {
     width: 100%;
     height: 85%;
     position: relative;
@@ -151,4 +151,9 @@
     display: flex;
     -webkit-flex-direction: column-reverse;
     flex-direction: column-reverse;
+}
+
+
+.fluid-width-video-wrapper{
+    min-height: 150px;
 }

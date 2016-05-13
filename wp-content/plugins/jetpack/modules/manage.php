@@ -13,41 +13,38 @@
  * Additional Search Queries: manage, management, remote
  */
 
-add_action('jetpack_activate_module_manage', array(Jetpack::init(), 'toggle_module_on_wpcom'));
-add_action('jetpack_deactivate_module_manage', array(Jetpack::init(), 'toggle_module_on_wpcom'));
-add_action('customize_register', 'add_wpcom_to_allowed_redirect_hosts');
+add_action( 'jetpack_activate_module_manage', array( Jetpack::init(), 'toggle_module_on_wpcom' ) );
+add_action( 'jetpack_deactivate_module_manage', array( Jetpack::init(), 'toggle_module_on_wpcom' ) );
+add_action( 'customize_register', 'add_wpcom_to_allowed_redirect_hosts' );
 
 // Add wordpress.com to the safe redirect whitelist if the Manage module is enabled
 // so the customizer can `return` to wordpress.com if invoked from there.
-function add_wpcom_to_allowed_redirect_hosts($domains)
-{
-    if (Jetpack::is_module_active('manage')) {
-        add_filter('allowed_redirect_hosts', 'allow_wpcom_domain');
-    }
+function add_wpcom_to_allowed_redirect_hosts( $domains ) {
+	if ( Jetpack::is_module_active( 'manage' ) ) {
+		add_filter( 'allowed_redirect_hosts', 'allow_wpcom_domain' );
+	}
 }
 
 // Return $domains, with 'wordpress.com' appended.
-function allow_wpcom_domain($domains)
-{
-    if (empty($domains)) {
-        $domains = array();
-    }
-    $domains[] = 'wordpress.com';
-    return array_unique($domains);
+function allow_wpcom_domain( $domains ) {
+	if ( empty( $domains ) ) {
+		$domains = array();
+	}
+	$domains[] = 'wordpress.com';
+	return array_unique( $domains );
 }
 
 // Re add sync for non public posts when the optin is selected in Calypso.
 // This will only work if you have manage enabled as well.
-if (Jetpack_Options::get_option('sync_non_public_post_stati')) {
-    $sync_options = array(
-        'post_types' => get_post_types(array('public' => true)),
-        'post_stati' => get_post_stati(),
-    );
-    Jetpack_Sync::sync_posts(__FILE__, $sync_options);
+if ( Jetpack_Options::get_option( 'sync_non_public_post_stati' ) ) {
+	$sync_options = array(
+		'post_types' => get_post_types( array( 'public' => true ) ),
+		'post_stati' => get_post_stati(),
+	);
+	Jetpack_Sync::sync_posts( __FILE__, $sync_options );
 }
 
-Jetpack::module_configuration_screen('manage', 'jetpack_manage_config_screen');
-function jetpack_manage_config_screen()
-{
-    include(JETPACK__PLUGIN_DIR . 'modules/manage/confirm-admin.php');
+Jetpack::module_configuration_screen( 'manage', 'jetpack_manage_config_screen' );
+function jetpack_manage_config_screen() {
+	include ( JETPACK__PLUGIN_DIR . 'modules/manage/confirm-admin.php' );
 }

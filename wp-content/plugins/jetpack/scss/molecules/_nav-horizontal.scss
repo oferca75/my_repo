@@ -3,17 +3,17 @@
 // ==========================================================================
 
 .nav-horizontal {
-  @extend %clearfix;
+	@extend %clearfix;
 
-  a {
-    display: inline-block;
-  }
-  li {
-    position: relative;
-    float: left;
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-  }
+	a {
+		display: inline-block;
+	}
+	li {
+		position: relative;
+		float: left;
+	}
+	ul {
+		margin: 0;
+		padding: 0;
+	}
 }

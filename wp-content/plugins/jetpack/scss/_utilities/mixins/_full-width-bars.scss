@@ -3,19 +3,19 @@
 // ==========================================================================
 
 @mixin full-width-bars() {
-  // Still testing this one
-  position: relative;
-  z-index: 1;
+	// Still testing this one
+	position: relative;
+	z-index: 1;
 
-  &:before {
-    position: absolute;
-    content: "";
-    display: block;
-    top: 0;
-    left: -5000px;
-    height: 100%;
-    width: 15000px;
-    z-index: -1;
-    @content;
-  }
+	&:before {
+		position: absolute;
+		content: "";
+		display: block;
+		top: 0;
+		left: -5000px;
+		height: 100%;
+		width: 15000px;
+		z-index: -1;
+		@content;
+	}
 }

@@ -1534,7 +1534,9 @@ class YARPP
         }
 
         $output .= ($optin) ? '<img src="http://yarpp.org/pixels/' . md5(get_bloginfo('url')) . '" alt="YARPP"/>' . "\n" : null;
-        $output .= "</div>\n";
+
+        // Ofer Begin comment out following line causes a bug
+       // $output .= "</div>\n";
 
         if ($echo) echo $output;
         return $output;

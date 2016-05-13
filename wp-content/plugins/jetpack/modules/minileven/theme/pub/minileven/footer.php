@@ -8,58 +8,56 @@
  */
 ?>
 
-</div><!-- #main -->
+	</div><!-- #main -->
 </div><!-- #page -->
 <?php get_sidebar(); ?>
 
 </div><!-- #wrapper -->
 
 <?php
-/**
- * Fires before the Mobile Theme's <footer> tag.
- *
- * @module minileven
- *
- * @since 3.7.0
- */
-do_action('jetpack_mobile_footer_before');
+	/**
+	* Fires before the Mobile Theme's <footer> tag.
+	*
+	* @module minileven
+	*
+	* @since 3.7.0
+	*/
+	do_action( 'jetpack_mobile_footer_before' );
 ?>
 
 <footer id="colophon" role="contentinfo">
-    <div id="site-generator">
+	<div id="site-generator">
 
-        <?php
-        global $wp;
-        $current_url = trailingslashit(home_url(add_query_arg(array(), $wp->request)));
-        ?>
-        <a href="<?php echo $current_url . '?ak_action=reject_mobile'; ?>"><?php _e('View Full Site', 'jetpack'); ?></a><br/>
+<?php
+	global $wp;
+	$current_url =  trailingslashit( home_url( add_query_arg( array(), $wp->request ) ) );
+?>
+		<a href="<?php echo $current_url . '?ak_action=reject_mobile'; ?>"><?php _e( 'View Full Site', 'jetpack' ); ?></a><br />
 
-        <?php
-        /**
-         * Fires after the View Full Site link in the Mobile Theme's footer.
-         *
-         * By default, a promo to download the native apps is added to this action.
-         *
-         * @module minileven
-         *
-         * @since 1.8.0
-         */
-        do_action('wp_mobile_theme_footer');
+		<?php
+			/**
+			 * Fires after the View Full Site link in the Mobile Theme's footer.
+			 *
+			 * By default, a promo to download the native apps is added to this action.
+			 *
+			 * @module minileven
+			 *
+			 * @since 1.8.0
+			 */
+			do_action( 'wp_mobile_theme_footer' );
 
-        /**
-         * Fires before the credit links in the Mobile Theme's footer.
-         *
-         * @module minilven
-         *
-         * @since 1.8.0
-         */
-        do_action('minileven_credits');
-        ?>
+			/**
+			 * Fires before the credit links in the Mobile Theme's footer.
+			 *
+			 * @module minilven
+			 *
+			 * @since 1.8.0
+			 */
+			do_action( 'minileven_credits' );
+		?>
 
-        <a href="<?php echo esc_url(__('http://wordpress.org/', 'jetpack')); ?>" target="_blank"
-           title="<?php esc_attr_e('Semantic Personal Publishing Platform', 'jetpack'); ?>"
-           rel="generator"><?php printf(__('Proudly powered by %s', 'jetpack'), 'WordPress'); ?></a>
-    </div>
+		<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'jetpack' ) ); ?>" target="_blank" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'jetpack' ); ?>" rel="generator"><?php printf( __( 'Proudly powered by %s', 'jetpack' ), 'WordPress' ); ?></a>
+	</div>
 </footer><!-- #colophon -->
 
 <?php wp_footer(); ?>

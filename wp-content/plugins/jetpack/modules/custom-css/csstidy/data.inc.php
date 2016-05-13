@@ -24,27 +24,27 @@
  * @author Nikolay Matsievsky (speed at webo dot name) 2010
  */
 
-define('AT_START', 1);
-define('AT_END', 2);
-define('SEL_START', 3);
-define('SEL_END', 4);
-define('PROPERTY', 5);
-define('VALUE', 6);
-define('COMMENT', 7);
+define('AT_START',    1);
+define('AT_END',      2);
+define('SEL_START',   3);
+define('SEL_END',     4);
+define('PROPERTY',    5);
+define('VALUE',       6);
+define('COMMENT',     7);
 define('DEFAULT_AT', 41);
 
 /**
  * All whitespace allowed in CSS
  *
- * @global array $GLOBALS ['csstidy']['whitespace']
+ * @global array $GLOBALS['csstidy']['whitespace']
  * @version 1.0
  */
-$GLOBALS['csstidy']['whitespace'] = array(' ', "\n", "\t", "\r", "\x0B");
+$GLOBALS['csstidy']['whitespace'] = array(' ',"\n","\t","\r","\x0B");
 
 /**
  * All CSS tokens used by csstidy
  *
- * @global string $GLOBALS ['csstidy']['tokens']
+ * @global string $GLOBALS['csstidy']['tokens']
  * @version 1.0
  */
 $GLOBALS['csstidy']['tokens'] = '/@}{;:=\'"(,\\!$%&)*+.<>?[]^`|~';
@@ -53,39 +53,39 @@ $GLOBALS['csstidy']['tokens'] = '/@}{;:=\'"(,\\!$%&)*+.<>?[]^`|~';
  * All CSS units (CSS 3 units included)
  *
  * @see compress_numbers()
- * @global array $GLOBALS ['csstidy']['units']
+ * @global array $GLOBALS['csstidy']['units']
  * @version 1.0
  */
-$GLOBALS['csstidy']['units'] = array('in', 'cm', 'mm', 'pt', 'pc', 'px', 'rem', 'em', '%', 'ex', 'gd', 'vw', 'vh', 'vm', 'deg', 'grad', 'rad', 'ms', 's', 'khz', 'hz');
+$GLOBALS['csstidy']['units'] = array('in','cm','mm','pt','pc','px','rem','em','%','ex','gd','vw','vh','vm','deg','grad','rad','ms','s','khz','hz');
 
 /**
  * Available at-rules
  *
- * @global array $GLOBALS ['csstidy']['at_rules']
+ * @global array $GLOBALS['csstidy']['at_rules']
  * @version 1.0
  */
-$GLOBALS['csstidy']['at_rules'] = array('page' => 'is', 'font-face' => 'is', 'charset' => 'iv', 'import' => 'iv', 'namespace' => 'iv', 'media' => 'at', 'keyframes' => 'at', 'supports' => 'at');
+$GLOBALS['csstidy']['at_rules'] = array('page' => 'is','font-face' => 'is','charset' => 'iv', 'import' => 'iv','namespace' => 'iv','media' => 'at','keyframes' => 'at', 'supports' => 'at');
 
-/**
+ /**
  * Properties that need a value with unit
  *
  * @todo CSS3 properties
  * @see compress_numbers();
- * @global array $GLOBALS ['csstidy']['unit_values']
+ * @global array $GLOBALS['csstidy']['unit_values']
  * @version 1.2
  */
-$GLOBALS['csstidy']['unit_values'] = array('background', 'background-position', 'background-size', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-width',
-    'border-top-width', 'border-right-width', 'border-left-width', 'border-bottom-width', 'bottom', 'border-spacing', 'column-gap', 'column-width',
-    'font-size', 'height', 'left', 'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'max-height',
-    'max-width', 'min-height', 'min-width', 'outline', 'outline-width', 'padding', 'padding-top', 'padding-right',
-    'padding-bottom', 'padding-left', 'perspective', 'right', 'top', 'text-indent', 'letter-spacing', 'word-spacing', 'width');
+$GLOBALS['csstidy']['unit_values'] = array ('background', 'background-position', 'background-size', 'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-width',
+											'border-top-width', 'border-right-width', 'border-left-width', 'border-bottom-width', 'bottom', 'border-spacing', 'column-gap', 'column-width',
+											'font-size', 'height', 'left', 'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'max-height',
+											'max-width', 'min-height', 'min-width', 'outline', 'outline-width', 'padding', 'padding-top', 'padding-right',
+											'padding-bottom', 'padding-left', 'perspective', 'right', 'top', 'text-indent', 'letter-spacing', 'word-spacing', 'width');
 
 /**
  * Properties that allow <color> as value
  *
  * @todo CSS3 properties
  * @see compress_numbers();
- * @global array $GLOBALS ['csstidy']['color_values']
+ * @global array $GLOBALS['csstidy']['color_values']
  * @version 1.0
  */
 $GLOBALS['csstidy']['color_values'] = array();
@@ -103,7 +103,7 @@ $GLOBALS['csstidy']['color_values'][] = 'column-rule-color';
  * Default values for the background properties
  *
  * @todo Possibly property names will change during CSS3 development
- * @global array $GLOBALS ['csstidy']['background_prop_default']
+ * @global array $GLOBALS['csstidy']['background_prop_default']
  * @see dissolve_short_bg()
  * @see merge_bg()
  * @version 1.0
@@ -121,7 +121,7 @@ $GLOBALS['csstidy']['background_prop_default']['background-color'] = 'transparen
 /**
  * Default values for the font properties
  *
- * @global array $GLOBALS ['csstidy']['font_prop_default']
+ * @global array $GLOBALS['csstidy']['font_prop_default']
  * @see merge_fonts()
  * @version 1.3
  */
@@ -136,7 +136,7 @@ $GLOBALS['csstidy']['font_prop_default']['font-family'] = '';
 /**
  * A list of non-W3C color names which get replaced by their hex-codes
  *
- * @global array $GLOBALS ['csstidy']['replace_colors']
+ * @global array $GLOBALS['csstidy']['replace_colors']
  * @see cut_color()
  * @version 1.0
  */
@@ -271,24 +271,24 @@ $GLOBALS['csstidy']['replace_colors']['yellowgreen'] = '#9acd32';
 /**
  * A list of all shorthand properties that are divided into four properties and/or have four subvalues
  *
- * @global array $GLOBALS ['csstidy']['shorthands']
+ * @global array $GLOBALS['csstidy']['shorthands']
  * @todo Are there new ones in CSS3?
  * @see dissolve_4value_shorthands()
  * @see merge_4value_shorthands()
  * @version 1.0
  */
 $GLOBALS['csstidy']['shorthands'] = array();
-$GLOBALS['csstidy']['shorthands']['border-color'] = array('border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color');
-$GLOBALS['csstidy']['shorthands']['border-style'] = array('border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style');
-$GLOBALS['csstidy']['shorthands']['border-width'] = array('border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width');
-$GLOBALS['csstidy']['shorthands']['margin'] = array('margin-top', 'margin-right', 'margin-bottom', 'margin-left');
-$GLOBALS['csstidy']['shorthands']['padding'] = array('padding-top', 'padding-right', 'padding-bottom', 'padding-left');
+$GLOBALS['csstidy']['shorthands']['border-color'] = array('border-top-color','border-right-color','border-bottom-color','border-left-color');
+$GLOBALS['csstidy']['shorthands']['border-style'] = array('border-top-style','border-right-style','border-bottom-style','border-left-style');
+$GLOBALS['csstidy']['shorthands']['border-width'] = array('border-top-width','border-right-width','border-bottom-width','border-left-width');
+$GLOBALS['csstidy']['shorthands']['margin'] = array('margin-top','margin-right','margin-bottom','margin-left');
+$GLOBALS['csstidy']['shorthands']['padding'] = array('padding-top','padding-right','padding-bottom','padding-left');
 $GLOBALS['csstidy']['shorthands']['-moz-border-radius'] = 0;
 
 /**
  * All CSS Properties. Needed for csstidy::property_is_next()
  *
- * @global array $GLOBALS ['csstidy']['all_properties']
+ * @global array $GLOBALS['csstidy']['all_properties']
  * @todo Add CSS3 properties
  * @version 1.0
  * @see csstidy::property_is_next()
@@ -588,7 +588,7 @@ $GLOBALS['csstidy']['all_properties']['z-index'] = 'CSS2.0,CSS2.1,CSS3.0';
 /**
  * An array containing all properties that can accept a quoted string as a value.
  *
- * @global array $GLOBALS ['csstidy']['quoted_string_properties']
+ * @global array $GLOBALS['csstidy']['quoted_string_properties']
  */
 $GLOBALS['csstidy']['quoted_string_properties'] = array('content', 'font', 'font-family', 'quotes');
 
@@ -596,34 +596,34 @@ $GLOBALS['csstidy']['quoted_string_properties'] = array('content', 'font', 'font
  * An array containing all properties that can be defined multiple times without being overwritten.
  * All unit values are included so that units like rem can be supported with fallbacks to px or em.
  *
- * @global array $GLOBALS ['csstidy']['quoted_string_properties']
+ * @global array $GLOBALS['csstidy']['quoted_string_properties']
  */
-$GLOBALS['csstidy']['multiple_properties'] = array_merge($GLOBALS['csstidy']['color_values'], $GLOBALS['csstidy']['unit_values'], array('transition', 'background-image', 'border-image', 'list-style-image'));
+$GLOBALS['csstidy']['multiple_properties'] = array_merge( $GLOBALS['csstidy']['color_values'], $GLOBALS['csstidy']['unit_values'], array( 'transition', 'background-image', 'border-image', 'list-style-image' ) );
 
 /**
  * An array containing all predefined templates.
  *
- * @global array $GLOBALS ['csstidy']['predefined_templates']
+ * @global array $GLOBALS['csstidy']['predefined_templates']
  * @version 1.0
  * @see csstidy::load_template()
  */
 $GLOBALS['csstidy']['predefined_templates']['default'][] = '<span class="at">'; //string before @rule
-$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span> <span class="format">{</span>' . "\n"; //bracket after @-rule
+$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span> <span class="format">{</span>'."\n"; //bracket after @-rule
 $GLOBALS['csstidy']['predefined_templates']['default'][] = '<span class="selector">'; //string before selector
-$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span> <span class="format">{</span>' . "\n"; //bracket after selector
+$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span> <span class="format">{</span>'."\n"; //bracket after selector
 $GLOBALS['csstidy']['predefined_templates']['default'][] = '<span class="property">'; //string before property
 $GLOBALS['csstidy']['predefined_templates']['default'][] = '</span><span class="value">'; //string after property+before value
-$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span><span class="format">;</span>' . "\n"; //string after value
+$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span><span class="format">;</span>'."\n"; //string after value
 $GLOBALS['csstidy']['predefined_templates']['default'][] = '<span class="format">}</span>'; //closing bracket - selector
 $GLOBALS['csstidy']['predefined_templates']['default'][] = "\n\n"; //space between blocks {...}
-$GLOBALS['csstidy']['predefined_templates']['default'][] = "\n" . '<span class="format">}</span>' . "\n\n"; //closing bracket @-rule
+$GLOBALS['csstidy']['predefined_templates']['default'][] = "\n".'<span class="format">}</span>'. "\n\n"; //closing bracket @-rule
 $GLOBALS['csstidy']['predefined_templates']['default'][] = ''; //indent in @-rule
 $GLOBALS['csstidy']['predefined_templates']['default'][] = '<span class="comment">'; // before comment
-$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span>' . "\n"; // after comment
+$GLOBALS['csstidy']['predefined_templates']['default'][] = '</span>'."\n"; // after comment
 $GLOBALS['csstidy']['predefined_templates']['default'][] = "\n"; // after last line @-rule
 
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '<span class="at">';
-$GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '</span> <span class="format">{</span>' . "\n";
+$GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '</span> <span class="format">{</span>'."\n";
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '<span class="selector">';
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '</span><span class="format">{</span>';
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '<span class="property">';
@@ -631,7 +631,7 @@ $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '</span><spa
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '</span><span class="format">;</span>';
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '<span class="format">}</span>';
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = "\n";
-$GLOBALS['csstidy']['predefined_templates']['high_compression'][] = "\n" . '<span class="format">}' . "\n" . '</span>';
+$GLOBALS['csstidy']['predefined_templates']['high_compression'][] = "\n". '<span class="format">}'."\n".'</span>';
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '';
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '<span class="comment">'; // before comment
 $GLOBALS['csstidy']['predefined_templates']['high_compression'][] = '</span>'; // after comment
@@ -653,20 +653,20 @@ $GLOBALS['csstidy']['predefined_templates']['highest_compression'][] = '</span>'
 $GLOBALS['csstidy']['predefined_templates']['highest_compression'][] = '';
 
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '<span class="at">';
-$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span> <span class="format">{</span>' . "\n";
+$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span> <span class="format">{</span>'."\n";
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '<span class="selector">';
-$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span>' . "\n" . '<span class="format">{</span>' . "\n";
+$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span>'."\n".'<span class="format">{</span>'."\n";
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '	<span class="property">';
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span><span class="value">';
-$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span><span class="format">;</span>' . "\n";
+$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span><span class="format">;</span>'."\n";
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '<span class="format">}</span>';
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = "\n\n";
-$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = "\n" . '<span class="format">}</span>' . "\n\n";
+$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = "\n".'<span class="format">}</span>'."\n\n";
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '	';
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '<span class="comment">'; // before comment
-$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span>' . "\n"; // after comment
+$GLOBALS['csstidy']['predefined_templates']['low_compression'][] = '</span>'."\n"; // after comment
 $GLOBALS['csstidy']['predefined_templates']['low_compression'][] = "\n";
 
-require dirname(__FILE__) . '/data-wp.inc.php';
+require dirname( __FILE__ ) . '/data-wp.inc.php';
 
 ?>

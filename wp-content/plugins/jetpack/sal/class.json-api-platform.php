@@ -1,7 +1,7 @@
 <?php
 
-if (defined('IS_WPCOM') && IS_WPCOM) {
-    require_once dirname(__FILE__) . '/class.json-api-platform-wpcom.php';
+if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+	require_once dirname( __FILE__ ) . '/class.json-api-platform-wpcom.php';
 } else {
-    require_once dirname(__FILE__) . '/class.json-api-platform-jetpack.php';
+	require_once dirname( __FILE__ ) . '/class.json-api-platform-jetpack.php';
 }
