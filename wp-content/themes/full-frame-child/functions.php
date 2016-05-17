@@ -4,15 +4,20 @@
  * @param $postTitle
  * @return mixed
  */
-function eliminateKeywords($postTitle)
+function eliminateKeywords($postTitle, $moreWords = array())
 {
     if (str_word_count($postTitle) > 2) {
         $postTitle = trim($postTitle);
+
+        $postTitle = eliminateIfEndsWith($postTitle, $moreWords);
+
         $words = array("Position", "Positions");
-        $postTitle = eliminate($postTitle, $words);
+        $postTitle = eliminateIfEndsWith($postTitle, $words);
 
         $words = array("Top", "Bottom");
-        $postTitle = eliminate($postTitle, $words);
+        $postTitle = eliminateIfEndsWith($postTitle, $words);
+
+
     }
     return $postTitle;
 }
@@ -22,7 +27,7 @@ function eliminateKeywords($postTitle)
  * @param $words
  * @return array
  */
-function eliminate($postTitle, $words)
+function eliminateIfEndsWith($postTitle, $words)
 {
     foreach ($words as $word) {
         if (endsWith($postTitle, $word)) {

@@ -15,14 +15,14 @@
 }
 
 .page p .fluid-width-video-wrapper {
-    height: 425px;
+    height: 500px;
 }
 
 .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe,
 .single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe,
 .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed {
-    width: 800px !important;
-    height: 425px !important;
+    width: 100% !important;
+    height: 500px !important;
     position: relative;
 }
 
@@ -57,7 +57,9 @@
     margin-top: 30px !important;
     width: 250px !important;
 }
-
+.yarpp-thumbnails-horizontal>h3{
+    padding-top: 75px;
+}
 .fluid-width-video-wrapper {
     padding-top: 0% !important;
 }
@@ -127,6 +129,7 @@
 
 .next-arrow {
     transform: rotate(270deg) translateZ(0px);
+    margin-bottom: -60px;
 }
 .history.next-arrow {
     transform: rotate(270deg) translateZ(0px) scale(0.3);
@@ -139,7 +142,7 @@
 .lastViewedcontent .lastViewedExcerpt,.lastViewedcontent .next-overlay{
 transform: scale(0.75);
 }
-.widget_lastviewed{
+.widget{
     text-align: center;
 }
 
@@ -169,7 +172,7 @@ transform: scale(0.75);
     min-height: 150px;
 }
 
-.widget_lastviewed .widget-title{
+ .widget-title{
     font-size:30px;
     margin-bottom: 50px;
 
@@ -183,3 +186,40 @@ transform: scale(0.75);
 /*.lastViewedList>li:first-child>.next-arrow:first-child{*/
     /*display: none;*/
 /*}*/
+
+body,.yarpp-thumbnails-horizontal,.entry-footer{
+    text-align: center;
+    background: #DDDDDD !important;
+}
+#main,.sidebar-primary{
+    background: white;
+}
+
+.sidebar-primary{
+    width: 330px;
+    margin-left:10px;
+}
+
+.widget-title, .entry-container>.entry-header>.entry-title{
+    border-bottom: 1px solid #DDDDDD;
+    line-height: 1.4;
+}
+.home  .entry-container>.entry-header>.entry-title{
+    border:none;
+}
+
+body.home {
+    background:white !important;
+}
+
+.yarpp-thumbnails-horizontal .yarpp-thumbnail-title {
+    font-size: 20px !important;
+    color: black;
+}
+.next-arrow svg {
+    fill:currentColor;
+}
+
+.widget_categories{
+    text-align: left;
+}

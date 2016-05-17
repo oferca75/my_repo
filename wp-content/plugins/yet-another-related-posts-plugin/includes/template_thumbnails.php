@@ -31,16 +31,17 @@ if (have_posts()) {
     $postTitle = get_the_title();
     if ($postTitle !== "Front") {
         global $arrowSVG;
-        $dispStr = '<div class="next-arrow">'.$arrowSVG."</div>";
+        $output .= '<div class="next-arrow">'.$arrowSVG."</div>";
         if ((endsWith($postTitle, "sitions") || endsWith($postTitle, "sition"))) {
             $dispStr .= "Attacks And Defences From The " . eliminateKeywords($postTitle);
         } else {
             $dispStr .= 'What To Do From ' . eliminateKeywords($postTitle);
 
         };
-        $output .= '<h3>' . $dispStr . ':</h3>' . "\n";
+        $whatToDo = '<h3>' . $dispStr . ':</h3>' . "\n";
     }
     $output .= '<div class="yarpp-thumbnails-horizontal">' . "\n";
+    $output .= $whatToDo;
     while (have_posts()) {
         the_post();
 
@@ -62,7 +63,7 @@ if (have_posts()) {
             $post_thumbnail_html = get_the_post_thumbnail(null, $dimensions['size']);
         }
 
-        $output .= '<span class="yarpp-thumbnail-title">' . eliminateKeywords(get_the_title()) . '</span>';
+        $output .= '<span class="yarpp-thumbnail-title">' . eliminateKeywords(get_the_title(),array("Control","control")) . '</span>';
 
         if (trim($post_thumbnail_html) != '')
             $output .= $post_thumbnail_html;

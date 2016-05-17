@@ -39,8 +39,8 @@ $getParams="";
 
     } else {
       $isIndexTemplate = strpos($GLOBALS["template"],"index.php") > 0;
-    $autoplay == $isIndexTemplate ? "0" : $autoplay;
-    $getParams .= "&width=600&autoplay=$autoplay";
+    // $autoplay == $isIndexTemplate ? "0" : $autoplay;
+    $getParams .= "&width=800";//&autoplay=$autoplay";
     }
      if ($content){
         return $content.$getParams;
