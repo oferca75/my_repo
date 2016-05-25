@@ -313,7 +313,6 @@ require get_template_directory() . '/inc/fullframe-featured-slider.php';
  */
 require get_template_directory() . '/inc/fullframe-featured-content.php';
 
-
 /**
  * Load Breadcrumb file.
  */

@@ -8,14 +8,18 @@
  Version:        1.0.0
 */
 @import url("../full-frame/style.css");
+@import url("css/metal-theme.css");
+@import url("./buttons.css");
+
 
 .fluid-width-video-wrapper iframe, .fluid-width-video-wrapper object, .fluid-width-video-wrapper embed {
     width: auto !important;
     height: auto !important;
 }
 
-.page p .fluid-width-video-wrapper {
-    height: 500px;
+ .entry-content>p:first-child {
+    height: auto;
+     background: black;
 }
 
 .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe,
@@ -37,8 +41,8 @@
 
 .next-overlay {
     background: transparent;
-    width: 560px;
-    height: 250px;
+    width: 360px;
+    height: 200px;
     opacity: 0;
     position: absolute;
     float: left;
@@ -55,7 +59,7 @@
 
 .yarpp-thumbnails-horizontal .yarpp-thumbnail {
     margin-top: 30px !important;
-    width: 250px !important;
+    width: 200px !important;
 }
 .yarpp-thumbnails-horizontal>h3{
     padding-top: 75px;
@@ -94,6 +98,8 @@
 
 .yarpp-thumbnail-title {
     width: 100%;
+    font-size: 16px;
+
 }
 
 .yarpp-related-none {
@@ -128,15 +134,17 @@
 }
 
 .next-arrow {
-    transform: rotate(270deg) translateZ(0px);
-    margin-bottom: -60px;
+transform: rotate(270deg) translateZ(0px);
+margin-bottom: -60px;
+width: 87px;
+margin-left: 45%;
 }
 .history.next-arrow {
     transform: rotate(270deg) translateZ(0px) scale(0.3);
-    height: 100px;
-    right: 0px;
-    margin-top: -55px;
-    margin-bottom: -28px;
+    height: 300px;
+    right: -12px;
+    margin-top: -166px;
+    margin-bottom: -145px;
 }
 
 .lastViewedcontent .lastViewedExcerpt,.lastViewedcontent .next-overlay{
@@ -198,9 +206,11 @@ body,.yarpp-thumbnails-horizontal,.entry-footer{
 .sidebar-primary{
     width: 330px;
     margin-left:10px;
+    float: left;
+    margin-left: 4px;
 }
 
-.widget-title, .entry-container>.entry-header>.entry-title{
+.widget-title, .entry-container>.entry-header>.entry-title, h2.next-move-title{
     border-bottom: 1px solid #DDDDDD;
     line-height: 1.4;
 }
@@ -222,4 +232,38 @@ body.home {
 
 .widget_categories{
     text-align: left;
+}
+
+.btn-red{
+    margin-bottom: 20px;
+}
+
+.featured-heading-wrap>p>b{
+    cursor: pointer;
+}
+
+
+h2.next-move-title{
+    margin: 0px;
+    line-height: 50px;
+    background: white;
+    margin-top: 10px;
+}
+
+
+#jssor_1{
+    height:200px;
+    background: white;
+
+}
+#jssor_1>div{
+    /*padding: 0px 10px 0px 10px !important;*/
+}
+
+#content .wrapper{
+    padding-top: 4px;
+}
+
+.home .next-move-title{
+    display: none;
 }

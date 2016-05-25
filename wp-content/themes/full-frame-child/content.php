@@ -19,7 +19,7 @@
          * @hooked fullframe_archive_content_image - 10
          */
         do_action('fullframe_before_entry_container'); ?>
-
+    
         <div class="entry-container">
             <a href="<?php the_permalink(); ?>" rel="bookmark">
                 <div class="next-overlay"></div>
