@@ -41,7 +41,7 @@ if (!function_exists('next-move')) :
 
 
         <div id="jssor_1"
-             style="position: relative; margin: 0 auto; top: 0px; width: <?php echo $nextMoveWidth ?>; height: 250px; overflow: hidden; visibility: hidden;">
+             style="position: relative; margin: 0 auto; top: 0px; width: <?php echo $nextMoveWidth ?>; height: 250px; overflow: hidden; visibility: visible;">
             <?php echo '<h2 class="next-move-title">' . $dispStr . ':</h2>'; ?>
 
             <!-- Loading Screen -->
