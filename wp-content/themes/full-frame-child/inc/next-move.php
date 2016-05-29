@@ -20,13 +20,19 @@ if (!function_exists('next-move')) :
 
     function next_move()
     {
+        if(is_front_page()){
+            $dontDisplay = true;
+        }
         $nextMoveWidth = "1235px";
         $postTitle = get_the_title();
         $numberposts = 40;
         $postTitle = $postTitle == "Front" || $postTitle == "" ? "Top Positions" : $postTitle;
 
         $catId = get_cat_ID($postTitle);
-        query_posts(array('category__in' => array($catId), 'numberposts' => $numberposts));
+        if(!$dontDisplay)
+            query_posts(array('category__in' => array($catId), 'numberposts' => $numberposts));
+
+
         if (!have_posts() && $_COOKIE["last_viewed"]) {
             $catId = get_cat_ID($_COOKIE["last_viewed"]);
             query_posts(array('category__in' => array($catId), 'numberposts' => $numberposts));
@@ -37,12 +43,13 @@ if (!function_exists('next-move')) :
                 $dispStr = nextMoveText($postTitle);
             }
         }
+
         ?>
 
 
         <div id="jssor_1"
-             style="position: relative; margin: 0 auto; top: 0px; width: <?php echo $nextMoveWidth ?>; height: 250px; overflow: hidden; visibility: visible;">
-            <?php echo '<h2 class="next-move-title">' . $dispStr . ':</h2>'; ?>
+             style="position: relative; margin: 0 auto; top: 12px; width: <?php echo $nextMoveWidth ?>; height: 280px; overflow: hidden; visibility: visible;">
+            <?php echo '<h2 class="next-move-title">Next Move:</h2><h3>'. $dispStr .'</h3>'; ?>
 
             <!-- Loading Screen -->
             <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -51,11 +58,12 @@ if (!function_exists('next-move')) :
                 <div
                     style="position:absolute;display:block;background:url('<?php echo get_stylesheet_directory_uri() ?>/css/img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
             </div>
+
             <div data-u="slides"
-                 style="cursor: default; position: relative; top: 60px; width: 1235px; height: 250px; overflow: hidden;">
+                 style="cursor: default; position: relative; top: 96px; width: 1235px; height: 250px; overflow: hidden;">
                 <?php
 
-                while (have_posts()) :
+                while (!$dontDisplay && have_posts()) :
                     ?>
                     <div style="display: none;"><?php
                         the_post();
@@ -69,8 +77,8 @@ if (!function_exists('next-move')) :
                             }
                             global $post;
 
-                            $post_thumbnail_html = '<iframe id="_ytid_56590" src="https://www.youtube.com/embed/' . $video_id . '?enablejsapi=1&amp;loop=1&amp;playlist=fvmhXk95ZtA&amp;autoplay=0&amp;cc_load_policy=0&amp;iv_load_policy=1&amp;modestbranding=0&amp;rel=1&amp;showinfo=1&amp;playsinline=0&amp;controls=2&amp;autohide=2&amp;theme=dark&amp;color=red&amp;wmode=opaque&amp;vq=&amp;&amp;enablejsapi=1&amp;origin=http://bjjinteractive.ga" frameborder="0" class="__youtube_prefs__" data-vol="0" allowfullscreen=""></iframe>';
-
+                            //$post_thumbnail_html = '<iframe id="_ytid_56590" src="https://www.youtube.com/embed/' . $video_id . '?enablejsapi=1&amp;loop=1&amp;playlist=fvmhXk95ZtA&amp;autoplay=0&amp;cc_load_policy=0&amp;iv_load_policy=1&amp;modestbranding=0&amp;rel=1&amp;showinfo=1&amp;playsinline=0&amp;controls=2&amp;autohide=2&amp;theme=dark&amp;color=red&amp;wmode=opaque&amp;vq=&amp;&amp;enablejsapi=1&amp;origin=http://bjjinteractive.ga" frameborder="0" class="__youtube_prefs__" data-vol="0" allowfullscreen=""></iframe>';
+                            $post_thumbnail_html = '<img src="http://img.youtube.com/vi/'.$video_id.'/0.jpg" />'
                             ?>
 
                             <?php
@@ -89,6 +97,7 @@ if (!function_exists('next-move')) :
 
 
             </div>
+
             <!-- Bullet Navigator -->
             <div data-u="navigator" class="jssorb03" style="bottom:10px;right:10px;">
                 <!-- bullet navigator item prototype -->
@@ -101,10 +110,15 @@ if (!function_exists('next-move')) :
                   data-autocenter="2"></span>
             <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;"
                   data-autocenter="2"></span>
+<?php
+
+        ?>
         </div>
 
 
         <?php
+
+
         wp_reset_query();
 
     }

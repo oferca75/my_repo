@@ -19,7 +19,6 @@
 
  .entry-content>p:first-child {
     height: auto;
-     background: black;
 }
 
 .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe,
@@ -40,14 +39,15 @@
 }
 
 .next-overlay {
-    background: transparent;
-    width: 360px;
-    height: 200px;
-    opacity: 0;
+    background: whitesmoke;
+    opacity: 0.25;
+    width: 275px;
+    height: 125px;
     position: absolute;
     float: left;
     z-index: 99999;
     cursor: pointer;
+    margin-top: -10px;
 }
 
 .yarpp-related .next-overlay,.history .next-overlay {
@@ -78,6 +78,7 @@
 
 .yarpp-thumbnails-horizontal .yarpp-thumbnail-title {
     width: 100% !important;
+    color:black;
 }
 
 .yarpp-thumbnails-horizontal .yarpp-thumbnail {
@@ -98,8 +99,12 @@
 
 .yarpp-thumbnail-title {
     width: 100%;
-    font-size: 16px;
-
+    font-size: 15px;
+    color: black !important;
+    text-align: left;
+    float: left;
+    padding-left: 10px;
+    font-weight: bold;
 }
 
 .yarpp-related-none {
@@ -135,6 +140,7 @@
 
 .history.next-arrow {
     transform: rotate(270deg) translateZ(0px) scale(0.3);
+    margin-top:30px;
 
 }
 
@@ -186,7 +192,7 @@ transform: scale(0.75);
 
 body,.yarpp-thumbnails-horizontal,.entry-footer{
     text-align: center;
-    background: #DDDDDD !important;
+    /*background: #DDDDDD !important;*/
 }
 #main,.sidebar-primary{
     background: white;
@@ -207,13 +213,13 @@ body,.yarpp-thumbnails-horizontal,.entry-footer{
     border:none;
 }
 
-body.home {
-    background:white !important;
+#promotion-message {
+    color:white
 }
 
 .yarpp-thumbnails-horizontal .yarpp-thumbnail-title {
     font-size: 20px !important;
-    color: black;
+    color: black !important;
 }
 .next-arrow svg {
     fill:currentColor;
@@ -239,6 +245,10 @@ h2.next-move-title{
     margin-top: 10px;
 }
 
+.home #jssor_1 {
+    display:none
+}
+
 
 #jssor_1{
     height:200px;
@@ -251,6 +261,7 @@ h2.next-move-title{
 
 #content .wrapper{
     padding-top: 4px;
+    margin-top: 12px;
 }
 
 .home .next-move-title{
@@ -272,4 +283,45 @@ h2.next-move-title{
 
 .lastViewedList{
     padding-top: 15px;
+}
+
+.home #main{
+    background:#009B3A;
+}
+
+@media screen and (min-width: 1440px) {
+    #feature-slider .cycle-slideshow img {
+        width: auto !important;
+        height: auto !important;
+    }
+}
+
+#feature-slider .cycle-slideshow {
+    height:170px !important;
+    top:35px;
+}
+
+#feature-slider .entry-container{
+    top:85px;
+    padding:0px;
+}
+
+#feature-slider .entry-header{
+    margin-top:7px;
+}
+div[data-u="slides"] iframe,div[data-u="slides"] img{
+    max-height:140px;
+}
+
+h2,#jssor_1 h3{
+    font-size: 25px;
+}
+.lastViewedExcerpt img{
+    height: 150px;
+}
+
+.lastViewedTitle{
+    clear: both;
+    line-height: 1.2;
+    margin: 0px 0 38px;
 }

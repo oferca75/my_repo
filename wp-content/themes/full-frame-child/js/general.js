@@ -4,11 +4,11 @@ jQuery(document).ready(function ($) {
         $AutoPlay: true,
         $AutoPlaySteps: 4,
         $SlideDuration: 260,
-        $SlideWidth: 205,
+        $SlideWidth: 160,
         // $SlideHeight: 140,
         $Idle:8000,
         $SlideSpacing: 0,
-        $Cols: 6,
+        $Cols: 8,
         $ArrowNavigatorOptions: {
             $Class: $JssorArrowNavigator$,
             $Steps: 4
@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
     function ScaleSlider() {
         var refSize = location.pathname === "" ? screen.width: 1235;
         if (refSize) {
-           // refSize = Math.min(refSize, 1600);
+            refSize = Math.min(refSize, screen.width);
             jssor_1_slider.$ScaleWidth(refSize);
         }
         else {

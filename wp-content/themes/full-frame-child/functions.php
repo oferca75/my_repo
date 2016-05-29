@@ -54,7 +54,7 @@ function nextMoveText($postTitle)
         $dispStr .= "Choose a " . rtrim(eliminateKeywords($postTitle),"s");
     } else
     if (endsWith($postTitle, "sition")) {
-        $dispStr .= "Choose what to do from the " . eliminateKeywords($postTitle);
+        $dispStr .= "Choose a technique from the " . eliminateKeywords($postTitle);
     } else {
         $dispStr .= 'Choose next move from the ' . eliminateKeywords($postTitle);
 

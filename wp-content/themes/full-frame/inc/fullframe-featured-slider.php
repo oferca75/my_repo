@@ -100,54 +100,54 @@ if (!function_exists('fullframe_demo_slider')) :
         $fullframe_demo_slider = '
 								<article class="post hentry slides demo-image displayblock">
 									<figure class="slider-image">
-										<a title="Learn BJJ Techniques" href="' . esc_url(home_url('/')) . '">
-											<img src="' . get_template_directory_uri() . '/images/gallery/slider1-1680x720.jpg" class="wp-post-image" alt="Learn BJJ Techniques" title="Learn BJJ Techniques">
+										<a title="Step by step guide to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
+											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step guide to Brazilian Jiu Jitsu" title="Step by step guide to Brazilian Jiu Jitsu">
 										</a>
 									</figure>  
 									<div class="entry-container">
 										<header class="entry-header">
 											<h1 class="entry-title">
-												<a title="Learn BJJ Techniques" href="#"><span>Learn BJJ Techniques</span></a>
+												<a title="Step by step guide to Brazilian Jiu Jitsu" href="#"><span>Step by step guide to Brazilian Jiu Jitsu</span></a>
 											</h1>
 											</header>
 										<div class="entry-content">
-											<p>Simple And Intuitive Guide</p>
+											<p>The #1 online guide to BJJ techniques</p>
 										</div>   
 									</div>             
 								</article><!-- .slides --> 	
 								
 								<article class="post hentry slides demo-image displaynone">
-									<figure class="Learn BJJ Techniques">
-										<a title="Learn BJJ Techniques" href="' . esc_url(home_url('/')) . '">
-											<img src="' . get_template_directory_uri() . '/images/gallery/slider2-1680x720.jpg" class="wp-post-image" alt="Learn BJJ Techniques" title="Learn BJJ Techniques">
+									<figure class="Step by step guide to Brazilian Jiu Jitsu">
+										<a title="Step by step guide to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
+											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step guide to Brazilian Jiu Jitsu" title="Step by step guide to Brazilian Jiu Jitsu">
 										</a>
 									</figure>
 									<div class="entry-container">
 										<header class="entry-header">
 											<h1 class="entry-title">
-												<a title="Learn BJJ Techniques" href="#"><span>Learn BJJ Techniques</span></a>
+												<a title="Step by step guide to Brazilian Jiu Jitsu" href="#"><span>Step by step guide to Brazilian Jiu Jitsu</span></a>
 											</h1>
 											</header>
 										<div class="entry-content">
-											<p>Simple And Intuitive Guide</p>
+											<p>Click your favourite position and browse fight options </p>
 										</div>   
 									</div>             
 								</article>
 								
 								<article class="post hentry slides demo-image displaynone">
-									<figure class="Learn BJJ Techniques">
-										<a title="Learn BJJ Techniques" href="' . esc_url(home_url('/')) . '">
-											<img src="' . get_template_directory_uri() . '/images/gallery/slider3-1680x720.jpg" class="wp-post-image" alt="Learn BJJ Techniques" title="Learn BJJ Techniques">
+									<figure class="Step by step guide to Brazilian Jiu Jitsu">
+										<a title="Step by step guide to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
+											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step guide to Brazilian Jiu Jitsu" title="Step by step guide to Brazilian Jiu Jitsu">
 										</a>
 									</figure>
 									<div class="entry-container">
 										<header class="entry-header">
 											<h1 class="entry-title">
-												<a title="Learn BJJ Techniques" href="#"><span>Learn BJJ Techniques</span></a>
+												<a title="Step by step guide to Brazilian Jiu Jitsu" href="#"><span>Step by step guide to Brazilian Jiu Jitsu</span></a>
 											</h1>
 											</header>
 										<div class="entry-content">
-											<p>Simple And Intuitive Guide</p>
+											<p>The #1 online guide to BJJ techniques</p>
 										</div>   
 									</div>             
 								</article>

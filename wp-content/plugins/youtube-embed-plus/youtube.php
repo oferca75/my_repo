@@ -34,8 +34,12 @@
 function preyoutube_function($content,$isFirstVideo,$isNotSingle, $atts,$autoplay = "1") {
 $getParams="";
     if ($isNotSingle ) {
-    $getParams .= "&width=300&height=200";
+    $getParams .= "&width=280&height=150";
     $getParams .= "&loop=1";
+    $getParams .= "&showinfo=0";
+    $getParams .= "&controls=0";
+    $getParams .= "&autohide=1";
+
 
     } else {
       $isIndexTemplate = strpos($GLOBALS["template"],"index.php") > 0;
