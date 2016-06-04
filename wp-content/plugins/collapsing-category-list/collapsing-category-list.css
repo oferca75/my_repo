@@ -1,0 +1,10 @@
+
+@import url('css/font-awesome-subset-collapscatlist.css');
+
+.icon-nothing-squared:before { content: '\0000a0'; }
+
+.hide { 
+  display: none;
+  height: 0;
+}
+

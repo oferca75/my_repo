@@ -42,7 +42,7 @@ get_header(); ?>
              *
              * @hooked fullframe_post_navigation - 10
              */
-            do_action('fullframe_after_post');
+            //do_action('fullframe_after_post');
 
             /**
              * fullframe_comment_section hook
@@ -56,4 +56,4 @@ get_header(); ?>
     </main><!-- #main -->
 
 <?php get_sidebar(); ?>
-<?php get_footer(); ?>
+<?php get_footer(   ); ?>

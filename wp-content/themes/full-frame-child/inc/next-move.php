@@ -34,9 +34,10 @@ if (!function_exists('next-move')) :
 
 
         if (!have_posts() && $_COOKIE["last_viewed"]) {
+            $gameOver = true;
             $catId = get_cat_ID($_COOKIE["last_viewed"]);
             query_posts(array('category__in' => array($catId), 'numberposts' => $numberposts));
-            $dispStr = "Choose more techniques from " . eliminateKeywords($_COOKIE["last_viewed"]);
+            $dispStr = "Other techniques you can do from the <strong>" . eliminateKeywords($_COOKIE["last_viewed"])."</strong>";
         } else {
             setcookie("last_viewed", $postTitle, time() + (60 * 60 * 24 * 30), "/"); // 30 days
             if (function_exists("nextMoveText")) {
@@ -48,8 +49,12 @@ if (!function_exists('next-move')) :
 
 
         <div id="jssor_1"
+             <?php
+                if ($gameOver) $nextPositionText = 'Submission. Learn More';
+                    else $nextPositionText = nextMoveText($postTitle,true);
+             ?>
              style="position: relative; margin: 0 auto; top: 12px; width: <?php echo $nextMoveWidth ?>; height: 280px; overflow: hidden; visibility: visible;">
-            <?php echo '<h2 class="next-move-title">Next Move:</h2><h3>'. $dispStr .'</h3>'; ?>
+            <?php echo '<h2 class="next-move-title"><strong>'.$nextPositionText.':</strong></h2><h4>'. $dispStr .'</h4>'; ?>
 
             <!-- Loading Screen -->
             <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">

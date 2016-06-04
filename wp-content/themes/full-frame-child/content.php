@@ -42,7 +42,7 @@
             if (is_search() || 'full-content' != $options['content_layout']) : // Only display Excerpts for Search and if 'full-content' is not selected 
                 ?>
                 <div class="entry-summary">
-                    <?php the_excerpt(); ?>
+                    <?php the_content(); ?>
                 </div><!-- .entry-summary -->
             <?php else : ?>
                 <div class="entry-content">

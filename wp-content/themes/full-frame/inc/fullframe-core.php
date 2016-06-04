@@ -1170,17 +1170,17 @@ if (!function_exists('fullframe_archive_content_image')) :
 
         $featured_image = $options['content_layout'];
 
-        if (has_post_thumbnail() && 'excerpt-featured-image' == $featured_image) {
-            ?>
-            <figure class="featured-image">
-                <a rel="bookmark" href="<?php the_permalink(); ?>">
-                    <?php
-                    the_post_thumbnail('fullframe-featured');
-                    ?>
-                </a>
-            </figure>
-            <?php
-        }
+//        if (has_post_thumbnail() && 'excerpt-featured-image' == $featured_image) {
+//            ?>
+<!--            <figure class="featured-image">-->
+<!--                <a rel="bookmark" href="--><?php //the_permalink(); ?><!--">-->
+<!--                    --><?php
+//                    the_post_thumbnail('fullframe-featured');
+//                    ?>
+<!--                </a>-->
+<!--            </figure>-->
+<!--            --><?php
+//        }
     }
 endif; //fullframe_archive_content_image
 add_action('fullframe_before_entry_container', 'fullframe_archive_content_image', 10);
@@ -1233,14 +1233,14 @@ if (!function_exists('fullframe_single_content_image')) :
             }
 
             ?>
-            <figure class="featured-image <?php echo $class; ?>">
-                <?php
-                if ($individual_featured_image == 'featured' || ($individual_featured_image == 'default' && $featured_image == 'featured')) {
-                    the_post_thumbnail('fullframe-featured');
-                } else {
-                    the_post_thumbnail('full');
-                } ?>
-            </figure>
+<!--            <figure class="featured-image --><?php //echo $class; ?><!--">-->
+<!--                --><?php
+//                if ($individual_featured_image == 'featured' || ($individual_featured_image == 'default' && $featured_image == 'featured')) {
+//                    the_post_thumbnail('fullframe-featured');
+//                } else {
+//                    the_post_thumbnail('full');
+//                } ?>
+<!--            </figure>-->
             <?php
         }
     }

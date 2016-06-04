@@ -22,7 +22,29 @@ get_header(); ?>
             <?php /* Start the Loop */ ?>
             <?php while (have_posts()) : the_post(); ?>
 
-                <?php get_template_part('content', 'search'); ?>
+                <?php
+                $id = get_the_ID();
+                $title = get_the_title();
+
+                if (function_exists("eliminateKeywords")) {
+                    $title = eliminateKeywords($title);
+                }
+//Ofer End
+                // Ofer BEGIN
+                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', get_the_content(), $match)) {
+                    $video_id = $match[1];
+                } else
+                    $video_id = null;
+                global $post, $default_video_image;
+                $content = '<a href="' . get_the_permalink() . '" rel="bookmark">';
+                $content .= $video_id != null ? '<img src="http://img.youtube.com/vi/' . $video_id . '/0.jpg" />' : '<img height="280" src="' . $default_video_image . '"/>"';
+                $content .= '</a>';
+                
+                echo '<h3 class="SearchedQueryTitle">' . $title . '</h3>';
+
+                echo $content;
+                ?>
+                <?php //get_template_part('content', 'search'); ?>
 
             <?php endwhile; ?>
 

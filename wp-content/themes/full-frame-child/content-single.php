@@ -19,14 +19,23 @@
 
     <div class="entry-container">
         <header class="entry-header">
+            <div class="fight-path">
+                <?php
+                if (!is_page()) {
+                    global $dd_lastviewed_id;
+                    echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
+                }
+                ?>
+            </div>
             <h1 class="entry-title"><?php echo eliminateKeywords(get_the_title()); ?></h1>
 
             <?php fullframe_entry_meta(); ?>
         </header><!-- .entry-header -->
 
         <div class="entry-content">
-          
+
             <?php the_content(); ?>
+
             <?php
             wp_link_pages(array(
                 'before' => '<div class="page-links"><span class="pages">' . __('Pages:', 'full-frame') . '</span>',
