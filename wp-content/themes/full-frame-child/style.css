@@ -288,9 +288,6 @@ h2.next-move-title{
     padding-top: 15px;
 }
 
-.home #main{
-    background:#009B3A;
-}
 
 @media screen and (min-width: 1440px) {
     #feature-slider .cycle-slideshow img {

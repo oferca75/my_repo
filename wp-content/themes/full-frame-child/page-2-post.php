@@ -30,9 +30,20 @@ get_header(); ?>
 
         $page_title = get_the_title();
         $post = get_page_by_title($page_title, "OBJECT", 'post');
-        query_posts('p=' . $post->ID);
 
-        while (have_posts()) : the_post(); ?>
+
+
+//Define the loop based on arguments
+$args = array(
+    'p' => $post->ID
+);
+$loop = new WP_Query( $args );
+
+//Display the contents
+
+while ( $loop->have_posts() ) : $loop->the_post();
+
+        ?>
 
             <?php get_template_part('content', 'single'); ?>
 
@@ -51,9 +62,9 @@ get_header(); ?>
              */
             do_action('fullframe_comment_section');
             ?>
-        <?php endwhile; // end of the loop. ?>
+<?php endwhile; // end of the loop. ?>
 
     </main><!-- #main -->
 
 <?php get_sidebar(); ?>
-<?php get_footer(   ); ?>
+<?php get_footer(); ?>
