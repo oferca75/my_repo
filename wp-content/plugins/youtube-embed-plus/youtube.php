@@ -234,7 +234,7 @@ public static $vidCount = 0;
         add_action('media_buttons', 'YouTubePrefs::media_button_wizard', 11);
 
 
-        self::do_ytprefs();
+        //self::do_ytprefs();
         add_action('admin_menu', 'YouTubePrefs::ytprefs_plugin_menu');
         if (!is_admin())
         {
@@ -246,8 +246,8 @@ public static $vidCount = 0;
                 add_action('wp_enqueue_scripts', array('YouTubePrefs', 'jsvars'));
             }
 
-            add_action('wp_enqueue_scripts', array('YouTubePrefs', 'ytprefsscript'), 100);
-            add_action('wp_enqueue_scripts', array('YouTubePrefs', 'fitvids'), 101);
+            //add_action('wp_enqueue_scripts', array('YouTubePrefs', 'ytprefsscript'), 100);
+            //add_action('wp_enqueue_scripts', array('YouTubePrefs', 'fitvids'), 101);
 
 
 
@@ -4069,9 +4069,9 @@ if ($GLOBALS["posttags"] ){
             $loggedin = current_user_can('edit_posts');
             if (!($loggedin && self::$alloptions[self::$opt_admin_off_scripts]))
             {
-                wp_enqueue_style(
-                        '__EPYT__style', plugins_url('styles/ytprefs.min.css', __FILE__)
-                );
+//                wp_enqueue_style(
+//                        '__EPYT__style', plugins_url('styles/ytprefs.min.css', __FILE__)
+//                );
                 $cols = floatval(self::$alloptions[self::$opt_gallery_columns]);
                 $cols = $cols == 0 ? 3.0 : $cols;
                 $colwidth = 100.0 / $cols;

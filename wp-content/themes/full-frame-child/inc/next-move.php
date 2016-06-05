@@ -136,4 +136,4 @@ if (!function_exists('next-move')) :
     }
 
 endif;
-add_action('fullframe_before_post_container', 'next_move', 30);
+add_action('fullframe_before_content', 'next_move', 30);
