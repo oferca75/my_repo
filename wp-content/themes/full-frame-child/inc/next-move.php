@@ -29,19 +29,23 @@ if (!function_exists('next-move')) :
         $postTitle = $postTitle == "Front" || $postTitle == "" ? "Top Positions" : $postTitle;
 
         $catId = get_cat_ID($postTitle);
-        if(!$dontDisplay)
-            query_posts(array('category__in' => array($catId), 'numberposts' => $numberposts));
+        if(!$dontDisplay && $catId != 0) {
+            $args = array('category__in' => array($catId), 'numberposts' => $numberposts);
+            $loop = new WP_Query( $args );
+        }
 
-
-        if (!have_posts() && $_COOKIE["last_viewed"]) {
+        if ($loop->post_count<=1 && $_COOKIE["last_viewed"]) {
             $gameOver = true;
             $catId = get_cat_ID($_COOKIE["last_viewed"]);
-            query_posts(array('category__in' => array($catId), 'numberposts' => $numberposts));
-            $dispStr = "Other techniques you can do from the <strong>" . eliminateKeywords($_COOKIE["last_viewed"])."</strong>";
-        } else {
-            setcookie("last_viewed", $postTitle, time() + (60 * 60 * 24 * 30), "/"); // 30 days
+            $nextMoveLoopArgs = array('category__in' => array($catId), 'numberposts' => $numberposts);
+            $loop = new WP_Query( $nextMoveLoopArgs );
+            $nextMoveTechniqueTitle = $_COOKIE["last_viewed"];
+            $dispStr = "Other techniques you can do from the <strong>" . eliminateKeywords($nextMoveTechniqueTitle)."</strong>";
+        } elseif ($_COOKIE["last_viewed"] != $postTitle) {
+            $nextMoveTechniqueTitle = $postTitle;
+            setcookie("last_viewed", $nextMoveTechniqueTitle, time() + (60 * 60 * 24 * 30), "/"); // 30 days
             if (function_exists("nextMoveText")) {
-                $dispStr = nextMoveText($postTitle);
+                $dispStr = nextMoveText($nextMoveTechniqueTitle);
             }
         }
 
@@ -68,10 +72,13 @@ if (!function_exists('next-move')) :
                  style="cursor: default; position: relative; top: 96px; width: 1235px; height: 250px; overflow: hidden;">
                 <?php
 
-                while (!$dontDisplay && have_posts()) :
+                while (!$dontDisplay && $loop->have_posts()) :
+                    $loop->the_post();
+                    if ($postTitle == get_the_title() || $nextMoveTechniqueTitle == get_the_title() )
+                        continue;
                     ?>
                     <div style="display: none;"><?php
-                        the_post();
+
                         ?>
                         <a class='yarpp-thumbnail' href='<?php echo get_permalink() ?>'
                            title='<?php echo the_title_attribute('echo=0') ?>'>
@@ -129,4 +136,4 @@ if (!function_exists('next-move')) :
     }
 
 endif;
-add_action('fullframe_before_content', 'next_move', 30);
+add_action('fullframe_before_post_container', 'next_move', 30);
