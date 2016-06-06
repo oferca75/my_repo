@@ -108,3 +108,13 @@ function hidemywidget($all_widgets)
 $dd_lastviewed_id = 3;
 
 $default_video_image = site_url() . "/wp-content/uploads/2016/06/BJJ_black_red_belt.svg_.png";
+
+add_filter('wp_list_categories', 'add_span_cat_count');
+function add_span_cat_count($links) {
+    $arr  = explode("\n\n",str_replace("\t","",strip_tags($links)));
+    foreach ($arr as $title){
+        $mTitle = eliminateKeywords(trim($title));
+        $links = str_replace(trim($title),$mTitle,$links);
+    }
+    return $links;
+}
