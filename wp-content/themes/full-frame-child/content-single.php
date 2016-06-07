@@ -27,11 +27,19 @@
                     global $dd_lastviewed_id;
                     echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
                 }
+                $title = get_the_title();
+                $newTitle = eliminateKeywords($title);
+                if (function_exists("getTrueTitle"))
+                {
+                    $tTitle = getTrueTitle($title);
+                }
                 ?>
             </div>
-            <h1 class="entry-title"><?php echo eliminateKeywords(get_the_title()); ?></h1>
+            <h1 class="entry-title <?php echo $tTitle;?>"><?php
 
-            <?php fullframe_entry_meta(); ?>
+                echo $newTitle."</h1>";
+
+             fullframe_entry_meta(); ?>
         </header><!-- .entry-header -->
 
         <div class="entry-content">

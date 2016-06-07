@@ -111,10 +111,24 @@ $default_video_image = site_url() . "/wp-content/uploads/2016/06/BJJ_black_red_b
 
 add_filter('wp_list_categories', 'add_span_cat_count');
 function add_span_cat_count($links) {
-    $arr  = explode("\n\n",str_replace("\t","",strip_tags($links)));
-    foreach ($arr as $title){
-        $mTitle = eliminateKeywords(trim($title));
-        $links = str_replace(trim($title),$mTitle,$links);
+    $arr  = explode("<li",$links);
+    foreach ($arr as $key => $titleLink){
+        $origTitle = trim(strip_tags(str_replace("\t","","<li".$titleLink)));
+        $mTitle = eliminateKeywords($origTitle);
+        if (function_exists("getTrueTitle"))
+            {
+                $tTitle = getTrueTitle($mTitle);
+            }
+        $arr[$key] = str_replace('<a href="h','<a class="'.$tTitle.'" href="h',str_replace(trim($origTitle),$mTitle,$titleLink));
     }
-    return $links;
+    return implode("<li",$arr);
+}
+
+/**
+ * @param $title
+ * @return string
+ */
+function getTrueTitle($title)
+{
+    return trim(str_replace(" ", "-", trim($title)));
 }

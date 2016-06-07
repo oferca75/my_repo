@@ -273,7 +273,7 @@ class lastviewed extends WP_Widget
                 }
                 $last_id = $id;
                 if (function_exists("eliminateKeywords")) {
-                    $title = eliminateKeywords($title);
+                    $newTitle = eliminateKeywords($title);
                 }
 //Ofer End
                 $strip_content = $lastViewed_content_type == 'plain content'; // 1/0
@@ -281,12 +281,11 @@ class lastviewed extends WP_Widget
                 // Ofer BEGIN
                 if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', get_the_content(), $match)) {
                     $video_id = $match[1];
-                }
-                    else
-                        $video_id = null;
-                global $post,$default_video_image;
+                } else
+                    $video_id = null;
+                global $post, $default_video_image;
                 $content = '<a href="' . get_the_permalink() . '" rel="bookmark">';
-                $content .= $video_id != null ? '<img src="http://img.youtube.com/vi/'.$video_id.'/0.jpg" />': '<img height="280" src="'.$default_video_image.'"/>"';
+                $content .= $video_id != null ? '<img src="http://img.youtube.com/vi/' . $video_id . '/0.jpg" />' : '<img height="280" src="' . $default_video_image . '"/>"';
                 $content .= '</a>';
 
                 // Ofer Begin comment out
@@ -318,11 +317,13 @@ class lastviewed extends WP_Widget
                 }
 
                 echo '<div class="lastViewedcontent">';
-
+                if (function_exists("getTrueTitle")) {
+                    $tTitle = getTrueTitle($title);
+                }
                 if ($lastViewed_showPostTitle && $lastViewed_lv_link_title) {
-                    echo '<a class="lastViewedTitle" href="' . $perma . '">' . $title . ':</a>';
+                    echo '<a class="lastViewedTitle ' . $tTitle . '" href="' . $perma . '">' . $newTitle . ':</a>';
                 } elseif ($lastViewed_showPostTitle && !$lastViewed_lv_link_title) {
-                    echo '<h3 class="lastViewedTitle">' . $title . '</h3>';
+                    echo '<h3 class="lastViewedTitle ' . $tTitle . '">' . $newTitle . '</h3>';
                 }
 
                 if ($lastViewed_lv_link_excerpt && $lastViewed_showExcerpt) {

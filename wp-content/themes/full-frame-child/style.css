@@ -355,3 +355,7 @@ h2,#jssor_1 h3{
 .jssora03r,.jssora03l{
     top:15px !important;
 }
+
+.widget_categories .cat-item:first-child{
+    display: none;
+}
