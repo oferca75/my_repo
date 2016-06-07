@@ -7,16 +7,23 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 function catTreeNreadcrmbHighlight(click) {
-    var cand = jQuery(this).text().replaceAll(" ","-");
+
+    var text = click ? jQuery(this).text() :jQuery(this).attr("class").split(" ")[1];
+    var cand = text.replaceAll(" ","-");
     jQuery("li.cat-item a." + cand).each(function () {
+        var $el = jQuery(this).prev();
             if(click) {
-                var $el = jQuery(this).prev();
                 while($el.length > 0 && $el.hasClass("collapse")){
                     clickPar.call(this,$el);
-                    jQuery($el).css("font-weight", "bold");
-                    jQuery($el).css("color", "black");
+                    jQuery($el).next().css("font-weight", "bold");
+                    jQuery($el).next().css("color", "black");
                     $el = $el.parent().parent().prev().prev();
                 }
+            }
+        else{
+                jQuery($el).next().css("font-weight", "bold");
+                jQuery($el).next().css("color", "black");
+
             }
 
     })
@@ -32,7 +39,7 @@ $(".widget_lastviewed .widgettitle").click(function(){
     jQuery(".lastViewedcontent .lastViewedTitle").each(function(){
             catTreeNreadcrmbHighlight.call(this,true);
     })
-    jQuery(".entry-header .entry-title  ").each(function(){
+    jQuery("#content article .entry-header .entry-title").each(function(){
             catTreeNreadcrmbHighlight.call(this,false);
     }
     )
