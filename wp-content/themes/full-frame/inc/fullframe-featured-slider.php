@@ -100,14 +100,14 @@ if (!function_exists('fullframe_demo_slider')) :
         $fullframe_demo_slider = '
 								<article class="post hentry slides demo-image displayblock">
 									<figure class="slider-image">
-										<a title="Step by step guide to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
-											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step guide to Brazilian Jiu Jitsu" title="Step by step guide to Brazilian Jiu Jitsu">
+										<a title="Step by step overview of Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
+											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step overview of Brazilian Jiu Jitsu" title="Step by step overview of Brazilian Jiu Jitsu">
 										</a>
 									</figure>  
 									<div class="entry-container">
 										<header class="entry-header">
 											<h1 class="entry-title">
-												<a title="Step by step guide to Brazilian Jiu Jitsu" href="#"><span>Step by step guide to Brazilian Jiu Jitsu</span></a>
+												<a title="Step by step overview of Brazilian Jiu Jitsu" href="#"><span>Step by step overview of Brazilian Jiu Jitsu</span></a>
 											</h1>
 											</header>
 										<div class="entry-content">
@@ -117,15 +117,15 @@ if (!function_exists('fullframe_demo_slider')) :
 								</article><!-- .slides --> 	
 								
 								<article class="post hentry slides demo-image displaynone">
-									<figure class="Step by step guide to Brazilian Jiu Jitsu">
-										<a title="Step by step guide to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
-											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step guide to Brazilian Jiu Jitsu" title="Step by step guide to Brazilian Jiu Jitsu">
+									<figure class="Step by step overview of Brazilian Jiu Jitsu">
+										<a title="Step by step overview of Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
+											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step overview of Brazilian Jiu Jitsu" title="Step by step overview of Brazilian Jiu Jitsu">
 										</a>
 									</figure>
 									<div class="entry-container">
 										<header class="entry-header">
 											<h1 class="entry-title">
-												<a title="Step by step guide to Brazilian Jiu Jitsu" href="#"><span>Step by step guide to Brazilian Jiu Jitsu</span></a>
+												<a title="Step by step overview of Brazilian Jiu Jitsu" href="#"><span>Step by step overview of Brazilian Jiu Jitsu</span></a>
 											</h1>
 											</header>
 										<div class="entry-content">
@@ -135,15 +135,15 @@ if (!function_exists('fullframe_demo_slider')) :
 								</article>
 								
 								<article class="post hentry slides demo-image displaynone">
-									<figure class="Step by step guide to Brazilian Jiu Jitsu">
-										<a title="Step by step guide to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
-											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step guide to Brazilian Jiu Jitsu" title="Step by step guide to Brazilian Jiu Jitsu">
+									<figure class="Step by step overview of Brazilian Jiu Jitsu">
+										<a title="Step by step overview of Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
+											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Step by step overview of Brazilian Jiu Jitsu" title="Step by step overview of Brazilian Jiu Jitsu">
 										</a>
 									</figure>
 									<div class="entry-container">
 										<header class="entry-header">
 											<h1 class="entry-title">
-												<a title="Step by step guide to Brazilian Jiu Jitsu" href="#"><span>Step by step guide to Brazilian Jiu Jitsu</span></a>
+												<a title="Step by step overview of Brazilian Jiu Jitsu" href="#"><span>Step by step overview of Brazilian Jiu Jitsu</span></a>
 											</h1>
 											</header>
 										<div class="entry-content">

@@ -119,7 +119,7 @@ function add_span_cat_count($links) {
             {
                 $tTitle = getTrueTitle($origTitle);
             }
-        $arr[$key] = str_replace('<a href="h','<a class="'.$tTitle.'" href="h',str_replace(trim($origTitle),$mTitle,$titleLink));
+        $arr[$key] = str_replace("category/","",str_replace('<a href="h','<a class="'.$tTitle.'" href="h',str_replace(trim($origTitle),$mTitle,$titleLink)));
     }
     return implode("<li",$arr);
 }
@@ -131,4 +131,30 @@ function add_span_cat_count($links) {
 function getTrueTitle($title)
 {
     return trim(str_replace(" ", "-", trim($title)));
+}
+
+function fight_path(){
+    ?>
+    <div class="fight-path">
+        <?php
+        if (!is_page()) {
+            global $dd_lastviewed_id;
+            echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
+        }
+        ?>
+    </div>
+<?php
+}
+
+function modified_post_title($title){
+    $newTitle = eliminateKeywords($title);
+    if (function_exists("getTrueTitle"))
+    {
+        $tTitle = getTrueTitle($title);
+    }
+    ?>
+    <h1 class="entry-title <?php echo $tTitle;?>"><?php
+
+    echo $newTitle."</h1>";
+
 }
