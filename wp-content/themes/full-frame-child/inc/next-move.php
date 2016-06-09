@@ -57,8 +57,10 @@ if (!function_exists('next-move')) :
                 if ($gameOver) $nextPositionText = 'Submission. Learn More';
                     else $nextPositionText = nextMoveText($postTitle,true);
              ?>
-             style="position: relative; margin: 0 auto; top: 12px; width: <?php echo $nextMoveWidth ?>; height: 280px; overflow: hidden; visibility: visible;">
-            <?php echo '<h2 class="next-move-title"><strong>'.$nextPositionText.':</strong></h2><h4>'. $dispStr .'</h4>'; ?>
+             style="position: relative; margin: 0 auto; top: 12px;
+                 width: <?php echo $nextMoveWidth ?>; height: 325px;
+                 overflow: visible; visibility: visible;">
+            <?php echo '<h2 class="next-move-title">'.$nextPositionText.':</h2><h4>'. $dispStr .'</h4>'; ?>
 
             <!-- Loading Screen -->
             <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -69,13 +71,15 @@ if (!function_exists('next-move')) :
             </div>
 
             <div data-u="slides"
-                 style="cursor: default; position: relative; top: 96px; width: 1235px; height: 250px; overflow: hidden;">
+                 style="cursor: default; position: relative; top: 96px; width: 1235px; height: 200px; overflow: hidden;">
                 <?php
-
+                ob_start();
+                $nextMoveCounter = 0;
                 while (!$dontDisplay && $loop->have_posts()) :
                     $loop->the_post();
                     if ($postTitle == get_the_title() || $nextMoveTechniqueTitle == get_the_title() )
                         continue;
+                    $nextMoveCounter++;
                     ?>
                     <div style="display: none;"><?php
 
@@ -105,6 +109,9 @@ if (!function_exists('next-move')) :
                     <?php
 
                 endwhile; // end of the loop.
+                $nextMovesHtml =  ob_get_clean();
+                echo $nextMovesHtml;
+
                 ?>
 
 
@@ -123,7 +130,8 @@ if (!function_exists('next-move')) :
             <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;"
                   data-autocenter="2"></span>
 <?php
-
+      global $arrowSVG;
+          echo '<div class="history next-arrow">' . $arrowSVG . "</div>";
         ?>
         </div>
 

@@ -50,12 +50,12 @@ function nextMoveText($postTitle, $headline = false)
 {
     $dispStr = "";
     if (endsWith($postTitle, "sitions")) {
-        $dispStr .= $headline ? "Choose a position" : "Types of <strong>" . eliminateKeywords($postTitle) . "</strong>";
+        $dispStr .= $headline ? "Next position" : "Types of <strong>" . eliminateKeywords($postTitle) . "</strong>";
     } else
         if (endsWith($postTitle, "sition")) {
-            $dispStr .= $headline ? "Choose a Technique" : "Techniques from the <strong>" . eliminateKeywords($postTitle) . "</strong>";
+            $dispStr .= $headline ? "Next Technique" : "Techniques from the <strong>" . eliminateKeywords($postTitle) . "</strong>";
         } else {
-            $dispStr .= $headline ? "Choose next move" : 'What you can do from the  <strong>' . eliminateKeywords($postTitle) . "</strong>";
+            $dispStr .= $headline ? "Next move" : 'What you can do from the  <strong>' . eliminateKeywords($postTitle) . "</strong>";
 
         };
     return $dispStr;
@@ -119,7 +119,7 @@ function add_span_cat_count($links) {
             {
                 $tTitle = getTrueTitle($origTitle);
             }
-        $arr[$key] = str_replace("category/","",str_replace('<a href="h','<a class="'.$tTitle.'" href="h',str_replace(trim($origTitle),$mTitle,$titleLink)));
+        $arr[$key] = str_replace('<a href="h','<a class="'.$tTitle.'" href="h',str_replace(trim($origTitle),$mTitle,$titleLink));
     }
     return implode("<li",$arr);
 }

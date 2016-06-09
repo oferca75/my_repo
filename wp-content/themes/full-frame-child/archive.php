@@ -1,5 +1,5 @@
 <?php
-
+ 
 $page_title = single_cat_title("", false);
 $post1 = get_page_by_title($page_title, "OBJECT", 'post');
 global $post;
@@ -27,7 +27,7 @@ $post = get_post($post1->ID);
         <header class="entry-header">
             <div class="fight-path">
                 <?php
-                if (false) { // lastviewed causes strange bug
+                if (!is_page() || true) { // lastviewed causes strange bug
                     global $dd_lastviewed_id;
                     echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
                 }
@@ -48,7 +48,15 @@ $post = get_post($post1->ID);
 
         <div class="entry-content">
 
-            <?php the_content(); ?>
+            <?php
+          $my_postid = $post1->ID;//This is page id or post id
+          $content_post = get_post($my_postid);
+          $content = $content_post->post_content;
+          $content = apply_filters('the_content', $content);
+          $content = str_replace(']]>', ']]&gt;', $content);
+          echo $content;
+          
+         // get_the_content(); ?>
 
             <?php
             wp_link_pages(array(

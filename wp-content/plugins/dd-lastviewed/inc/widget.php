@@ -208,7 +208,8 @@ class lastviewed extends WP_Widget
         $widgetID = $args['widget_id'];
         $widgetID = str_replace('lastviewed-', '', $widgetID);
         $widgetOptions = get_option($this->option_name);
-        $lastviewedTitle = $widgetOptions[$widgetID]['lastviewedTitle'];
+        // Ofer Start Change
+        $lastviewedTitle = "Your fight path...";//$widgetOptions[$widgetID]['lastviewedTitle'];
         $lastViewed_total = $widgetOptions[$widgetID]['lastViewed_total'];
         $lastViewed_truncate = $widgetOptions[$widgetID]['lastViewed_truncate'] ? $widgetOptions[$widgetID]['lastViewed_truncate'] : false;
         $lastViewed_linkname = $widgetOptions[$widgetID]['lastViewed_linkname'];

@@ -31,6 +31,8 @@ function catTreeNreadcrmbHighlight(click) {
 jQuery(document).ready(function ($) {
     $(".widget_lastviewed .widgettitle").click(function () {
         $(".fight-path .lastViewedList").toggle("slow");
+        jQuery('#jssor_1 .next-arrow').toggle();
+
     })
 
     jQuery.fx.off = true;
@@ -45,4 +47,22 @@ jQuery(document).ready(function ($) {
             catTreeNreadcrmbHighlight.call(this, false);
         }
     )
+
+
+    var thumbArray = jQuery("#jssor_1 .yarpp-thumbnail");
+    if (thumbArray.length > 0)
+        {
+            var thumbWidth = jQuery(thumbArray[0]).css("width").replace(/\D/g, '');
+            var containerWidth = jQuery('.next-arrow').offset().left * 2;
+            var thumbsWidth = thumbWidth * thumbArray.length;
+            if (thumbsWidth < containerWidth)
+                {
+                    var leftDistPx = Math.max(0,(containerWidth - thumbsWidth) / 2 - thumbWidth);
+                    leftDistPx += "px";
+                    thumbArray.each(function(){
+                        jQuery(this).parent().css("left",leftDistPx)
+                    })
+                }
+
+        }
 });
