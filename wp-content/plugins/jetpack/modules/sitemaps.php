@@ -15,13 +15,12 @@
  *
  * @module sitemaps
  */
-function jetpack_sitemaps_activate()
-{
-    Jetpack::check_privacy(__FILE__);
+function jetpack_sitemaps_activate() {
+	Jetpack::check_privacy( __FILE__ );
 }
 
-add_action('jetpack_activate_module_sitemaps', 'jetpack_sitemaps_activate');
+add_action( 'jetpack_activate_module_sitemaps', 'jetpack_sitemaps_activate' );
 
-if ('1' == get_option('blog_public')) {
-    include_once 'sitemaps/sitemaps.php';
+if ( '1' == get_option( 'blog_public' ) ) {
+	include_once 'sitemaps/sitemaps.php';
 }

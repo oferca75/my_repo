@@ -22,7 +22,7 @@
 	width: inherit; /* prevents ie8 bug with inline width styles */
 }
 .tiled-gallery .gallery-row {
-	overflow: hidden;
+	 overflow: hidden;
 }
 .tiled-gallery .tiled-gallery-item a { /* Needs to reset some properties for theme compatibility */
 	background: transparent;
@@ -44,14 +44,14 @@
 }
 .tiled-gallery-caption { /* Captions */
 	background: #eee;
-	background: rgba(255, 255, 255, 0.8);
+	background: rgba( 255,255,255,0.8 );
 	color: #333;
 	font-size: 13px;
 	font-weight: 400;
 	overflow: hidden;
 	padding: 10px 0;
 	position: absolute;
-	bottom: 0;
+		bottom: 0;
 	text-indent: 10px;
 	text-overflow: ellipsis;
 	width: 100%;
@@ -75,8 +75,8 @@
 
 .tiled-gallery .tiled-gallery-item img.grayscale {
 	position: absolute;
-	right: 0;
-	top: 0;
+		right: 0;
+		top: 0;
 }
 .tiled-gallery .tiled-gallery-item img.grayscale:hover {
 	opacity: 0;

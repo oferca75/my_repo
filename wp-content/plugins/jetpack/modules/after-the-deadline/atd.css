@@ -1,16 +1,19 @@
 /* AtD error styles */
 
-.hiddenSpellError {
+.hiddenSpellError
+{
    border-bottom: 2px solid red;
    cursor: default;
 }
 
-.hiddenGrammarError {
+.hiddenGrammarError
+{
    border-bottom: 2px solid green;
    cursor: default;
 }
 
-.hiddenSuggestion {
+.hiddenSuggestion
+{
    border-bottom: 2px solid blue;
    cursor: default;
 }
@@ -22,7 +25,8 @@
  * Project      : http://jquery-spellchecker.googlecode.com
  */
 
-#suggestmenu {
+#suggestmenu
+{
    min-width: 122px;
    background: #ebeaeb;
    position: absolute;
@@ -35,75 +39,84 @@
    font-family: Tahoma, Verdana, Arial, Helvetica;
 }
 
-#suggestmenu strong {
+#suggestmenu strong
+{
    background: #cccccc;
    font-weight: bold;
-   padding: 3px 6px 3px 6px;
-   display: block;
-   border: 1px solid #dddddd;
+   padding:3px 6px 3px 6px;
+   display:block;
+   border:1px solid #dddddd;
    border-bottom: 1px solid #aaaaaa;
    color: black;
 }
 
-#suggestmenu em {
-   text-align: center;
-   padding: 3px 6px 3px 6px;
-   display: block;
-   border-top: 1px solid #ccc;
-   border-left: 1px solid #ccc;
+#suggestmenu em
+{
+   text-align:center;
+   padding:3px 6px 3px 6px;
+   display:block;
+   border-top:1px solid #ccc;
+   border-left:1px solid #ccc;
 }
 
-#suggestmenu a, #suggestmenu a:visited {
+#suggestmenu a, #suggestmenu a:visited
+{
    background: #ebeaeb;
-   border-left: 1px solid #dddddd;
-   border-right: 1px solid #dddddd;
-   padding: 3px 6px 3px 6px;
-   display: block;
-   margin: 0px;
-   text-decoration: none;
+   border-left:1px solid #dddddd;
+   border-right:1px solid #dddddd;
+   padding:3px 6px 3px 6px;
+   display:block;
+   margin:0px;
+   text-decoration:none;
    color: black;
-   outline: none
+   outline:none
 }
 
-#suggestmenu a.first, #suggestmenu a.first:visited {
-   border-top: 1px solid #dddddd;
+#suggestmenu a.first, #suggestmenu a.first:visited
+{
+   border-top:1px solid #dddddd;
 }
 
-.spell_sep_bottom {
+.spell_sep_bottom
+{
    border-bottom: 1px solid #dddddd;
 }
 
-.spell_sep_top {
+.spell_sep_top
+{
    border-top: 1px solid #aaaaaa;
 }
 
-#suggestmenu a:hover {
-   color: #000;
+#suggestmenu a:hover
+{
+   color:#000;
    background: #f5f5f5;
 }
 
-#suggestmenu .foot {
-   border-top: 1px solid #aaaaaa;
-   background: #fff
+#suggestmenu .foot
+{
+   border-top:1px solid #aaaaaa;
+   background:#fff
 }
 
-#suggestmenu .foot a, #suggestmenu .foot a:visited {
-   outline: none
+#suggestmenu .foot a, #suggestmenu .foot a:visited
+{
+   outline:none
 }
 
 /* TinyMCE 4.0 */
 div.mce-atd-menu-title.mce-disabled {
-   padding: 3px 12px 0;
+	padding: 3px 12px 0;
 }
 
 div.mce-atd-menu-title.mce-disabled:hover,
 div.mce-atd-menu-title.mce-disabled:hover span.mce-text {
-   background: none;
-   color: #888;
-   cursor: default;
+	background: none;
+	color: #888;
+	cursor: default;
 }
 
 div.mce-atd-menu-title.mce-disabled span.mce-text {
-   font-weight: bold;
-   color: #888;
+	font-weight: bold;
+	color: #888;
 }

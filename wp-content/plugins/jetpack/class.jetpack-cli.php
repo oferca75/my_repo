@@ -1,16 +1,15 @@
 <?php
 
-WP_CLI::add_command('jetpack', 'Jetpack_CLI');
+WP_CLI::add_command( 'jetpack', 'Jetpack_CLI' );
 
 /**
  * Control your local Jetpack installation.
  */
-class Jetpack_CLI extends WP_CLI_Command
-{
+class Jetpack_CLI extends WP_CLI_Command {
 
 	// Aesthetics
-	public $green_open = "\033[32m";
-	public $red_open = "\033[31m";
+	public $green_open  = "\033[32m";
+	public $red_open    = "\033[31m";
 	public $yellow_open = "\033[33m";
 	public $color_close = "\033[0m";
 
@@ -29,14 +28,13 @@ class Jetpack_CLI extends WP_CLI_Command
 	 * wp jetpack status full
 	 *
 	 */
-	public function status($args, $assoc_args)
-	{
-		if (!Jetpack::is_active()) {
-			WP_CLI::error(__('Jetpack is not currently connected to WordPress.com', 'jetpack'));
+	public function status( $args, $assoc_args ) {
+		if ( ! Jetpack::is_active() ) {
+			WP_CLI::error( __( 'Jetpack is not currently connected to WordPress.com', 'jetpack' ) );
 		}
 
-		if (isset($args[0]) && 'full' !== $args[0]) {
-			WP_CLI::error(sprintf(__('%s is not a valid command.', 'jetpack'), $args[0]));
+		if ( isset( $args[0] ) && 'full' !== $args[0] ) {
+			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack' ), $args[0] ) );
 		}
 
 		/*
@@ -44,47 +42,47 @@ class Jetpack_CLI extends WP_CLI_Command
 		 *
 		 * Loop through heartbeat data and organize by priority.
 		 */
-		$all_data = (isset($args[0]) && 'full' == $args[0]) ? 'full' : false;
-		if ($all_data) {
-			WP_CLI::success(__('Jetpack is currently connected to WordPress.com', 'jetpack'));
-			WP_CLI::line(sprintf(__("The Jetpack Version is %s", 'jetpack'), JETPACK__VERSION));
-			WP_CLI::line(sprintf(__("The WordPress.com blog_id is %d", 'jetpack'), Jetpack_Options::get_option('id')));
+		$all_data = ( isset( $args[0] ) && 'full' == $args[0] ) ? 'full' : false;
+		if ( $all_data ) {
+			WP_CLI::success( __( 'Jetpack is currently connected to WordPress.com', 'jetpack' ) );
+			WP_CLI::line( sprintf( __( "The Jetpack Version is %s", 'jetpack' ), JETPACK__VERSION ) );
+			WP_CLI::line( sprintf( __( "The WordPress.com blog_id is %d", 'jetpack' ), Jetpack_Options::get_option( 'id' ) ) );
 
 			// Heartbeat data
-			WP_CLI::line("\n" . __('Additional data: ', 'jetpack'));
+			WP_CLI::line( "\n" . __( 'Additional data: ', 'jetpack' ) );
 
 			// Get the filtered heartbeat data.
 			// Filtered so we can color/list by severity
 			$stats = Jetpack::jetpack_check_heartbeat_data();
 
 			// Display red flags first
-			foreach ($stats['bad'] as $stat => $value) {
-				printf("$this->red_open%-'.16s %s $this->color_close\n", $stat, $value);
+			foreach ( $stats['bad'] as $stat => $value ) {
+				printf( "$this->red_open%-'.16s %s $this->color_close\n", $stat, $value );
 			}
 
 			// Display caution warnings next
-			foreach ($stats['caution'] as $stat => $value) {
-				printf("$this->yellow_open%-'.16s %s $this->color_close\n", $stat, $value);
+			foreach ( $stats['caution'] as $stat => $value ) {
+				printf( "$this->yellow_open%-'.16s %s $this->color_close\n", $stat, $value );
 			}
 
 			// The rest of the results are good!
-			foreach ($stats['good'] as $stat => $value) {
+			foreach ( $stats['good'] as $stat => $value ) {
 
 				// Modules should get special spacing for aestetics
-				if (strpos($stat, 'odule-')) {
-					printf("%-'.30s %s\n", $stat, $value);
-					usleep(4000); // For dramatic effect lolz
+				if ( strpos( $stat, 'odule-' ) ) {
+					printf( "%-'.30s %s\n", $stat, $value );
+					usleep( 4000 ); // For dramatic effect lolz
 					continue;
 				}
-				printf("%-'.16s %s\n", $stat, $value);
-				usleep(4000); // For dramatic effect lolz
+				printf( "%-'.16s %s\n", $stat, $value );
+				usleep( 4000 ); // For dramatic effect lolz
 			}
 		} else {
 			// Just the basics
-			WP_CLI::success(__('Jetpack is currently connected to WordPress.com', 'jetpack'));
-			WP_CLI::line(sprintf(__('The Jetpack Version is %s', 'jetpack'), JETPACK__VERSION));
-			WP_CLI::line(sprintf(__('The WordPress.com blog_id is %d', 'jetpack'), Jetpack_Options::get_option('id')));
-			WP_CLI::line("\n" . _x("View full status with 'wp jetpack status full'", '"wp jetpack status full" is a command - do not translate', 'jetpack'));
+			WP_CLI::success( __( 'Jetpack is currently connected to WordPress.com', 'jetpack' ) );
+			WP_CLI::line( sprintf( __( 'The Jetpack Version is %s', 'jetpack' ), JETPACK__VERSION ) );
+			WP_CLI::line( sprintf( __( 'The WordPress.com blog_id is %d', 'jetpack' ), Jetpack_Options::get_option( 'id' ) ) );
+			WP_CLI::line( "\n" . _x( "View full status with 'wp jetpack status full'", '"wp jetpack status full" is a command - do not translate', 'jetpack' ) );
 		}
 	}
 
@@ -110,54 +108,53 @@ class Jetpack_CLI extends WP_CLI_Command
 	 *
 	 * @synopsis <blog|user> [<user_identifier>]
 	 */
-	public function disconnect($args, $assoc_args)
-	{
-		if (!Jetpack::is_active()) {
-			WP_CLI::error(__('You cannot disconnect, without having first connected.', 'jetpack'));
+	public function disconnect( $args, $assoc_args ) {
+		if ( ! Jetpack::is_active() ) {
+			WP_CLI::error( __( 'You cannot disconnect, without having first connected.', 'jetpack' ) );
 		}
 
-		$action = isset($args[0]) ? $args[0] : 'prompt';
-		if (!in_array($action, array('blog', 'user', 'prompt'))) {
-			WP_CLI::error(sprintf(__('%s is not a valid command.', 'jetpack'), $action));
+		$action = isset( $args[0] ) ? $args[0] : 'prompt';
+		if ( ! in_array( $action, array( 'blog', 'user', 'prompt' ) ) ) {
+			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack' ), $action ) );
 		}
 
-		if (in_array($action, array('user'))) {
-			if (isset($args[1])) {
+		if ( in_array( $action, array( 'user' ) ) ) {
+			if ( isset( $args[1] ) ) {
 				$user_id = $args[1];
-				if (ctype_digit($user_id)) {
+				if ( ctype_digit( $user_id ) ) {
 					$field = 'id';
-					$user_id = (int)$user_id;
-				} elseif (is_email($user_id)) {
+					$user_id = (int) $user_id;
+				} elseif ( is_email( $user_id ) ) {
 					$field = 'email';
-					$user_id = sanitize_user($user_id, true);
+					$user_id = sanitize_user( $user_id, true );
 				} else {
 					$field = 'login';
-					$user_id = sanitize_user($user_id, true);
+					$user_id = sanitize_user( $user_id, true );
 				}
-				if (!$user = get_user_by($field, $user_id)) {
-					WP_CLI::error(__('Please specify a valid user.', 'jetpack'));
+				if ( ! $user = get_user_by( $field, $user_id ) ) {
+					WP_CLI::error( __( 'Please specify a valid user.', 'jetpack' ) );
 				}
 			} else {
-				WP_CLI::error(__('Please specify a user by either ID, username, or email.', 'jetpack'));
+				WP_CLI::error( __( 'Please specify a user by either ID, username, or email.', 'jetpack' ) );
 			}
 		}
 
-		switch ($action) {
+		switch ( $action ) {
 			case 'blog':
-				Jetpack::log('disconnect');
+				Jetpack::log( 'disconnect' );
 				Jetpack::disconnect();
-				WP_CLI::success(__('Jetpack has been successfully disconnected.', 'jetpack'));
+				WP_CLI::success( __( 'Jetpack has been successfully disconnected.', 'jetpack' ) );
 				break;
 			case 'user':
-				if (Jetpack::unlink_user($user->ID)) {
-					Jetpack::log('unlink', $user->ID);
-					WP_CLI::success(sprintf(__('%s has been successfully disconnected.', 'jetpack'), $action));
+				if ( Jetpack::unlink_user( $user->ID ) ) {
+					Jetpack::log( 'unlink', $user->ID );
+					WP_CLI::success( sprintf( __( '%s has been successfully disconnected.', 'jetpack' ), $action ) );
 				} else {
-					WP_CLI::error(sprintf(__('%s could not be disconnected.  Are you sure they\'re connected currently?', 'jetpack'), "{$user->login} <{$user->email}>"));
+					WP_CLI::error( sprintf( __( '%s could not be disconnected.  Are you sure they\'re connected currently?', 'jetpack' ), "{$user->login} <{$user->email}>" ) );
 				}
 				break;
 			case 'prompt':
-				WP_CLI::error(__('Please specify if you would like to disconnect a blog or user.', 'jetpack'));
+				WP_CLI::error( __( 'Please specify if you would like to disconnect a blog or user.', 'jetpack' ) );
 				break;
 		}
 	}
@@ -183,56 +180,55 @@ class Jetpack_CLI extends WP_CLI_Command
 	 *
 	 * @synopsis <modules|options>
 	 */
-	public function reset($args, $assoc_args)
-	{
-		$action = isset($args[0]) ? $args[0] : 'prompt';
-		if (!in_array($action, array('options', 'modules'))) {
-			WP_CLI::error(sprintf(__('%s is not a valid command.', 'jetpack'), $action));
+	public function reset( $args, $assoc_args ) {
+		$action = isset( $args[0] ) ? $args[0] : 'prompt';
+		if ( ! in_array( $action, array( 'options', 'modules' ) ) ) {
+			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack' ), $action ) );
 		}
 
 		// Are you sure?
 		jetpack_cli_are_you_sure();
 
-		switch ($action) {
+		switch ( $action ) {
 			case 'options':
 				$options_to_reset = Jetpack::get_jetpack_options_for_reset();
 
 				// Reset the Jetpack options
-				_e("Resetting Jetpack Options...\n", "jetpack");
+				_e( "Resetting Jetpack Options...\n", "jetpack" );
 				sleep(1); // Take a breath
-				foreach ($options_to_reset['jp_options'] as $option_to_reset) {
-					Jetpack_Options::delete_option($option_to_reset);
-					usleep(100000);
-					WP_CLI::success(sprintf(__('%s option reset', 'jetpack'), $option_to_reset));
+				foreach ( $options_to_reset['jp_options'] as $option_to_reset ) {
+					Jetpack_Options::delete_option( $option_to_reset );
+					usleep( 100000 );
+					WP_CLI::success( sprintf( __( '%s option reset', 'jetpack' ), $option_to_reset ) );
 				}
 
 				// Reset the WP options
-				_e("Resetting the jetpack options stored in wp_options...\n", "jetpack");
-				usleep(500000); // Take a breath
-				foreach ($options_to_reset['wp_options'] as $option_to_reset) {
-					delete_option($option_to_reset);
-					usleep(100000);
-					WP_CLI::success(sprintf(__('%s option reset', 'jetpack'), $option_to_reset));
+				_e( "Resetting the jetpack options stored in wp_options...\n", "jetpack" );
+				usleep( 500000 ); // Take a breath
+				foreach ( $options_to_reset['wp_options'] as $option_to_reset ) {
+					delete_option( $option_to_reset );
+					usleep( 100000 );
+					WP_CLI::success( sprintf( __( '%s option reset', 'jetpack' ), $option_to_reset ) );
 				}
 
 				// Reset to default modules
-				_e("Resetting default modules...\n", "jetpack");
-				usleep(500000); // Take a breath
+				_e( "Resetting default modules...\n", "jetpack" );
+				usleep( 500000 ); // Take a breath
 				$default_modules = Jetpack::get_default_modules();
-				Jetpack_Options::update_option('active_modules', $default_modules);
-				WP_CLI::success(__('Modules reset to default.', 'jetpack'));
+				Jetpack_Options::update_option( 'active_modules', $default_modules );
+				WP_CLI::success( __( 'Modules reset to default.', 'jetpack' ) );
 
 				// Jumpstart option is special
-				Jetpack_Options::update_option('jumpstart', 'new_connection');
-				WP_CLI::success(__('jumpstart option reset', 'jetpack'));
+				Jetpack_Options::update_option( 'jumpstart', 'new_connection' );
+				WP_CLI::success( __( 'jumpstart option reset', 'jetpack' ) );
 				break;
 			case 'modules':
 				$default_modules = Jetpack::get_default_modules();
-				Jetpack_Options::update_option('active_modules', $default_modules);
-				WP_CLI::success(__('Modules reset to default.', 'jetpack'));
+				Jetpack_Options::update_option( 'active_modules', $default_modules );
+				WP_CLI::success( __( 'Modules reset to default.', 'jetpack' ) );
 				break;
 			case 'prompt':
-				WP_CLI::error(__('Please specify if you would like to reset your options, or modules', 'jetpack'));
+				WP_CLI::error( __( 'Please specify if you would like to reset your options, or modules', 'jetpack' ) );
 				break;
 		}
 	}
@@ -262,67 +258,66 @@ class Jetpack_CLI extends WP_CLI_Command
 	 *
 	 * @synopsis <list|activate|deactivate|toggle> [<module_name>]
 	 */
-	public function module($args, $assoc_args)
-	{
-		$action = isset($args[0]) ? $args[0] : 'list';
-		if (!in_array($action, array('list', 'activate', 'deactivate', 'toggle'))) {
-			WP_CLI::error(sprintf(__('%s is not a valid command.', 'jetpack'), $action));
+	public function module( $args, $assoc_args ) {
+		$action = isset( $args[0] ) ? $args[0] : 'list';
+		if ( ! in_array( $action, array( 'list', 'activate', 'deactivate', 'toggle' ) ) ) {
+			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack' ), $action ) );
 		}
-		if (in_array($action, array('activate', 'deactivate', 'toggle'))) {
-			if (isset($args[1])) {
+		if ( in_array( $action, array( 'activate', 'deactivate', 'toggle' ) ) ) {
+			if ( isset( $args[1] ) ) {
 				$module_slug = $args[1];
-				if ('all' !== $module_slug && !Jetpack::is_module($module_slug)) {
-					WP_CLI::error(sprintf(__('%s is not a valid module.', 'jetpack'), $module_slug));
+				if ( 'all' !== $module_slug && ! Jetpack::is_module( $module_slug ) ) {
+					WP_CLI::error( sprintf( __( '%s is not a valid module.', 'jetpack' ), $module_slug ) );
 				}
-				if ('toggle' == $action) {
-					$action = Jetpack::is_module_active($module_slug) ? 'deactivate' : 'activate';
+				if ( 'toggle' == $action ) {
+					$action = Jetpack::is_module_active( $module_slug ) ? 'deactivate' : 'activate';
 				}
 				// Bulk actions
-				if ('all' == $args[1]) {
-					$action = ('deactivate' == $action) ? 'deactivate_all' : 'activate_all';
+				if ( 'all' == $args[1] ) {
+					$action = ( 'deactivate' == $action ) ? 'deactivate_all' : 'activate_all';
 				}
 				// VaultPress needs to be handled elsewhere.
-				if (in_array($action, array('activate', 'deactivate', 'toggle')) && 'vaultpress' == $args[1]) {
-					WP_CLI::error(sprintf(_x('Please visit %s to configure your VaultPress subscription.', '%s is a website', 'jetpack'), esc_url('https://vaultpress.com/jetpack/')));
+				if ( in_array( $action, array( 'activate', 'deactivate', 'toggle' ) ) && 'vaultpress' == $args[1] ) {
+					WP_CLI::error( sprintf( _x( 'Please visit %s to configure your VaultPress subscription.', '%s is a website', 'jetpack' ), esc_url( 'https://vaultpress.com/jetpack/' ) ) );
 				}
 			} else {
-				WP_CLI::line(__('Please specify a valid module.', 'jetpack'));
+				WP_CLI::line( __( 'Please specify a valid module.', 'jetpack' ) );
 				$action = 'list';
 			}
 		}
-		switch ($action) {
+		switch ( $action ) {
 			case 'list':
-				WP_CLI::line(__('Available Modules:', 'jetpack'));
+				WP_CLI::line( __( 'Available Modules:', 'jetpack' ) );
 				$modules = Jetpack::get_available_modules();
-				sort($modules);
-				foreach ($modules as $module_slug) {
-					if ('vaultpress' == $module_slug) {
+				sort( $modules );
+				foreach( $modules as $module_slug ) {
+					if ( 'vaultpress' == $module_slug ) {
 						continue;
 					}
-					$active = Jetpack::is_module_active($module_slug) ? __('Active', 'jetpack') : __('Inactive', 'jetpack');
-					WP_CLI::line("\t" . str_pad($module_slug, 24) . $active);
+					$active = Jetpack::is_module_active( $module_slug ) ? __( 'Active', 'jetpack' ) : __( 'Inactive', 'jetpack' );
+					WP_CLI::line( "\t" . str_pad( $module_slug, 24 ) . $active );
 				}
 				break;
 			case 'activate':
-				$module = Jetpack::get_module($module_slug);
-				Jetpack::log('activate', $module_slug);
-				Jetpack::activate_module($module_slug, false, false);
-				WP_CLI::success(sprintf(__('%s has been activated.', 'jetpack'), $module['name']));
+				$module = Jetpack::get_module( $module_slug );
+				Jetpack::log( 'activate', $module_slug );
+				Jetpack::activate_module( $module_slug, false, false );
+				WP_CLI::success( sprintf( __( '%s has been activated.', 'jetpack' ), $module['name'] ) );
 				break;
 			case 'activate_all':
 				$modules = Jetpack::get_available_modules();
-				Jetpack_Options::update_option('active_modules', $modules);
-				WP_CLI::success(__('All modules activated!', 'jetpack'));
+				Jetpack_Options::update_option( 'active_modules', $modules );
+				WP_CLI::success( __( 'All modules activated!', 'jetpack' ) );
 				break;
 			case 'deactivate':
-				$module = Jetpack::get_module($module_slug);
-				Jetpack::log('deactivate', $module_slug);
-				Jetpack::deactivate_module($module_slug);
-				WP_CLI::success(sprintf(__('%s has been deactivated.', 'jetpack'), $module['name']));
+				$module = Jetpack::get_module( $module_slug );
+				Jetpack::log( 'deactivate', $module_slug );
+				Jetpack::deactivate_module( $module_slug );
+				WP_CLI::success( sprintf( __( '%s has been deactivated.', 'jetpack' ), $module['name'] ) );
 				break;
 			case 'deactivate_all':
-				Jetpack_Options::update_option('active_modules', '');
-				WP_CLI::success(__('All modules deactivated!', 'jetpack'));
+				Jetpack_Options::update_option( 'active_modules', '' );
+				WP_CLI::success( __( 'All modules deactivated!', 'jetpack' ) );
 				break;
 			case 'toggle':
 				// Will never happen, should have been handled above and changed to activate or deactivate.
@@ -346,40 +341,39 @@ class Jetpack_CLI extends WP_CLI_Command
 	 *
 	 * @synopsis <whitelist> [<ip|ip_low-ip_high|list|clear>]
 	 */
-	public function protect($args, $assoc_args)
-	{
-		$action = isset($args[0]) ? $args[0] : 'prompt';
-		if (!in_array($action, array('whitelist'))) {
-			WP_CLI::error(sprintf(__('%s is not a valid command.', 'jetpack'), $action));
+	public function protect( $args, $assoc_args ) {
+		$action = isset( $args[0] ) ? $args[0] : 'prompt';
+		if ( ! in_array( $action, array( 'whitelist' ) ) ) {
+			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack' ), $action ) );
 		}
 		// Check if module is active
-		if (!Jetpack::is_module_active(__FUNCTION__)) {
-			WP_CLI::error(sprintf(_x('%s is not active. You can activate it with "wp jetpack module activate %s"', '"wp jetpack module activate" is a command - do not translate', 'jetpack'), __FUNCTION__, __FUNCTION__));
+		if ( ! Jetpack::is_module_active( __FUNCTION__ ) ) {
+			WP_CLI::error( sprintf( _x( '%s is not active. You can activate it with "wp jetpack module activate %s"', '"wp jetpack module activate" is a command - do not translate', 'jetpack' ), __FUNCTION__, __FUNCTION__ ) );
 		}
-		if (in_array($action, array('whitelist'))) {
-			if (isset($args[1])) {
+		if ( in_array( $action, array( 'whitelist' ) ) ) {
+			if ( isset( $args[1] ) ) {
 				$action = 'whitelist';
 			} else {
 				$action = 'prompt';
 			}
 		}
-		switch ($action) {
+		switch ( $action ) {
 			case 'whitelist':
-				$whitelist = array();
-				$new_ip = $args[1];
-				$current_whitelist = get_site_option('jetpack_protect_whitelist');
+				$whitelist         = array();
+				$new_ip            = $args[1];
+				$current_whitelist = get_site_option( 'jetpack_protect_whitelist' );
 
 				// Build array of IPs that are already whitelisted.
 				// Re-build manually instead of using jetpack_protect_format_whitelist() so we can easily get
 				// low & high range params for jetpack_protect_ip_address_is_in_range();
-				foreach ($current_whitelist as $whitelisted) {
+				foreach( $current_whitelist as $whitelisted ) {
 
 					// IP ranges
-					if ($whitelisted->range) {
+					if ( $whitelisted->range ) {
 
 						// Is it already whitelisted?
-						if (jetpack_protect_ip_address_is_in_range($new_ip, $whitelisted->range_low, $whitelisted->range_high)) {
-							WP_CLI::error(sprintf(__("%s has already been whitelisted", 'jetpack'), $new_ip));
+						if ( jetpack_protect_ip_address_is_in_range( $new_ip, $whitelisted->range_low, $whitelisted->range_high ) ) {
+							WP_CLI::error( sprintf( __( "%s has already been whitelisted", 'jetpack' ), $new_ip ) );
 							break;
 						}
 						$whitelist[] = $whitelisted->range_low . " - " . $whitelisted->range_high;
@@ -387,8 +381,8 @@ class Jetpack_CLI extends WP_CLI_Command
 					} else { // Individual IPs
 
 						// Check if the IP is already whitelisted (single IP only)
-						if ($new_ip == $whitelisted->ip_address) {
-							WP_CLI::error(sprintf(__("%s has already been whitelisted", 'jetpack'), $new_ip));
+						if ( $new_ip == $whitelisted->ip_address ) {
+							WP_CLI::error( sprintf( __( "%s has already been whitelisted", 'jetpack' ), $new_ip ) );
 							break;
 						}
 						$whitelist[] = $whitelisted->ip_address;
@@ -400,14 +394,14 @@ class Jetpack_CLI extends WP_CLI_Command
 				 * List the whitelist
 				 * Done here because it's easier to read the $whitelist array after it's been rebuilt
 				 */
-				if (isset($args[1]) && 'list' == $args[1]) {
-					if (!empty($whitelist)) {
-						WP_CLI::success(__('Here are your whitelisted IPs:', 'jetpack'));
-						foreach ($whitelist as $ip) {
-							WP_CLI::line("\t" . str_pad($ip, 24));
+				if ( isset( $args[1] ) && 'list' == $args[1] ) {
+					if ( ! empty( $whitelist ) ) {
+						WP_CLI::success( __( 'Here are your whitelisted IPs:', 'jetpack' ) );
+						foreach ( $whitelist as $ip ) {
+							WP_CLI::line( "\t" . str_pad( $ip, 24 ) ) ;
 						}
 					} else {
-						WP_CLI::line(__('Whitelist is empty.', "jetpack"));
+						WP_CLI::line( __( 'Whitelist is empty.', "jetpack" ) ) ;
 					}
 					break;
 				}
@@ -415,34 +409,34 @@ class Jetpack_CLI extends WP_CLI_Command
 				/*
 				 * Clear the whitelist
 				 */
-				if (isset($args[1]) && 'clear' == $args[1]) {
-					if (!empty($whitelist)) {
+				if ( isset( $args[1] ) && 'clear' == $args[1] ) {
+					if ( ! empty( $whitelist ) ) {
 						$whitelist = array();
-						jetpack_protect_save_whitelist($whitelist);
-						WP_CLI::success(__('Cleared all whitelisted IPs', 'jetpack'));
+						jetpack_protect_save_whitelist( $whitelist );
+						WP_CLI::success( __( 'Cleared all whitelisted IPs', 'jetpack' ) );
 					} else {
-						WP_CLI::line(__('Whitelist is empty.', "jetpack"));
+						WP_CLI::line( __( 'Whitelist is empty.', "jetpack" ) ) ;
 					}
 					break;
 				}
 
 				// Append new IP to whitelist array
-				array_push($whitelist, $new_ip);
+				array_push( $whitelist, $new_ip );
 
 				// Save whitelist if there are no errors
-				$result = jetpack_protect_save_whitelist($whitelist);
-				if (is_wp_error($result)) {
-					WP_CLI::error(__($result, 'jetpack'));
+				$result = jetpack_protect_save_whitelist( $whitelist );
+				if ( is_wp_error( $result ) ) {
+					WP_CLI::error( __( $result, 'jetpack' ) );
 				}
 
-				WP_CLI::success(sprintf(__('%s has been whitelisted.', 'jetpack'), $new_ip));
+				WP_CLI::success( sprintf( __( '%s has been whitelisted.', 'jetpack' ), $new_ip ) );
 				break;
 			case 'prompt':
 				WP_CLI::error(
-					__('No command found.', 'jetpack') . "\n" .
-					__('Please enter the IP address you want to whitelist.', 'jetpack') . "\n" .
-					_x('You can save a range of IPs {low_range}-{high_range}. No spaces allowed.  (example: 1.1.1.1-2.2.2.2)', 'Instructions on how to whitelist IP ranges - low_range/high_range should be translated.', 'jetpack') . "\n" .
-					_x("You can also 'list' or 'clear' the whitelist.", "'list' and 'clear' are commands and should not be translated", 'jetpack') . "\n"
+					__( 'No command found.', 'jetpack' ) . "\n" .
+					__( 'Please enter the IP address you want to whitelist.', 'jetpack' ) . "\n" .
+					_x( 'You can save a range of IPs {low_range}-{high_range}. No spaces allowed.  (example: 1.1.1.1-2.2.2.2)', 'Instructions on how to whitelist IP ranges - low_range/high_range should be translated.', 'jetpack' ) . "\n" .
+					_x( "You can also 'list' or 'clear' the whitelist.", "'list' and 'clear' are commands and should not be translated", 'jetpack' ) . "\n"
 				);
 				break;
 		}
@@ -469,27 +463,26 @@ class Jetpack_CLI extends WP_CLI_Command
 	 *
 	 * @synopsis <list|get|delete|update> [<option_name>] [<option_value>]
 	 */
-	public function options($args, $assoc_args)
-	{
-		$action = isset($args[0]) ? $args[0] : 'list';
+	public function options( $args, $assoc_args ) {
+		$action = isset( $args[0] ) ? $args[0] : 'list';
 		$safe_to_modify = Jetpack::get_jetpack_options_for_reset();
 
 		// Jumpstart is special
-		array_push($safe_to_modify, 'jumpstart');
+		array_push( $safe_to_modify, 'jumpstart' );
 
 		// Is the option flagged as unsafe?
-		$flagged = !in_array($args[1], $safe_to_modify);
+		$flagged = ! in_array( $args[1], $safe_to_modify );
 
-		if (!in_array($action, array('list', 'get', 'delete', 'update'))) {
-			WP_CLI::error(sprintf(__('%s is not a valid command.', 'jetpack'), $action));
+		if ( ! in_array( $action, array( 'list', 'get', 'delete', 'update' ) ) ) {
+			WP_CLI::error( sprintf( __( '%s is not a valid command.', 'jetpack' ), $action ) );
 		}
 
-		if (isset($args[0])) {
-			if ('get' == $args[0] && isset($args[1])) {
+		if ( isset( $args[0] ) ) {
+			if ( 'get' == $args[0] && isset( $args[1] ) ) {
 				$action = 'get';
-			} else if ('delete' == $args[0] && isset($args[1])) {
+			} else if ( 'delete' == $args[0] && isset( $args[1] ) ) {
 				$action = 'delete';
-			} else if ('update' == $args[0] && isset($args[1])) {
+			} else if ( 'update' == $args[0] && isset( $args[1] ) ) {
 				$action = 'update';
 			} else {
 				$action = 'list';
@@ -497,71 +490,71 @@ class Jetpack_CLI extends WP_CLI_Command
 		}
 
 		// Bail if the option isn't found
-		$option = isset($args[1]) ? Jetpack_Options::get_option($args[1]) : false;
-		if (isset($args[1]) && !$option && 'update' !== $args[0]) {
-			WP_CLI::error(__('Option not found or is empty.  Use "list" to list option names', 'jetpack'));
+		$option = isset( $args[1] ) ? Jetpack_Options::get_option( $args[1] ) : false;
+		if ( isset( $args[1] ) && ! $option && 'update' !== $args[0] ) {
+			WP_CLI::error( __( 'Option not found or is empty.  Use "list" to list option names', 'jetpack' ) );
 		}
 
 		// Let's print_r the option if it's an array
 		// Used in the 'get' and 'list' actions
-		$option = is_array($option) ? print_r($option) : $option;
+		$option = is_array( $option ) ? print_r( $option ) : $option;
 
-		switch ($action) {
+		switch ( $action ) {
 			case 'get':
-				WP_CLI::success("\t" . $option);
+				WP_CLI::success( "\t" . $option );
 				break;
 			case 'delete':
-				jetpack_cli_are_you_sure($flagged);
+				jetpack_cli_are_you_sure( $flagged );
 
-				Jetpack_Options::delete_option($args[1]);
-				WP_CLI::success(sprintf(__('Deleted option: %s', 'jetpack'), $args[1]));
+				Jetpack_Options::delete_option( $args[1] );
+				WP_CLI::success( sprintf( __( 'Deleted option: %s', 'jetpack' ), $args[1] ) );
 				break;
 			case 'update':
-				jetpack_cli_are_you_sure($flagged);
+				jetpack_cli_are_you_sure( $flagged );
 
 				// Updating arrays would get pretty tricky...
-				$value = Jetpack_Options::get_option($args[1]);
-				if ($value && is_array($value)) {
-					WP_CLI::error(__('Sorry, no updating arrays at this time', 'jetpack'));
+				$value = Jetpack_Options::get_option( $args[1] );
+				if ( $value && is_array( $value ) ) {
+					WP_CLI::error( __( 'Sorry, no updating arrays at this time', 'jetpack' ) );
 				}
 
-				Jetpack_Options::update_option($args[1], $args[2]);
-				WP_CLI::success(sprintf(_x('Updated option: %s to "%s"', 'Updating an option from "this" to "that".', 'jetpack'), $args[1], $args[2]));
+				Jetpack_Options::update_option( $args[1], $args[2] );
+				WP_CLI::success( sprintf( _x( 'Updated option: %s to "%s"', 'Updating an option from "this" to "that".', 'jetpack' ), $args[1], $args[2] ) );
 				break;
 			case 'list':
-				$options_compact = Jetpack_Options::get_option_names();
-				$options_non_compact = Jetpack_Options::get_option_names('non_compact');
-				$options_private = Jetpack_Options::get_option_names('private');
-				$options = array_merge($options_compact, $options_non_compact, $options_private);
+				$options_compact     = Jetpack_Options::get_option_names();
+				$options_non_compact = Jetpack_Options::get_option_names( 'non_compact' );
+				$options_private     = Jetpack_Options::get_option_names( 'private' );
+				$options             = array_merge( $options_compact, $options_non_compact, $options_private );
 
 				// Table headers
-				WP_CLI::line("\t" . str_pad(__('Option', 'jetpack'), 30) . __('Value', 'jetpack'));
+				WP_CLI::line( "\t" . str_pad( __( 'Option', 'jetpack' ), 30 ) . __( 'Value', 'jetpack' ) );
 
 				// List out the options and their values
 				// Tell them if the value is empty or not
 				// Tell them if it's an array
-				foreach ($options as $option) {
-					$value = Jetpack_Options::get_option($option);
-					if (!$value) {
-						WP_CLI::line("\t" . str_pad($option, 30) . 'Empty');
+				foreach ( $options as $option ) {
+					$value = Jetpack_Options::get_option( $option );
+					if ( ! $value ) {
+						WP_CLI::line( "\t" . str_pad( $option, 30 ) . 'Empty' );
 						continue;
 					}
 
-					if (!is_array($value)) {
-						WP_CLI::line("\t" . str_pad($option, 30) . $value);
-					} else if (is_array($value)) {
-						WP_CLI::line("\t" . str_pad($option, 30) . 'Array - Use "get <option>" to read option array.');
+					if ( ! is_array( $value ) ) {
+						WP_CLI::line( "\t" . str_pad( $option, 30 ) . $value );
+					} else if ( is_array( $value ) ) {
+						WP_CLI::line( "\t" . str_pad( $option, 30 ) . 'Array - Use "get <option>" to read option array.' );
 					}
 				}
-				$option_text = '{' . _x('option', 'a variable command that a user can write, provided in the printed instructions', 'jetpack') . '}';
-				$value_text = '{' . _x('value', 'the value that they want to update the option to', 'jetpack') . '}';
+				$option_text = '{' . _x( 'option', 'a variable command that a user can write, provided in the printed instructions', 'jetpack' ) . '}';
+				$value_text  = '{' . _x( 'value', 'the value that they want to update the option to', 'jetpack' ) . '}';
 
 				WP_CLI::success(
-					_x("Above are your options. You may 'get', 'delete', and 'update' them.", "'get', 'delete', and 'update' are commands - do not translate.", 'jetpack') . "\n" .
-					str_pad('wp jetpack options get', 26) . $option_text . "\n" .
-					str_pad('wp jetpack options delete', 26) . $option_text . "\n" .
-					str_pad('wp jetpack options update', 26) . "$option_text $value_text" . "\n" .
-					_x("Type 'wp jetpack options' for more info.", "'wp jetpack options' is a command - do not translate.", 'jetpack') . "\n"
+					_x( "Above are your options. You may 'get', 'delete', and 'update' them.", "'get', 'delete', and 'update' are commands - do not translate.", 'jetpack' ) . "\n" .
+					str_pad( 'wp jetpack options get', 26 )    . $option_text . "\n" .
+					str_pad( 'wp jetpack options delete', 26 ) . $option_text . "\n" .
+					str_pad( 'wp jetpack options update', 26 ) . "$option_text $value_text" . "\n" .
+					_x( "Type 'wp jetpack options' for more info.", "'wp jetpack options' is a command - do not translate.", 'jetpack' ) . "\n"
 				);
 				break;
 		}
@@ -577,31 +570,30 @@ class Jetpack_CLI extends WP_CLI_Command
  * @param $flagged   bool   false = normal option | true = flagged by get_jetpack_options_for_reset()
  * @param $error_msg string (optional)
  */
-function jetpack_cli_are_you_sure($flagged = false, $error_msg = false)
-{
+function jetpack_cli_are_you_sure( $flagged = false, $error_msg = false ) {
 	$cli = new Jetpack_CLI();
 
 	// Default cancellation message
-	if (!$error_msg) {
+	if ( ! $error_msg ) {
 		$error_msg =
-			__('Action cancelled. Have a question?', 'jetpack')
+			__( 'Action cancelled. Have a question?', 'jetpack' )
 			. ' '
 			. $cli->green_open
 			. 'jetpack.com/support'
-			. $cli->color_close;
+			.  $cli->color_close;
 	}
 
-	if (!$flagged) {
-		$prompt_message = __('Are you sure? This cannot be undone. Type "yes" to continue:', '"yes" is a command.  Do not translate that.', 'jetpack');
+	if ( ! $flagged ) {
+		$prompt_message = __( 'Are you sure? This cannot be undone. Type "yes" to continue:', '"yes" is a command.  Do not translate that.', 'jetpack' );
 	} else {
 		/* translators: Don't translate the word yes here. */
-		$prompt_message = __('Are you sure? Modifying this option may disrupt your Jetpack connection.  Type "yes" to continue.', 'jetpack');
+		$prompt_message = __( 'Are you sure? Modifying this option may disrupt your Jetpack connection.  Type "yes" to continue.', 'jetpack' );
 	}
 
-	WP_CLI::line($prompt_message);
-	$handle = fopen("php://stdin", "r");
-	$line = fgets($handle);
-	if ('yes' != trim($line)) {
-		WP_CLI::error($error_msg);
+	WP_CLI::line( $prompt_message );
+	$handle = fopen( "php://stdin", "r" );
+	$line = fgets( $handle );
+	if ( 'yes' != trim( $line ) ){
+		WP_CLI::error( $error_msg );
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 
-defined('ABSPATH') or die('No direct access, please.');
+defined( 'ABSPATH' ) or die( 'No direct access, please.' );
 
-require_once(ABSPATH . WPINC . '/class-IXR.php');
+require_once( ABSPATH . WPINC . '/class-IXR.php' );
 
 /**
  * IXR_Client
@@ -11,61 +11,58 @@ require_once(ABSPATH . WPINC . '/class-IXR.php');
  * @since 1.5
  *
  */
-class Jetpack_IXR_Client extends IXR_Client
-{
+class Jetpack_IXR_Client extends IXR_Client {
 	public $jetpack_args = null;
 
-	function __construct($args = array(), $path = false, $port = 80, $timeout = 15)
-	{
+	function __construct( $args = array(), $path = false, $port = 80, $timeout = 15 ) {
 		$defaults = array(
 			'url' => Jetpack::xmlrpc_api_url(),
 			'user_id' => 0,
 		);
 
-		$args = wp_parse_args($args, $defaults);
+		$args = wp_parse_args( $args, $defaults );
 
 		$this->jetpack_args = $args;
 
-		$this->IXR_Client($args['url'], $path, $port, $timeout);
+		$this->IXR_Client( $args['url'], $path, $port, $timeout );
 	}
 
-	function query()
-	{
+	function query() {
 		$args = func_get_args();
-		$method = array_shift($args);
-		$request = new IXR_Request($method, $args);
-		$xml = trim($request->getXml());
+		$method = array_shift( $args );
+		$request = new IXR_Request( $method, $args );
+		$xml = trim( $request->getXml() );
 
-		$response = Jetpack_Client::remote_request($this->jetpack_args, $xml);
+		$response = Jetpack_Client::remote_request( $this->jetpack_args, $xml );
 
-		if (is_wp_error($response)) {
-			$this->error = new IXR_Error(-10520, sprintf('Jetpack: [%s] %s', $response->get_error_code(), $response->get_error_message()));
+		if ( is_wp_error( $response ) ) {
+			$this->error = new IXR_Error( -10520, sprintf( 'Jetpack: [%s] %s', $response->get_error_code(), $response->get_error_message() ) );
 			return false;
 		}
 
-		if (!$response) {
-			$this->error = new IXR_Error(-10520, 'Jetpack: Unknown Error');
+		if ( !$response ) {
+			$this->error = new IXR_Error( -10520, 'Jetpack: Unknown Error' );
 			return false;
 		}
 
-		if (200 != wp_remote_retrieve_response_code($response)) {
-			$this->error = new IXR_Error(-32300, 'transport error - HTTP status code was not 200');
+		if ( 200 != wp_remote_retrieve_response_code( $response ) ) {
+			$this->error = new IXR_Error( -32300, 'transport error - HTTP status code was not 200' );
 			return false;
 		}
 
-		$content = wp_remote_retrieve_body($response);
+		$content = wp_remote_retrieve_body( $response );
 
 		// Now parse what we've got back
-		$this->message = new IXR_Message($content);
-		if (!$this->message->parse()) {
+		$this->message = new IXR_Message( $content );
+		if ( !$this->message->parse() ) {
 			// XML error
-			$this->error = new IXR_Error(-32700, 'parse error. not well formed');
+			$this->error = new IXR_Error( -32700, 'parse error. not well formed' );
 			return false;
 		}
 
 		// Is the message a fault?
-		if ($this->message->messageType == 'fault') {
-			$this->error = new IXR_Error($this->message->faultCode, $this->message->faultString);
+		if ( $this->message->messageType == 'fault' ) {
+			$this->error = new IXR_Error( $this->message->faultCode, $this->message->faultString );
 			return false;
 		}
 
@@ -73,24 +70,23 @@ class Jetpack_IXR_Client extends IXR_Client
 		return true;
 	}
 
-	function get_jetpack_error($fault_code = null, $fault_string = null)
-	{
-		if (is_null($fault_code)) {
+	function get_jetpack_error( $fault_code = null, $fault_string = null ) {
+		if ( is_null( $fault_code ) ) {
 			$fault_code = $this->error->code;
 		}
 
-		if (is_null($fault_string)) {
+		if ( is_null( $fault_string ) ) {
 			$fault_string = $this->error->message;
 		}
 
-		if (preg_match('#jetpack:\s+\[(\w+)\]\s*(.*)?$#i', $fault_string, $match)) {
-			$code = $match[1];
+		if ( preg_match( '#jetpack:\s+\[(\w+)\]\s*(.*)?$#i', $fault_string, $match ) ) {
+			$code    = $match[1];
 			$message = $match[2];
-			$status = $fault_code;
-			return new Jetpack_Error($code, $message, $status);
+			$status  = $fault_code;
+			return new Jetpack_Error( $code, $message, $status );
 		}
 
-		return new Jetpack_Error("IXR_{$fault_code}", $fault_string);
+		return new Jetpack_Error( "IXR_{$fault_code}", $fault_string );
 	}
 }
 
@@ -100,19 +96,16 @@ class Jetpack_IXR_Client extends IXR_Client
  * @package IXR
  * @since 1.5
  */
-class Jetpack_IXR_ClientMulticall extends Jetpack_IXR_Client
-{
+class Jetpack_IXR_ClientMulticall extends Jetpack_IXR_Client {
 	public $calls = array();
 
-	function __construct($args = array(), $path = false, $port = 80, $timeout = 15)
-	{
-		parent::__construct($args, $path, $port, $timeout);
+	function __construct( $args = array(), $path = false, $port = 80, $timeout = 15 ) {
+		parent::__construct( $args, $path, $port, $timeout );
 	}
 
-	function addCall()
-	{
+	function addCall() {
 		$args = func_get_args();
-		$methodName = array_shift($args);
+		$methodName = array_shift( $args );
 		$struct = array(
 			'methodName' => $methodName,
 			'params' => $args
@@ -120,22 +113,20 @@ class Jetpack_IXR_ClientMulticall extends Jetpack_IXR_Client
 		$this->calls[] = $struct;
 	}
 
-	function query()
-	{
-		usort($this->calls, array($this, 'sort_calls'));
+	function query() {
+		usort( $this->calls, array( $this, 'sort_calls' ) );
 
 		// Prepare multicall, then call the parent::query() method
-		return parent::query('system.multicall', $this->calls);
+		return parent::query( 'system.multicall', $this->calls );
 	}
 
 	// Make sure syncs are always done first
-	function sort_calls($a, $b)
-	{
-		if ('jetpack.syncContent' == $a['methodName']) {
+	function sort_calls( $a, $b ) {
+		if ( 'jetpack.syncContent' == $a['methodName'] ) {
 			return -1;
 		}
 
-		if ('jetpack.syncContent' == $b['methodName']) {
+		if ( 'jetpack.syncContent' == $b['methodName'] ) {
 			return 1;
 		}
 

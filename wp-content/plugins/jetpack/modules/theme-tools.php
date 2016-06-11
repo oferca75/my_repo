@@ -5,20 +5,17 @@
  * It is included by ./module-extras.php
  */
 
-function jetpack_load_theme_tools()
-{
-	if (current_theme_supports('tonesque')) {
-		jetpack_require_lib('tonesque');
+function jetpack_load_theme_tools() {
+	if ( current_theme_supports( 'tonesque' ) ) {
+		jetpack_require_lib( 'tonesque' );
 	}
 }
-
-add_action('init', 'jetpack_load_theme_tools', 30);
+add_action( 'init', 'jetpack_load_theme_tools', 30 );
 
 /**
  * Load theme compat file if it exists.
  */
-function jetpack_load_theme_compat()
-{
+function jetpack_load_theme_compat() {
 
 	/**
 	 * Filter theme compat files.
@@ -37,20 +34,19 @@ function jetpack_load_theme_compat()
 	 *
 	 * @param array Associative array of theme compat files to load.
 	 */
-	$compat_files = apply_filters('jetpack_theme_compat_files', array(
+	$compat_files = apply_filters( 'jetpack_theme_compat_files', array(
 		'twentyfourteen' => JETPACK__PLUGIN_DIR . 'modules/theme-tools/compat/twentyfourteen.php',
-		'twentyfifteen' => JETPACK__PLUGIN_DIR . 'modules/theme-tools/compat/twentyfifteen.php',
-		'twentysixteen' => JETPACK__PLUGIN_DIR . 'modules/theme-tools/compat/twentysixteen.php',
-	));
+		'twentyfifteen'  => JETPACK__PLUGIN_DIR . 'modules/theme-tools/compat/twentyfifteen.php',
+		'twentysixteen'  => JETPACK__PLUGIN_DIR . 'modules/theme-tools/compat/twentysixteen.php',
+	) );
 
-	_jetpack_require_compat_file(get_stylesheet(), $compat_files);
+	_jetpack_require_compat_file( get_stylesheet(), $compat_files );
 
-	if (is_child_theme()) {
-		_jetpack_require_compat_file(get_template(), $compat_files);
+	if ( is_child_theme() ) {
+		_jetpack_require_compat_file( get_template(), $compat_files );
 	}
 }
-
-add_action('after_setup_theme', 'jetpack_load_theme_compat', -1);
+add_action( 'after_setup_theme', 'jetpack_load_theme_compat', -1 );
 
 
 /**
@@ -61,13 +57,12 @@ add_action('after_setup_theme', 'jetpack_load_theme_compat', -1);
  * @param array $files
  * @return void
  */
-function _jetpack_require_compat_file($key, $files)
-{
-	if (!is_string($key)) {
-		return new WP_Error('key_not_string', 'The specified key is not actually a string.', compact('key'));
+function _jetpack_require_compat_file( $key, $files ) {
+	if ( ! is_string( $key ) ) {
+		return new WP_Error( 'key_not_string', 'The specified key is not actually a string.', compact( 'key' ) );
 	}
 
-	if (array_key_exists($key, $files) && is_readable($files[$key])) {
-		require_once $files[$key];
+	if ( array_key_exists( $key, $files ) && is_readable( $files[ $key ] ) ) {
+		require_once $files[ $key ];
 	}
 }

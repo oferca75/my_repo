@@ -1,87 +1,80 @@
 <?php
+abstract class Jetpack_Tiled_Gallery_Layout {
+	// Template whitelist
+	private static $templates = array( 'carousel-container', 'circle-layout', 'rectangular-layout', 'square-layout' );
+	private static $partials = array( 'carousel-image-args', 'item' );
 
-abstract class Jetpack_Tiled_Gallery_Layout
-{
-    // Template whitelist
-    private static $templates = array('carousel-container', 'circle-layout', 'rectangular-layout', 'square-layout');
-    private static $partials = array('carousel-image-args', 'item');
-    public $attachments; // Defined in child classes
-    public $link;
-    public $grayscale;
-    public $columns;
-    protected $type;
+	protected $type; // Defined in child classes
+	public $attachments;
+	public $link;
+	public $grayscale;
+	public $columns;
+	public function __construct( $attachments, $link, $grayscale, $columns ) {
 
-    public function __construct($attachments, $link, $grayscale, $columns)
-    {
+		$this->attachments = $attachments;
+		$this->link = $link;
+		$this->needs_attachment_link = ! ( isset( $link ) && $link == 'file' );
+		$this->grayscale = $grayscale;
+		$this->columns = $columns;
+	}
 
-        $this->attachments = $attachments;
-        $this->link = $link;
-        $this->needs_attachment_link = !(isset($link) && $link == 'file');
-        $this->grayscale = $grayscale;
-        $this->columns = $columns;
-    }
+	public function HTML( $context = array() ) {
+		// Render the carousel container template, which will take the
+		// appropriate strategy to fill it
+		ob_start();
+		$this->template( 'carousel-container', array_merge( $context, array(
+			'attachments' => $this->attachments,
+			'link' => $this->link,
+			'needs_attachment_link' => $this->needs_attachment_link,
+			'grayscale' => $this->grayscale
+		) ) );
+		$html = ob_get_clean();
 
-    public function HTML($context = array())
-    {
-        // Render the carousel container template, which will take the
-        // appropriate strategy to fill it
-        ob_start();
-        $this->template('carousel-container', array_merge($context, array(
-            'attachments' => $this->attachments,
-            'link' => $this->link,
-            'needs_attachment_link' => $this->needs_attachment_link,
-            'grayscale' => $this->grayscale
-        )));
-        $html = ob_get_clean();
+		return $html;
+	}
 
-        return $html;
-    }
+	private function template( $name, $context = null ) {
+		if ( ! in_array( $name, self::$templates ) ) {
+			return;
+		}
 
-    private function template($name, $context = null)
-    {
-        if (!in_array($name, self::$templates)) {
-            return;
-        }
+		if ( isset( $context ) ) {
+			extract( $context );
+		}
 
-        if (isset($context)) {
-            extract($context);
-        }
+		require dirname( __FILE__ ) . "/templates/$name.php";
+	}
 
-        require dirname(__FILE__) . "/templates/$name.php";
-    }
+	private function partial( $name, $context = null ) {
+		if ( ! in_array( $name, self::$partials ) ) {
+			return;
+		}
 
-    protected function get_container_extra_data()
-    {
-        global $post;
+		if ( isset( $context ) ) {
+			extract( $context );
+		}
 
-        $blog_id = (int)get_current_blog_id();
+		require dirname( __FILE__ ) . "/templates/partials/$name.php";
+	}
 
-        if (defined('IS_WPCOM') && IS_WPCOM) {
-            $likes_blog_id = $blog_id;
-        } else {
-            $likes_blog_id = Jetpack_Options::get_option('id');
-        }
+	protected function get_container_extra_data() {
+		global $post;
 
-        if (class_exists('Jetpack_Carousel') || in_array('carousel', Jetpack::get_active_modules()) || 'carousel' == $this->link) {
-            $extra_data = array('blog_id' => $blog_id, 'permalink' => get_permalink(isset($post->ID) ? $post->ID : 0), 'likes_blog_id' => $likes_blog_id);
-        } else {
-            $extra_data = null;
-        }
+		$blog_id = (int) get_current_blog_id();
 
-        return $extra_data;
-    }
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			$likes_blog_id = $blog_id;
+		} else {
+			$likes_blog_id = Jetpack_Options::get_option( 'id' );
+		}
 
-    private function partial($name, $context = null)
-    {
-        if (!in_array($name, self::$partials)) {
-            return;
-        }
+		if ( class_exists( 'Jetpack_Carousel' ) || in_array( 'carousel', Jetpack::get_active_modules() ) || 'carousel' == $this->link ) {
+			$extra_data = array( 'blog_id' => $blog_id, 'permalink' => get_permalink( isset( $post->ID ) ? $post->ID : 0 ), 'likes_blog_id' => $likes_blog_id );
+		} else {
+			$extra_data = null;
+		}
 
-        if (isset($context)) {
-            extract($context);
-        }
-
-        require dirname(__FILE__) . "/templates/partials/$name.php";
-    }
+		return $extra_data;
+	}
 }
 

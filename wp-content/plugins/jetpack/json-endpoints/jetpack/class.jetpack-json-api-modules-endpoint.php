@@ -3,123 +3,119 @@
 /**
  * Base class for working with Jetpack Modules.
  */
-abstract class Jetpack_JSON_API_Modules_Endpoint extends Jetpack_JSON_API_Endpoint
-{
+abstract class Jetpack_JSON_API_Modules_Endpoint extends Jetpack_JSON_API_Endpoint {
 
-    static $_response_format = array(
-        'id' => '(string)   The module\'s ID',
-        'active' => '(boolean)  The module\'s status.',
-        'name' => '(string)   The module\'s name.',
-        'description' => '(safehtml) The module\'s description.',
-        'sort' => '(int)      The module\'s display order.',
-        'introduced' => '(string)   The Jetpack version when the module was introduced.',
-        'changed' => '(string)   The Jetpack version when the module was changed.',
-        'free' => '(boolean)  The module\'s Free or Paid status.',
-        'module_tags' => '(array)    The module\'s tags.'
-    );
-    protected $modules = array();
-    protected $bulk = true;
+	protected $modules = array();
 
-    protected static function format_module($module_slug)
-    {
-        $module_data = Jetpack::get_module($module_slug);
+	protected $bulk = true;
 
-        $module = array();
-        $module['id'] = $module_slug;
-        $module['active'] = Jetpack::is_module_active($module_slug);
-        $module['name'] = $module_data['name'];
-        $module['short_description'] = $module_data['description'];
-        $module['sort'] = $module_data['sort'];
-        $module['introduced'] = $module_data['introduced'];
-        $module['changed'] = $module_data['changed'];
-        $module['free'] = $module_data['free'];
-        $module['module_tags'] = $module_data['module_tags'];
+	static $_response_format = array(
+		'id'          => '(string)   The module\'s ID',
+		'active'      => '(boolean)  The module\'s status.',
+		'name'        => '(string)   The module\'s name.',
+		'description' => '(safehtml) The module\'s description.',
+		'sort'        => '(int)      The module\'s display order.',
+		'introduced'  => '(string)   The Jetpack version when the module was introduced.',
+		'changed'     => '(string)   The Jetpack version when the module was changed.',
+		'free'        => '(boolean)  The module\'s Free or Paid status.',
+		'module_tags' => '(array)    The module\'s tags.'
+	);
 
-        // Fetch the HTML formatted long description
-        ob_start();
-        /** This action is documented in class.jetpack-modules-list-table.php */
-        do_action('jetpack_module_more_info_' . $module_slug);
-        $module['description'] = ob_get_clean();
+	protected function result() {
 
-        return $module;
-    }
+		$modules = $this->get_modules();
 
-    protected function result()
-    {
+		if ( ! $this->bulk && ! empty( $modules ) ) {
+			return array_pop( $modules );
+		}
 
-        $modules = $this->get_modules();
+		return array( 'modules' => $modules );
 
-        if (!$this->bulk && !empty($modules)) {
-            return array_pop($modules);
-        }
+	}
 
-        return array('modules' => $modules);
+	/**
+	 * Walks through either the submitted modules or list of themes and creates the global array
+	 * @param $theme
+	 *
+	 * @return bool
+	 */
+	protected function validate_input( $module) {
+		$args = $this->input();
+		// lets set what modules were requested, and validate them
+		if ( ! isset( $module ) || empty( $module ) ) {
 
-    }
+			if ( ! $args['modules'] || empty( $args['modules'] ) ) {
+				return new WP_Error( 'missing_module', __( 'You are required to specify a module.', 'jetpack' ), 400 );
+			}
+			if ( is_array( $args['modules'] ) ) {
+				$this->modules = $args['modules'];
+			} else {
+				$this->modules[] = $args['modules'];
+			}
+		} else {
+			$this->modules[] = urldecode( $module );
+			$this->bulk = false;
+		}
 
-    /**
-     * Format a list of modules for public display, using the supplied offset and limit args
-     * @uses   WPCOM_JSON_API_Endpoint::query_args()
-     * @return array         Public API modules objects
-     */
-    protected function get_modules()
-    {
-        $modules = array_values($this->modules);
-        // do offset & limit - we've already returned a 400 error if they're bad numbers
-        $args = $this->query_args();
+		if ( is_wp_error( $error = $this->validate_modules() ) ) {
+			return $error;
+		}
 
-        if (isset($args['offset']))
-            $modules = array_slice($modules, (int)$args['offset']);
-        if (isset($args['limit']))
-            $modules = array_slice($modules, 0, (int)$args['limit']);
+		return parent::validate_input( $module );
+	}
 
-        return array_map(array($this, 'format_module'), $modules);
-    }
+	/**
+	 * Walks through submitted themes to make sure they are valid
+	 * @return bool|WP_Error
+	 */
+	protected function validate_modules() {
+		foreach ( $this->modules as $module ) {
+			if ( ! Jetpack::is_module( $module ) ) {
+				return new WP_Error( 'unknown_jetpack_module', sprintf( __( 'Module not found: `%s`.', 'jetpack' ), $module ), 404 );
+			}
+		}
+		return true;
+	}
 
-    /**
-     * Walks through either the submitted modules or list of themes and creates the global array
-     * @param $theme
-     *
-     * @return bool
-     */
-    protected function validate_input($module)
-    {
-        $args = $this->input();
-        // lets set what modules were requested, and validate them
-        if (!isset($module) || empty($module)) {
+	protected static function format_module( $module_slug ) {
+		$module_data = Jetpack::get_module( $module_slug );
 
-            if (!$args['modules'] || empty($args['modules'])) {
-                return new WP_Error('missing_module', __('You are required to specify a module.', 'jetpack'), 400);
-            }
-            if (is_array($args['modules'])) {
-                $this->modules = $args['modules'];
-            } else {
-                $this->modules[] = $args['modules'];
-            }
-        } else {
-            $this->modules[] = urldecode($module);
-            $this->bulk = false;
-        }
+		$module = array();
+		$module['id']                = $module_slug;
+		$module['active']            = Jetpack::is_module_active( $module_slug );
+		$module['name']              = $module_data['name'];
+		$module['short_description'] = $module_data['description'];
+		$module['sort']              = $module_data['sort'];
+		$module['introduced']        = $module_data['introduced'];
+		$module['changed']           = $module_data['changed'];
+		$module['free']              = $module_data['free'];
+		$module['module_tags']       = $module_data['module_tags'];
 
-        if (is_wp_error($error = $this->validate_modules())) {
-            return $error;
-        }
+		// Fetch the HTML formatted long description
+		ob_start();
+		/** This action is documented in class.jetpack-modules-list-table.php */
+		do_action( 'jetpack_module_more_info_' . $module_slug );
+		$module['description']  = ob_get_clean();
 
-        return parent::validate_input($module);
-    }
+		return $module;
+	}
 
-    /**
-     * Walks through submitted themes to make sure they are valid
-     * @return bool|WP_Error
-     */
-    protected function validate_modules()
-    {
-        foreach ($this->modules as $module) {
-            if (!Jetpack::is_module($module)) {
-                return new WP_Error('unknown_jetpack_module', sprintf(__('Module not found: `%s`.', 'jetpack'), $module), 404);
-            }
-        }
-        return true;
-    }
+	/**
+	 * Format a list of modules for public display, using the supplied offset and limit args
+	 * @uses   WPCOM_JSON_API_Endpoint::query_args()
+	 * @return array         Public API modules objects
+	 */
+	protected function get_modules() {
+		$modules = array_values( $this->modules );
+		// do offset & limit - we've already returned a 400 error if they're bad numbers
+		$args = $this->query_args();
+
+		if ( isset( $args['offset'] ) )
+			$modules = array_slice( $modules, (int) $args['offset'] );
+		if ( isset( $args['limit'] ) )
+			$modules = array_slice( $modules, 0, (int) $args['limit'] );
+
+		return array_map( array( $this, 'format_module' ), $modules );
+	}
 
 }

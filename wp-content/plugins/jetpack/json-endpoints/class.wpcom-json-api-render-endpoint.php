@@ -1,8 +1,7 @@
 <?php
 
 // these are helpers for the shortcode and embed render endpoints
-abstract class WPCOM_JSON_API_Render_Endpoint extends WPCOM_JSON_API_Endpoint
-{
+abstract class WPCOM_JSON_API_Render_Endpoint extends WPCOM_JSON_API_Endpoint {
 
 	/*
 	 * Figure out what scripts and styles to load.
@@ -13,8 +12,7 @@ abstract class WPCOM_JSON_API_Render_Endpoint extends WPCOM_JSON_API_Endpoint
 	 * then we load wp_head and wp_footer again to see what new resources were added
 	 * finally we find out the url to the source file and any extra info (like media or init js)
 	 */
-	function process_render($callback, $callback_arg)
-	{
+	function process_render( $callback, $callback_arg ) {
 		global $wp_scripts, $wp_styles;
 
 		// initial scripts & styles (to subtract)
@@ -29,14 +27,14 @@ abstract class WPCOM_JSON_API_Render_Endpoint extends WPCOM_JSON_API_Endpoint
 		ob_start();
 		wp_head();
 		ob_end_clean();
-		$result = call_user_func($callback, $callback_arg);
+		$result = call_user_func( $callback, $callback_arg );
 		ob_start();
 		wp_footer();
 		ob_end_clean();
 
 		// find the difference (the new resource files)
-		$loaded_scripts = array_diff($wp_scripts->done, $initial_scripts);
-		$loaded_styles = array_diff($wp_styles->done, $initial_styles);
+		$loaded_scripts = array_diff( $wp_scripts->done, $initial_scripts );
+		$loaded_styles = array_diff( $wp_styles->done, $initial_styles );
 		return array(
 			'result' => $result,
 			'loaded_scripts' => $loaded_scripts,
@@ -47,60 +45,59 @@ abstract class WPCOM_JSON_API_Render_Endpoint extends WPCOM_JSON_API_Endpoint
 	/**
 	 * Takes the list of styles and scripts and adds them to the JSON response
 	 */
-	function add_assets($return, $loaded_scripts, $loaded_styles)
-	{
+	function add_assets( $return, $loaded_scripts, $loaded_styles ) {
 		global $wp_scripts, $wp_styles;
 		// scripts first, just cuz
-		if (count($loaded_scripts) > 0) {
+		if ( count( $loaded_scripts ) > 0 ) {
 			$scripts = array();
-			foreach ($loaded_scripts as $handle) {
-				if (!isset($wp_scripts->registered[$handle]))
+			foreach ( $loaded_scripts as $handle ) {
+				if ( !isset( $wp_scripts->registered[ $handle ] ) )
 					continue;
 
-				$src = $wp_scripts->registered[$handle]->src;
+				$src = $wp_scripts->registered[ $handle ]->src;
 
 				// attach version and an extra query parameters
-				$ver = $this->get_version($wp_scripts->registered[$handle]->ver, $wp_scripts->default_version);
-				if (isset($wp_scripts->args[$handle])) {
+				$ver = $this->get_version( $wp_scripts->registered[ $handle ]->ver, $wp_scripts->default_version );
+				if ( isset( $wp_scripts->args[ $handle ] ) ) {
 					$ver = $ver ? $ver . '&amp;' . $wp_scripts->args[$handle] : $wp_scripts->args[$handle];
 				}
-				$src = add_query_arg('ver', $ver, $src);
+				$src = add_query_arg( 'ver', $ver, $src );
 
 				// add to an aray so we can return all this info
-				$scripts[$handle] = array(
+				$scripts[ $handle ] = array(
 					'src' => $src,
 				);
-				$extra = $wp_scripts->print_extra_script($handle, false);
-				if (!empty($extra)) {
+				$extra = $wp_scripts->print_extra_script( $handle, false );
+				if ( !empty( $extra ) ) {
 					$scripts[$handle]['extra'] = $extra;
 				}
 			}
 			$return['scripts'] = $scripts;
 		}
 		// now styles
-		if (count($loaded_styles) > 0) {
+		if ( count( $loaded_styles ) > 0 ) {
 			$styles = array();
-			foreach ($loaded_styles as $handle) {
-				if (!isset($wp_styles->registered[$handle]))
+			foreach ( $loaded_styles as $handle ) {
+				if ( !isset( $wp_styles->registered[ $handle ] ) )
 					continue;
 
-				$src = $wp_styles->registered[$handle]->src;
+				$src = $wp_styles->registered[ $handle ]->src;
 
 				// attach version and an extra query parameters
-				$ver = $this->get_version($wp_styles->registered[$handle]->ver, $wp_styles->default_version);
-				if (isset($wp_styles->args[$handle])) {
+				$ver = $this->get_version( $wp_styles->registered[ $handle ]->ver, $wp_styles->default_version );
+				if ( isset( $wp_styles->args[ $handle ] ) ) {
 					$ver = $ver ? $ver . '&amp;' . $wp_styles->args[$handle] : $wp_styles->args[$handle];
 				}
-				$src = add_query_arg('ver', $ver, $src);
+				$src = add_query_arg( 'ver', $ver, $src );
 
 				// is there a special media (print, screen, etc) for this? if not, default to 'all'
 				$media = 'all';
-				if (isset($wp_styles->registered[$handle]->args)) {
-					$media = esc_attr($wp_styles->registered[$handle]->args);
+				if ( isset( $wp_styles->registered[ $handle ]->args ) ) {
+					$media = esc_attr( $wp_styles->registered[ $handle ]->args );
 				}
 
 				// add to an aray so we can return all this info
-				$styles[$handle] = array(
+				$styles[ $handle ] = array (
 					'src' => $src,
 					'media' => $media,
 				);
@@ -115,9 +112,8 @@ abstract class WPCOM_JSON_API_Render_Endpoint extends WPCOM_JSON_API_Endpoint
 	/**
 	 * Returns the 'version' string set by the shortcode so different versions of scripts/styles can be loaded
 	 */
-	function get_version($this_scripts_version, $default_version)
-	{
-		if (null === $this_scripts_version) {
+	function get_version( $this_scripts_version, $default_version ) {
+		if ( null === $this_scripts_version ) {
 			$ver = '';
 		} else {
 			$ver = $this_scripts_version ? $this_scripts_version : $default_version;

@@ -1,3 +1,3 @@
 <?php
-$this->template('square-layout', $context);
+$this->template( 'square-layout', $context );
 

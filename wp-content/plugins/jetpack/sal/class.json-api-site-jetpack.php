@@ -1,141 +1,118 @@
 <?php
 
-require_once dirname(__FILE__) . '/class.json-api-site-jetpack-base.php';
+require_once dirname( __FILE__ ) . '/class.json-api-site-jetpack-base.php';
 
 // this code runs on Jetpack (.org) sites
-class Jetpack_Site extends Abstract_Jetpack_Site
-{
+class Jetpack_Site extends Abstract_Jetpack_Site {
 
-    function has_videopress()
-    {
-        // TODO - this only works on wporg site - need to detect videopress option for remote Jetpack site on WPCOM
-        $videopress = Jetpack_Options::get_option('videopress', array());
-        if (isset($videopress['blog_id']) && $videopress['blog_id'] > 0) {
-            return true;
-        }
+	protected function get_mock_option( $name ) {
+		return get_option( 'jetpack_'.$name );
+	}
 
-        return false;
-    }
+	protected function get_constant( $name ) {
+		if ( defined( $name) ) {
+			return constant( $name );
+		}
+		return null;
+	}
 
-    function upgraded_filetypes_enabled()
-    {
-        return true;
-    }
+	protected function current_theme_supports( $feature_name ) {
+		return current_theme_supports( $feature_name );
+	}
 
-    function is_mapped_domain()
-    {
-        return true;
-    }
+	protected function get_theme_support( $feature_name ) {
+		return get_theme_support( $feature_name );
+	}
 
-    function is_redirect()
-    {
-        return false;
-    }
+	function has_videopress() {
+		// TODO - this only works on wporg site - need to detect videopress option for remote Jetpack site on WPCOM
+		$videopress = Jetpack_Options::get_option( 'videopress', array() );
+		if ( isset( $videopress['blog_id'] ) && $videopress['blog_id'] > 0 ) {
+			return true;
+		}
 
-    function is_following()
-    {
-        return false;
-    }
+		return false;
+	}
 
-    function has_wordads()
-    {
-        // TODO: any way to detect wordads on the site, or does it need to be modified on the way through?
-        return false;
-    }
+	function upgraded_filetypes_enabled() {
+		return true;
+	}
 
-    function get_frame_nonce()
-    {
-        return false;
-    }
+	function is_mapped_domain() {
+		return true;
+	}
 
-    function allowed_file_types()
-    {
-        $allowed_file_types = array();
+	function is_redirect() {
+		return false;
+	}
 
-        // http://codex.wordpress.org/Uploading_Files
-        $mime_types = get_allowed_mime_types();
-        foreach ($mime_types as $type => $mime_type) {
-            $extras = explode('|', $type);
-            foreach ($extras as $extra) {
-                $allowed_file_types[] = $extra;
-            }
-        }
+	function is_following() {
+		return false;
+	}
 
-        return $allowed_file_types;
-    }
+	function has_wordads() {
+		// TODO: any way to detect wordads on the site, or does it need to be modified on the way through?
+		return false;
+	}
 
-    function is_private()
-    {
-        return false;
-    }
+	function get_frame_nonce() {
+		return false;
+	}
 
-    function get_plan()
-    {
-        return false;
-    }
+	function allowed_file_types() {
+		$allowed_file_types = array();
 
-    function get_subscribers_count()
-    {
-        return 0; // special magic fills this in on the WPCOM side
-    }
+		// http://codex.wordpress.org/Uploading_Files
+		$mime_types = get_allowed_mime_types();
+		foreach ( $mime_types as $type => $mime_type ) {
+			$extras = explode( '|', $type );
+			foreach ( $extras as $extra ) {
+				$allowed_file_types[] = $extra;
+			}
+		}
 
-    function get_capabilities()
-    {
-        return false;
-    }
+		return $allowed_file_types;
+	}
 
-    function get_locale()
-    {
-        return get_bloginfo('language');
-    }
+	function is_private() {
+		return false;
+	}
 
-    function get_icon()
-    {
-        if (function_exists('jetpack_site_icon_url') && function_exists('jetpack_photon_url')) {
-            return array(
-                'img' => (string)jetpack_photon_url(jetpack_site_icon_url(get_current_blog_id(), 80), array('w' => 80), 'https'),
-                'ico' => (string)jetpack_photon_url(jetpack_site_icon_url(get_current_blog_id(), 16), array('w' => 16), 'https'),
-            );
-        }
+	function get_plan() {
+		return false;
+	}
 
-        return null;
-    }
+	function get_subscribers_count() {
+		return 0; // special magic fills this in on the WPCOM side
+	}
 
-    function is_jetpack()
-    {
-        return true;
-    }
+	function get_capabilities() {
+		return false;
+	}
 
-    function get_ak_vp_bundle_enabled()
-    {
-    }
+	function get_locale() {
+		return get_bloginfo( 'language' );
+	}
 
-    protected function get_mock_option($name)
-    {
-        return get_option('jetpack_' . $name);
-    }
+	function get_icon() {
+		if ( function_exists( 'jetpack_site_icon_url' ) && function_exists( 'jetpack_photon_url' ) ) {
+			return array(
+				'img' => (string) jetpack_photon_url( jetpack_site_icon_url( get_current_blog_id() , 80 ), array( 'w' => 80 ), 'https' ),
+				'ico' => (string) jetpack_photon_url( jetpack_site_icon_url( get_current_blog_id() , 16 ), array( 'w' => 16 ), 'https' ),
+			);
+		}
 
-    protected function get_constant($name)
-    {
-        if (defined($name)) {
-            return constant($name);
-        }
-        return null;
-    }
+		return null;
+	}
 
-    protected function current_theme_supports($feature_name)
-    {
-        return current_theme_supports($feature_name);
-    }
+	function is_jetpack() {
+		return true;
+	}
 
-    protected function get_theme_support($feature_name)
-    {
-        return get_theme_support($feature_name);
-    }
+	protected function get_jetpack_version() {
+		return JETPACK__VERSION;
+	}
 
-    protected function get_jetpack_version()
-    {
-        return JETPACK__VERSION;
-    }
+	function get_ak_vp_bundle_enabled() {}
 
 }

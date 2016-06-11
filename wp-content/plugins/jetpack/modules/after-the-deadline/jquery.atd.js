@@ -19,46 +19,44 @@
 
 var AtD =
 {
-	rpc: '', /* see the proxy.php that came with the AtD/TinyMCE plugin */
-	rpc_css: 'http://www.polishmywriting.com/atd-jquery/server/proxycss.php?data=', /* you may use this, but be nice! */
-	rpc_css_lang: 'en',
-	api_key: '',
-	i18n: {}, // Back-compat
-	listener: {}
+	rpc : '', /* see the proxy.php that came with the AtD/TinyMCE plugin */
+	rpc_css : 'http://www.polishmywriting.com/atd-jquery/server/proxycss.php?data=', /* you may use this, but be nice! */
+	rpc_css_lang : 'en',
+	api_key : '',
+	i18n : {}, // Back-compat
+	listener : {}
 };
 
-AtD.getLang = function (key, defaultk) {
+AtD.getLang = function( key, defaultk ) {
 	return ( window.AtD_l10n_r0ar && window.AtD_l10n_r0ar[key] ) || defaultk;
 };
 
-AtD.addI18n = function (obj) {
+AtD.addI18n = function( obj ) {
 	// Back-compat
 	window.AtD_l10n_r0ar = obj;
 };
 
-AtD.setIgnoreStrings = function (string) {
+AtD.setIgnoreStrings = function(string) {
 	AtD.core.setIgnoreStrings(string);
 };
 
-AtD.showTypes = function (string) {
+AtD.showTypes = function(string) {
 	AtD.core.showTypes(string);
 };
 
-AtD.checkCrossAJAX = function (container_id, callback_f) {
+AtD.checkCrossAJAX = function(container_id, callback_f) {
 	/* checks if a global var for click stats exists and increments it if it does... */
 	if (typeof AtD_proofread_click_count !== 'undefined') {
 		AtD_proofread_click_count++;
 	}
 
-	AtD.callback_f = callback_f;
-	/* remember the callback for later */
+	AtD.callback_f = callback_f; /* remember the callback for later */
 	AtD.remove(container_id);
 	var container = jQuery('#' + container_id);
 
 	var text = jQuery.trim(container.html());
-	text = text.replace(/\&lt;/g, '<').replace(/\&gt;/g, '>').replace(/\&amp;/g, '&');
-	text = encodeURIComponent(text.replace(/\%/g, '%25'));
-	/* % not being escaped here creates problems, I don't know why. */
+	text     = text.replace(/\&lt;/g, '<').replace(/\&gt;/g, '>').replace(/\&amp;/g, '&');
+	text     = encodeURIComponent( text.replace( /\%/g, '%25' ) ); /* % not being escaped here creates problems, I don't know why. */
 
 	/* do some sanity checks based on the browser */
 	if ((text.length > 2000 && navigator.appName === 'Microsoft Internet Explorer') || text.length > 7800) {
@@ -70,7 +68,7 @@ AtD.checkCrossAJAX = function (container_id, callback_f) {
 	}
 
 	/* do some cross-domain AJAX action with CSSHttpRequest */
-	CSSHttpRequest.get(AtD.rpc_css + text + '&lang=' + AtD.rpc_css_lang + '&nocache=' + (new Date().getTime()), function (response) {
+	CSSHttpRequest.get(AtD.rpc_css + text + '&lang=' + AtD.rpc_css_lang + '&nocache=' + (new Date().getTime()), function(response) {
 		/* do some magic to convert the response into an XML document */
 		var xml;
 		if (navigator.appName === 'Microsoft Internet Explorer') {
@@ -93,7 +91,7 @@ AtD.checkCrossAJAX = function (container_id, callback_f) {
 		/* highlight the errors */
 
 		AtD.container = container_id;
-		var count = Number(AtD.processXML(container_id, xml));
+		var count = Number( AtD.processXML(container_id, xml) );
 
 		if (AtD.callback_f !== undefined && AtD.callback_f.ready !== undefined) {
 			AtD.callback_f.ready(count);
@@ -104,45 +102,43 @@ AtD.checkCrossAJAX = function (container_id, callback_f) {
 		}
 
 		AtD.counter = count;
-		AtD.count = count;
+		AtD.count   = count;
 	});
 };
 
 /* check a div for any incorrectly spelled words */
-AtD.check = function (container_id, callback_f) {
+AtD.check = function(container_id, callback_f) {
 	/* checks if a global var for click stats exists and increments it if it does... */
 	if (typeof AtD_proofread_click_count !== 'undefined') {
 		AtD_proofread_click_count++;
 	}
 
-	AtD.callback_f = callback_f;
-	/* remember the callback for later */
+	AtD.callback_f = callback_f; /* remember the callback for later */
 
 	AtD.remove(container_id);
 
 	var container = jQuery('#' + container_id);
 
 	var text = jQuery.trim(container.html());
-	text = text.replace(/\&lt;/g, '<').replace(/\&gt;/g, '>').replace(/\&amp;/g, '&');
-	text = encodeURIComponent(text);
-	/* re-escaping % is not necessary here. don't do it */
+	text     = text.replace(/\&lt;/g, '<').replace(/\&gt;/g, '>').replace(/\&amp;/g, '&');
+	text     = encodeURIComponent( text ); /* re-escaping % is not necessary here. don't do it */
 
 	jQuery.ajax({
-		type: 'POST',
-		url: AtD.rpc + '/checkDocument',
-		data: 'key=' + AtD.api_key + '&data=' + text,
-		format: 'raw',
-		dataType: (jQuery.browser.msie) ? 'text' : 'xml',
+		type : 'POST',
+		url : AtD.rpc + '/checkDocument',
+		data : 'key=' + AtD.api_key + '&data=' + text,
+		format : 'raw',
+		dataType : (jQuery.browser.msie) ? 'text' : 'xml',
 
-		error: function (XHR, status, error) {
+		error : function(XHR, status, error) {
 			if (AtD.callback_f !== undefined && AtD.callback_f.error !== undefined) {
 				AtD.callback_f.error(status + ': ' + error);
 			}
 		},
 
-		success: function (data) {
+		success : function(data) {
 			/* apparently IE likes to return XML as plain text-- work around from:
-			 http://docs.jquery.com/Specifying_the_Data_Type_for_AJAX_Requests */
+			   http://docs.jquery.com/Specifying_the_Data_Type_for_AJAX_Requests */
 
 			var xml;
 			if (typeof data === 'string') {
@@ -165,7 +161,7 @@ AtD.check = function (container_id, callback_f) {
 			/* on with the task of processing and highlighting errors */
 
 			AtD.container = container_id;
-			var count = Number(AtD.processXML(container_id, xml));
+			var count = Number( AtD.processXML(container_id, xml) );
 
 			if (AtD.callback_f !== undefined && AtD.callback_f.ready !== undefined) {
 				AtD.callback_f.ready(count);
@@ -176,22 +172,22 @@ AtD.check = function (container_id, callback_f) {
 			}
 
 			AtD.counter = count;
-			AtD.count = count;
+			AtD.count   = count;
 		}
 	});
 };
 
-AtD.remove = function (container_id) {
+AtD.remove = function(container_id) {
 	AtD._removeWords(container_id, null);
 };
 
-AtD.clickListener = function (event) {
+AtD.clickListener = function(event) {
 	if (AtD.core.isMarkedNode(event.target)) {
 		AtD.suggest(event.target);
 	}
 };
 
-AtD.processXML = function (container_id, responseXML) {
+AtD.processXML = function(container_id, responseXML) {
 
 	var results = AtD.core.processXML(responseXML);
 
@@ -205,16 +201,16 @@ AtD.processXML = function (container_id, responseXML) {
 	return results.count;
 };
 
-AtD.useSuggestion = function (word) {
+AtD.useSuggestion = function(word) {
 	this.core.applySuggestion(AtD.errorElement, word);
 
-	AtD.counter--;
+	AtD.counter --;
 	if (AtD.counter === 0 && AtD.callback_f !== undefined && AtD.callback_f.success !== undefined) {
 		AtD.callback_f.success(AtD.count);
 	}
 };
 
-AtD.editSelection = function () {
+AtD.editSelection = function() {
 	var parent = AtD.errorElement.parent();
 
 	if (AtD.callback_f !== undefined && AtD.callback_f.editSelection !== undefined) {
@@ -222,23 +218,23 @@ AtD.editSelection = function () {
 	}
 
 	if (AtD.errorElement.parent() !== parent) {
-		AtD.counter--;
+		AtD.counter --;
 		if (AtD.counter === 0 && AtD.callback_f !== undefined && AtD.callback_f.success !== undefined) {
 			AtD.callback_f.success(AtD.count);
 		}
 	}
 };
 
-AtD.ignoreSuggestion = function () {
+AtD.ignoreSuggestion = function() {
 	AtD.core.removeParent(AtD.errorElement);
 
-	AtD.counter--;
+	AtD.counter --;
 	if (AtD.counter === 0 && AtD.callback_f !== undefined && AtD.callback_f.success !== undefined) {
 		AtD.callback_f.success(AtD.count);
 	}
 };
 
-AtD.ignoreAll = function (container_id) {
+AtD.ignoreAll = function(container_id) {
 	var target = AtD.errorElement.text();
 	var removed = AtD._removeWords(container_id, target);
 
@@ -254,13 +250,13 @@ AtD.ignoreAll = function (container_id) {
 	}
 };
 
-AtD.explainError = function () {
+AtD.explainError = function() {
 	if (AtD.callback_f !== undefined && AtD.callback_f.explain !== undefined) {
 		AtD.callback_f.explain(AtD.explainURL);
 	}
 };
 
-AtD.suggest = function (element) {
+AtD.suggest = function(element) {
 	/* construct the menu if it doesn't already exist */
 	var suggest;
 
@@ -290,7 +286,7 @@ AtD.suggest = function (element) {
 		suggest.append('<strong>' + errorDescription['description'] + '</strong>');
 
 		for (var i = 0; i < errorDescription['suggestions'].length; i++) {
-			(function (sugg) {
+			(function(sugg) {
 				suggest.append('<a href="javascript:AtD.useSuggestion(\'' + sugg.replace(/'/, '\\\'') + '\')">' + sugg + '</a>');
 			})(errorDescription['suggestions'][i]); // jshint ignore:line
 		}
@@ -331,12 +327,12 @@ AtD.suggest = function (element) {
 	var pos = jQuery(element).offset();
 	var width = jQuery(element).width();
 
-	/* a sanity check for Internet Explorer--my favorite browser in every possible way */
+        /* a sanity check for Internet Explorer--my favorite browser in every possible way */
 	if (width > 100) {
 		width = 50;
 	}
 
-	jQuery(suggest).css({left: (pos.left + width) + 'px', top: pos.top + 'px'});
+	jQuery(suggest).css({ left: (pos.left + width) + 'px', top: pos.top + 'px' });
 
 	jQuery(suggest).fadeIn(200);
 
@@ -344,48 +340,48 @@ AtD.suggest = function (element) {
 
 	AtD.suggestShow = true;
 
-	setTimeout(function () {
-		jQuery('body').bind('click', function () {
+	setTimeout(function() {
+		jQuery('body').bind('click', function() {
 			if (!AtD.suggestShow) {
 				jQuery('#suggestmenu').fadeOut(200);
 			}
 		});
 	}, 1);
 
-	setTimeout(function () {
+	setTimeout(function() {
 		AtD.suggestShow = false;
 	}, 2);
 };
 
-AtD._removeWords = function (container_id, w) {
+AtD._removeWords = function(container_id, w) {
 	return this.core.removeWords(jQuery('#' + container_id), w);
 };
 
 /*
  * Set prototypes used by AtD Core UI
  */
-AtD.initCoreModule = function () {
+AtD.initCoreModule = function() {
 	var core = new AtDCore();
 
-	core.hasClass = function (node, className) {
+	core.hasClass = function(node, className) {
 		return jQuery(node).hasClass(className);
 	};
 
 	core.map = jQuery.map;
 
-	core.contents = function (node) {
+	core.contents = function(node) {
 		return jQuery(node).contents();
 	};
 
-	core.replaceWith = function (old_node, new_node) {
+	core.replaceWith = function(old_node, new_node) {
 		return jQuery(old_node).replaceWith(new_node);
 	};
 
-	core.findSpans = function (parent) {
+	core.findSpans = function(parent) {
 		return jQuery.makeArray(parent.find('span'));
 	};
 
-	core.create = function (string/*, isTextNode*/) {
+	core.create = function(string/*, isTextNode*/) {
 		// replace out all tags with &-equivalents so that we preserve tag text.
 		string = string.replace(/\&/g, '&amp;');
 		string = string.replace(/</g, '&lt;').replace(/\>/g, '&gt;');
@@ -417,11 +413,11 @@ AtD.initCoreModule = function () {
 		return node;
 	};
 
-	core.remove = function (node) {
+	core.remove = function(node) {
 		return jQuery(node).remove();
 	};
 
-	core.removeParent = function (node) {
+	core.removeParent = function(node) {
 		/* unwrap exists in jQuery 1.4+ only. Thankfully because replaceWith as-used here won't work in 1.4 */
 		if (jQuery(node).unwrap) {
 			return jQuery(node).contents().unwrap();
@@ -430,7 +426,7 @@ AtD.initCoreModule = function () {
 		}
 	};
 
-	core.getAttrib = function (node, name) {
+	core.getAttrib = function(node, name) {
 		return jQuery(node).attr(name);
 	};
 

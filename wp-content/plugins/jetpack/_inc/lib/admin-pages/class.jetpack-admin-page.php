@@ -1,128 +1,109 @@
 <?php
 
 // Shared logic between Jetpack admin pages
-abstract class Jetpack_Admin_Page
-{
-    // Add page specific actions given the page hook
-    function __construct()
-    {
-        $this->jetpack = Jetpack::init();
-    }
+abstract class Jetpack_Admin_Page {
+	// Add page specific actions given the page hook
+	abstract function add_page_actions( $hook );
 
-    // Create a menu item for the page and returns the hook
+	// Create a menu item for the page and returns the hook
+	abstract function get_page_hook();
 
-    function add_actions()
-    {
-        /**
-         * Don't add in the modules page unless modules are available!
-         */
-        if ($this->dont_show_if_not_active && !Jetpack::is_active() && !Jetpack::is_development_mode()) {
-            return;
-        }
+	// Enqueue and localize page specific scripts
+	abstract function page_admin_scripts();
 
-        // Initialize menu item for the page in the admin
-        $hook = $this->get_page_hook();
+	// Render page specific HTML
+	abstract function page_render();
 
-        // Attach hooks common to all Jetpack admin pages based on the created
-        // hook
-        add_action("load-$hook", array($this, 'admin_help'));
-        add_action("load-$hook", array($this, 'admin_page_load'));
-        add_action("admin_head-$hook", array($this, 'admin_head'));
+	function __construct() {
+		$this->jetpack = Jetpack::init();
+	}
 
-        add_action("admin_footer-$hook", array($this, 'module_modal_js_template'));
+	function add_actions() {
+		/**
+		 * Don't add in the modules page unless modules are available!
+		 */
+		if ( $this->dont_show_if_not_active && ! Jetpack::is_active() && ! Jetpack::is_development_mode() ) {
+			return;
+		}
 
-        add_action("admin_print_styles-$hook", array($this, 'admin_styles'));
-        add_action("admin_print_scripts-$hook", array($this, 'admin_scripts'));
+		// Initialize menu item for the page in the admin
+		$hook = $this->get_page_hook();
 
-        // Attach page specific actions in addition to the above
-        $this->add_page_actions($hook);
-    }
+		// Attach hooks common to all Jetpack admin pages based on the created
+		// hook
+		add_action( "load-$hook",                array( $this, 'admin_help'      ) );
+		add_action( "load-$hook",                array( $this, 'admin_page_load' ) );
+		add_action( "admin_head-$hook",          array( $this, 'admin_head'      ) );
 
-    // Enqueue and localize page specific scripts
+		add_action( "admin_footer-$hook",        array( $this, 'module_modal_js_template' ) );
 
-    abstract function get_page_hook();
+		add_action( "admin_print_styles-$hook",  array( $this, 'admin_styles'    ) );
+		add_action( "admin_print_scripts-$hook", array( $this, 'admin_scripts'   ) );
 
-    // Render page specific HTML
+		// Attach page specific actions in addition to the above
+		$this->add_page_actions( $hook );
+	}
 
-    abstract function add_page_actions($hook);
+	function admin_head() {
+		if ( isset( $_GET['configure'] ) && Jetpack::is_module( $_GET['configure'] ) && current_user_can( 'manage_options' ) ) {
+			/**
+			 * Fires in the <head> of a particular Jetpack configuation page.
+			 *
+			 * The dynamic portion of the hook name, `$_GET['configure']`,
+			 * refers to the slug of module, such as 'stats', 'sso', etc.
+			 * A complete hook for the latter would be
+			 * 'jetpack_module_configuation_head_sso'.
+			 *
+			 * @since 3.0.0
+			 */
+			do_action( 'jetpack_module_configuration_head_' . $_GET['configure'] );
+		}
+	}
 
-    function admin_head()
-    {
-        if (isset($_GET['configure']) && Jetpack::is_module($_GET['configure']) && current_user_can('manage_options')) {
-            /**
-             * Fires in the <head> of a particular Jetpack configuation page.
-             *
-             * The dynamic portion of the hook name, `$_GET['configure']`,
-             * refers to the slug of module, such as 'stats', 'sso', etc.
-             * A complete hook for the latter would be
-             * 'jetpack_module_configuation_head_sso'.
-             *
-             * @since 3.0.0
-             */
-            do_action('jetpack_module_configuration_head_' . $_GET['configure']);
-        }
-    }
+	// Render the page with a common top and bottom part, and page specific
+	// content
+	function render() {
+		$this->admin_page_top();
+		$this->page_render();
+		$this->admin_page_bottom();
+	}
 
-    function render()
-    {
-        $this->admin_page_top();
-        $this->page_render();
-        $this->admin_page_bottom();
-    }
+	function admin_help() {
+		$this->jetpack->admin_help();
+	}
 
-    function admin_page_top()
-    {
-        include_once(JETPACK__PLUGIN_DIR . '_inc/header.php');
-    }
+	function admin_page_load() {
+		// This is big.  For the moment, just call the existing one.
+		$this->jetpack->admin_page_load();
+	}
 
-    // Render the page with a common top and bottom part, and page specific
-    // content
+	// Load underscore template for the landing page and settings page modal
+	function module_modal_js_template() {
+		Jetpack::init()->load_view( 'admin/module-modal-template.php' );
+	}
 
-    abstract function page_render();
+	function admin_page_top() {
+		include_once( JETPACK__PLUGIN_DIR . '_inc/header.php' );
+	}
 
-    function admin_page_bottom()
-    {
-        include_once(JETPACK__PLUGIN_DIR . '_inc/footer.php');
-    }
+	function admin_page_bottom() {
+		include_once( JETPACK__PLUGIN_DIR . '_inc/footer.php' );
+	}
 
-    function admin_help()
-    {
-        $this->jetpack->admin_help();
-    }
+	// Add page specific scripts and jetpack stats for all menu pages
+	function admin_scripts() {
+		$this->page_admin_scripts(); // Delegate to inheriting class
+		add_action( 'admin_footer', array( $this->jetpack, 'do_stats' ) );
+	}
 
-    // Load underscore template for the landing page and settings page modal
+	// Enqueue the Jetpack admin stylesheet
+	function admin_styles() {
+		$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-    function admin_page_load()
-    {
-        // This is big.  For the moment, just call the existing one.
-        $this->jetpack->admin_page_load();
-    }
+		wp_enqueue_style( 'jetpack-google-fonts', '//fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,600,800' );
 
-    function module_modal_js_template()
-    {
-        Jetpack::init()->load_view('admin/module-modal-template.php');
-    }
-
-    function admin_scripts()
-    {
-        $this->page_admin_scripts(); // Delegate to inheriting class
-        add_action('admin_footer', array($this->jetpack, 'do_stats'));
-    }
-
-    // Add page specific scripts and jetpack stats for all menu pages
-
-    abstract function page_admin_scripts();
-
-    // Enqueue the Jetpack admin stylesheet
-
-    function admin_styles()
-    {
-        $min = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
-
-        wp_enqueue_style('jetpack-google-fonts', '//fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,600,800');
-
-        wp_enqueue_style('jetpack-admin', plugins_url("css/jetpack-admin{$min}.css", JETPACK__PLUGIN_FILE), array('genericons'), JETPACK__VERSION . '-20121016');
-        wp_style_add_data('jetpack-admin', 'rtl', 'replace');
-        wp_style_add_data('jetpack-admin', 'suffix', $min);
-    }
+		wp_enqueue_style( 'jetpack-admin', plugins_url( "css/jetpack-admin{$min}.css", JETPACK__PLUGIN_FILE ), array( 'genericons' ), JETPACK__VERSION . '-20121016' );
+		wp_style_add_data( 'jetpack-admin', 'rtl', 'replace' );
+		wp_style_add_data( 'jetpack-admin', 'suffix', $min );
+	}
 }

@@ -13,4 +13,4 @@
  * Additional Search Queries: contact, form, grunion, feedback, submission
  */
 
-include dirname(__FILE__) . '/contact-form/grunion-contact-form.php';
+include dirname( __FILE__ ) . '/contact-form/grunion-contact-form.php';

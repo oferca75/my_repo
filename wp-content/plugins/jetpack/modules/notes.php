@@ -10,206 +10,195 @@
  * Additional Search Queries: notification, notifications, toolbar, adminbar, push, comments
  */
 
-if (!defined('JETPACK_NOTES__CACHE_BUSTER')) define('JETPACK_NOTES__CACHE_BUSTER', JETPACK__VERSION . '-' . gmdate('oW'));
+if ( !defined( 'JETPACK_NOTES__CACHE_BUSTER' ) ) define( 'JETPACK_NOTES__CACHE_BUSTER', JETPACK__VERSION . '-' . gmdate( 'oW' ) );
 
-Jetpack_Sync::sync_options(__FILE__,
-    'home',
-    'blogname',
-    'siteurl',
-    'permalink_structure',
-    'category_base',
-    'tag_base',
-    'comment_moderation',
-    'default_comment_status',
-    'thread_comments',
-    'thread_comments_depth'
+Jetpack_Sync::sync_options( __FILE__,
+	'home',
+	'blogname',
+	'siteurl',
+	'permalink_structure',
+	'category_base',
+	'tag_base',
+	'comment_moderation',
+	'default_comment_status',
+	'thread_comments',
+	'thread_comments_depth'
 );
 
-class Jetpack_Notifications
-{
-    public $jetpack = false;
+class Jetpack_Notifications {
+	public $jetpack = false;
 
-    function __construct()
-    {
-        $this->jetpack = Jetpack::init();
+	/**
+	 * Singleton
+	 * @static
+	 */
+	public static function init() {
+		static $instance = array();
 
-        add_action('init', array(&$this, 'action_init'));
-    }
+		if ( !$instance ) {
+			$instance[0] = new Jetpack_Notifications;
+		}
 
-    /**
-     * Singleton
-     * @static
-     */
-    public static function init()
-    {
-        static $instance = array();
+		return $instance[0];
+	}
 
-        if (!$instance) {
-            $instance[0] = new Jetpack_Notifications;
-        }
+	function __construct() {
+		$this->jetpack = Jetpack::init();
 
-        return $instance[0];
-    }
+		add_action( 'init', array( &$this, 'action_init' ) );
+	}
 
-    function action_init()
-    {
-        //syncing must wait until after init so
-        //post types that support comments
-        $filt_post_types = array();
-        $all_post_types = get_post_types();
-        foreach ($all_post_types as $post_type) {
-            if (post_type_supports($post_type, 'comments')) {
-                $filt_post_types[] = $post_type;
-            }
-        }
+	function wpcom_static_url($file) {
+		$i = hexdec( substr( md5( $file ), -1 ) ) % 2;
+		$url = 'http://s' . $i . '.wp.com' . $file;
+		return set_url_scheme( $url );
+	}
 
-        Jetpack_Sync::sync_posts(__FILE__, array(
-            'post_types' => $filt_post_types,
-            'post_stati' => array('publish'),
-        ));
-        Jetpack_Sync::sync_comments(__FILE__, array(
-            'post_types' => $filt_post_types,
-            'post_stati' => array('publish'),
-            'comment_stati' => array('approve', 'approved', '1', 'hold', 'unapproved', 'unapprove', '0', 'spam', 'trash'),
-        ));
+	// return the major version of Internet Explorer the viewer is using or false if it's not IE
+	public static function get_internet_explorer_version() {
+		static $version;
+		if ( isset( $version ) ) {
+			return $version;
+		}
 
-        if (defined('DOING_AJAX') && DOING_AJAX)
-            return;
+		$user_agent = isset( $_SERVER['HTTP_USER_AGENT']  ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
-        if (!has_filter('show_admin_bar', '__return_true') && !is_user_logged_in())
-            return;
+		preg_match( '/MSIE (\d+)/', $user_agent, $matches );
+		$version = empty( $matches[1] ) ? null : $matches[1];
+		if ( empty( $version ) || !$version ) {
+			return false;
+		}
+		return $version;
+	}
 
-        if (!self::current_browser_is_supported())
-            return;
+	public static function current_browser_is_supported() {
+		static $supported;
 
-        add_action('admin_bar_menu', array(&$this, 'admin_bar_menu'), 120);
-        add_action('wp_head', array(&$this, 'styles_and_scripts'), 120);
-        add_action('admin_head', array(&$this, 'styles_and_scripts'));
-    }
+		if ( isset( $supported ) ) {
+			return $supported;
+		}
 
-    // return the major version of Internet Explorer the viewer is using or false if it's not IE
+		$ie_version = self::get_internet_explorer_version();
+		if ( false === $ie_version ) {
+			return $supported = true;
+		}
 
-    public static function current_browser_is_supported()
-    {
-        static $supported;
+		if ( $ie_version < 8 ) {
+			return $supported = false;
+		}
 
-        if (isset($supported)) {
-            return $supported;
-        }
+		return $supported = true;
+	}
 
-        $ie_version = self::get_internet_explorer_version();
-        if (false === $ie_version) {
-            return $supported = true;
-        }
+	function action_init() {
+		//syncing must wait until after init so
+		//post types that support comments
+		$filt_post_types = array();
+		$all_post_types = get_post_types();
+		foreach ( $all_post_types as $post_type ) {
+			if ( post_type_supports( $post_type, 'comments' ) ) {
+				$filt_post_types[] = $post_type;
+			}
+		}
 
-        if ($ie_version < 8) {
-            return $supported = false;
-        }
+		Jetpack_Sync::sync_posts( __FILE__, array(
+			'post_types' => $filt_post_types,
+			'post_stati' => array( 'publish' ),
+		) );
+		Jetpack_Sync::sync_comments( __FILE__, array(
+			'post_types' => $filt_post_types,
+			'post_stati' => array( 'publish' ),
+			'comment_stati' => array( 'approve', 'approved', '1', 'hold', 'unapproved', 'unapprove', '0', 'spam', 'trash' ),
+		) );
 
-        return $supported = true;
-    }
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+			return;
 
-    public static function get_internet_explorer_version()
-    {
-        static $version;
-        if (isset($version)) {
-            return $version;
-        }
+		if ( !has_filter( 'show_admin_bar', '__return_true' ) && !is_user_logged_in() )
+			return;
 
-        $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		if ( !self::current_browser_is_supported() )
+			return;
 
-        preg_match('/MSIE (\d+)/', $user_agent, $matches);
-        $version = empty($matches[1]) ? null : $matches[1];
-        if (empty($version) || !$version) {
-            return false;
-        }
-        return $version;
-    }
+		add_action( 'admin_bar_menu', array( &$this, 'admin_bar_menu'), 120 );
+		add_action( 'wp_head', array( &$this, 'styles_and_scripts'), 120 );
+		add_action( 'admin_head', array( &$this, 'styles_and_scripts') );
+	}
 
-    function styles_and_scripts()
-    {
-        if (!is_rtl()) {
-            wp_enqueue_style('wpcom-notes-admin-bar', $this->wpcom_static_url('/wp-content/mu-plugins/notes/admin-bar-v2.css'), array(), JETPACK_NOTES__CACHE_BUSTER);
-        } else {
-            wp_enqueue_style('wpcom-notes-admin-bar', $this->wpcom_static_url('/wp-content/mu-plugins/notes/rtl/admin-bar-v2-rtl.css'), array(), JETPACK_NOTES__CACHE_BUSTER);
-        }
-        wp_enqueue_style('noticons', $this->wpcom_static_url('/i/noticons/noticons.css'), array(), JETPACK_NOTES__CACHE_BUSTER);
+	function styles_and_scripts() {
+		if ( !is_rtl() ) {
+			wp_enqueue_style( 'wpcom-notes-admin-bar', $this->wpcom_static_url( '/wp-content/mu-plugins/notes/admin-bar-v2.css' ), array(), JETPACK_NOTES__CACHE_BUSTER );
+		} else {
+			wp_enqueue_style( 'wpcom-notes-admin-bar', $this->wpcom_static_url( '/wp-content/mu-plugins/notes/rtl/admin-bar-v2-rtl.css' ), array(), JETPACK_NOTES__CACHE_BUSTER );
+		}
+		wp_enqueue_style( 'noticons', $this->wpcom_static_url( '/i/noticons/noticons.css' ), array(), JETPACK_NOTES__CACHE_BUSTER );
 
-        $this->print_js();
+		$this->print_js();
 
-        // attempt to use core or plugin libraries if registered
-        if (!wp_script_is('mustache', 'registered')) {
-            wp_register_script('mustache', $this->wpcom_static_url('/wp-content/js/mustache.js'), null, JETPACK_NOTES__CACHE_BUSTER);
-        }
-        if (!wp_script_is('underscore', 'registered')) {
-            wp_register_script('underscore', $this->wpcom_static_url('/wp-includes/js/underscore.min.js'), null, JETPACK_NOTES__CACHE_BUSTER);
-        }
-        if (!wp_script_is('backbone', 'registered')) {
-            wp_register_script('backbone', $this->wpcom_static_url('/wp-includes/js/backbone.min.js'), array('underscore'), JETPACK_NOTES__CACHE_BUSTER);
-        }
+		// attempt to use core or plugin libraries if registered
+		if ( !wp_script_is( 'mustache', 'registered' ) ) {
+			wp_register_script( 'mustache', $this->wpcom_static_url( '/wp-content/js/mustache.js' ), null, JETPACK_NOTES__CACHE_BUSTER );
+		}
+		if ( !wp_script_is( 'underscore', 'registered' ) ) {
+			wp_register_script( 'underscore', $this->wpcom_static_url( '/wp-includes/js/underscore.min.js' ), null, JETPACK_NOTES__CACHE_BUSTER );
+		}
+		if ( !wp_script_is( 'backbone', 'registered' ) ) {
+			wp_register_script( 'backbone', $this->wpcom_static_url( '/wp-includes/js/backbone.min.js' ), array( 'underscore' ), JETPACK_NOTES__CACHE_BUSTER );
+		}
 
-        wp_register_script('wpcom-notes-common', $this->wpcom_static_url('/wp-content/mu-plugins/notes/notes-common-v2.js'), array('jquery', 'underscore', 'backbone', 'mustache'), JETPACK_NOTES__CACHE_BUSTER);
-        wp_enqueue_script('wpcom-notes-admin-bar', $this->wpcom_static_url('/wp-content/mu-plugins/notes/admin-bar-v2.js'), array('wpcom-notes-common'), JETPACK_NOTES__CACHE_BUSTER);
-    }
+		wp_register_script( 'wpcom-notes-common', $this->wpcom_static_url( '/wp-content/mu-plugins/notes/notes-common-v2.js' ), array( 'jquery', 'underscore', 'backbone', 'mustache' ), JETPACK_NOTES__CACHE_BUSTER );
+		wp_enqueue_script( 'wpcom-notes-admin-bar', $this->wpcom_static_url( '/wp-content/mu-plugins/notes/admin-bar-v2.js' ), array( 'wpcom-notes-common' ), JETPACK_NOTES__CACHE_BUSTER );
+	}
 
-    function wpcom_static_url($file)
-    {
-        $i = hexdec(substr(md5($file), -1)) % 2;
-        $url = 'http://s' . $i . '.wp.com' . $file;
-        return set_url_scheme($url);
-    }
+	function admin_bar_menu() {
+		global $wp_admin_bar, $current_blog;
 
-    function print_js()
-    {
-        $link_accounts_url = is_user_logged_in() && !Jetpack::is_user_connected() ? Jetpack::admin_url() : false;
-        ?>
-        <script type="text/javascript">
-            /* <![CDATA[ */
-            var wpNotesIsJetpackClient = true;
-            var wpNotesIsJetpackClientV2 = true;
-            <?php if ( $link_accounts_url ) : ?>
-            var wpNotesLinkAccountsURL = '<?php print $link_accounts_url; ?>';
-            <?php endif; ?>
-            /* ]]> */
-        </script>
-        <?php
-    }
+		if ( !is_object( $wp_admin_bar ) )
+			return;
 
-    function admin_bar_menu()
-    {
-        global $wp_admin_bar, $current_blog;
+		$wpcom_locale = get_locale();
 
-        if (!is_object($wp_admin_bar))
-            return;
+		if ( !class_exists( 'GP_Locales' ) ) {
+			if ( defined( 'JETPACK__GLOTPRESS_LOCALES_PATH' ) && file_exists( JETPACK__GLOTPRESS_LOCALES_PATH ) ) {
+				require JETPACK__GLOTPRESS_LOCALES_PATH;
+			}
+		}
 
-        $wpcom_locale = get_locale();
+		if ( class_exists( 'GP_Locales' ) ) {
+			$wpcom_locale_object = GP_Locales::by_field( 'wp_locale', get_locale() );
+			if ( $wpcom_locale_object instanceof GP_Locale ) {
+				$wpcom_locale = $wpcom_locale_object->slug;
+			}
+		}
 
-        if (!class_exists('GP_Locales')) {
-            if (defined('JETPACK__GLOTPRESS_LOCALES_PATH') && file_exists(JETPACK__GLOTPRESS_LOCALES_PATH)) {
-                require JETPACK__GLOTPRESS_LOCALES_PATH;
-            }
-        }
-
-        if (class_exists('GP_Locales')) {
-            $wpcom_locale_object = GP_Locales::by_field('wp_locale', get_locale());
-            if ($wpcom_locale_object instanceof GP_Locale) {
-                $wpcom_locale = $wpcom_locale_object->slug;
-            }
-        }
-
-        $classes = 'wpnt-loading wpn-read';
-        $wp_admin_bar->add_menu(array(
-            'id' => 'notes',
-            'title' => '<span id="wpnt-notes-unread-count" class="' . esc_attr($classes) . '">
+		$classes = 'wpnt-loading wpn-read';
+		$wp_admin_bar->add_menu( array(
+			'id'     => 'notes',
+			'title'  => '<span id="wpnt-notes-unread-count" class="' . esc_attr( $classes ) . '">
 					<span class="noticon noticon-notification"></span>
 					</span>',
-            'meta' => array(
-                'html' => '<div id="wpnt-notes-panel2" style="display:none" lang="' . esc_attr($wpcom_locale) . '" dir="' . (is_rtl() ? 'rtl' : 'ltr') . '"><div class="wpnt-notes-panel-header"><span class="wpnt-notes-header">' . __('Notifications', 'jetpack') . '</span><span class="wpnt-notes-panel-link"></span></div></div>',
-                'class' => 'menupop',
-            ),
-            'parent' => 'top-secondary',
-        ));
-    }
+			'meta'   => array(
+				'html'  => '<div id="wpnt-notes-panel2" style="display:none" lang="'. esc_attr( $wpcom_locale ) . '" dir="' . ( is_rtl() ? 'rtl' : 'ltr' ) . '"><div class="wpnt-notes-panel-header"><span class="wpnt-notes-header">' . __( 'Notifications', 'jetpack' ) . '</span><span class="wpnt-notes-panel-link"></span></div></div>',
+				'class' => 'menupop',
+			),
+			'parent' => 'top-secondary',
+		) );
+	}
+
+	function print_js() {
+		$link_accounts_url = is_user_logged_in() && !Jetpack::is_user_connected() ? Jetpack::admin_url() : false;
+?>
+<script type="text/javascript">
+/* <![CDATA[ */
+	var wpNotesIsJetpackClient = true;
+	var wpNotesIsJetpackClientV2 = true;
+<?php if ( $link_accounts_url ) : ?>
+	var wpNotesLinkAccountsURL = '<?php print $link_accounts_url; ?>';
+<?php endif; ?>
+/* ]]> */
+</script>
+<?php
+	}
 
 }
 

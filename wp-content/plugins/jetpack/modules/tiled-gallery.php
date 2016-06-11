@@ -11,22 +11,19 @@
  * Additional Search Queries: gallery, tiles, tiled, grid, mosaic, images
  */
 
-function jetpack_load_tiled_gallery()
-{
-	include dirname(__FILE__) . "/tiled-gallery/tiled-gallery.php";
+function jetpack_load_tiled_gallery() {
+	include dirname( __FILE__ ) . "/tiled-gallery/tiled-gallery.php";
 }
 
-add_action('jetpack_modules_loaded', 'jetpack_tiled_gallery_loaded');
+add_action( 'jetpack_modules_loaded', 'jetpack_tiled_gallery_loaded' );
 
-function jetpack_tiled_gallery_loaded()
-{
-	Jetpack::enable_module_configurable(__FILE__);
-	Jetpack::module_configuration_load(__FILE__, 'jetpack_tiled_gallery_configuration_load');
+function jetpack_tiled_gallery_loaded() {
+	Jetpack::enable_module_configurable( __FILE__ );
+	Jetpack::module_configuration_load( __FILE__, 'jetpack_tiled_gallery_configuration_load' );
 }
 
-function jetpack_tiled_gallery_configuration_load()
-{
-	wp_safe_redirect(admin_url('options-media.php'));
+function jetpack_tiled_gallery_configuration_load() {
+	wp_safe_redirect( admin_url( 'options-media.php' ) );
 	exit;
 }
 

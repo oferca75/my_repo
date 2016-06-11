@@ -36,7 +36,7 @@ div#jp-relatedposts h3.jp-relatedposts-headline em:before {
 	width: 100%;
 	min-width: 30px;
 	border-top: 1px solid #ddd;
-	border-top: 1px solid rgba(0, 0, 0, .2);
+	border-top: 1px solid rgba(0,0,0,.2);
 	margin-bottom: 1em;
 }
 
@@ -93,15 +93,15 @@ div#jp-relatedposts div.jp-relatedposts-items p {
 	margin: 0;
 }
 div#jp-relatedposts div.jp-relatedposts-items-visual div.jp-relatedposts-post-nothumbs {
-	position: relative;
+	position:relative;
 }
 div#jp-relatedposts div.jp-relatedposts-items-visual div.jp-relatedposts-post-nothumbs a.jp-relatedposts-post-aoverlay {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	display: block;
+	position:absolute;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+	display:block;
 }
 
 div#jp-relatedposts div.jp-relatedposts-items p {

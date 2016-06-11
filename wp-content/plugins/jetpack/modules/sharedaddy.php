@@ -14,19 +14,17 @@
  * Additional Search Queries: share, sharing, sharedaddy, buttons, icons, email, facebook, twitter, google+, linkedin, pinterest, pocket, press this, print, reddit, tumblr
  */
 
-if (!function_exists('sharing_init'))
-	include dirname(__FILE__) . '/sharedaddy/sharedaddy.php';
+if ( !function_exists( 'sharing_init' ) )
+	include dirname( __FILE__ ).'/sharedaddy/sharedaddy.php';
 
-add_action('jetpack_modules_loaded', 'sharedaddy_loaded');
+add_action( 'jetpack_modules_loaded', 'sharedaddy_loaded' );
 
-function sharedaddy_loaded()
-{
-	Jetpack::enable_module_configurable(__FILE__);
-	Jetpack::module_configuration_load(__FILE__, 'sharedaddy_configuration_load');
+function sharedaddy_loaded() {
+	Jetpack::enable_module_configurable( __FILE__ );
+	Jetpack::module_configuration_load( __FILE__, 'sharedaddy_configuration_load' );
 }
 
-function sharedaddy_configuration_load()
-{
-	wp_safe_redirect(menu_page_url('sharing', false) . "#sharing-buttons");
+function sharedaddy_configuration_load() {
+	wp_safe_redirect( menu_page_url( 'sharing', false ) . "#sharing-buttons" );
 	exit;
 }

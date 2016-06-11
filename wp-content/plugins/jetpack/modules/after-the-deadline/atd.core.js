@@ -28,11 +28,11 @@ function AtDCore() {
  * Internationalization Functions
  */
 
-AtDCore.prototype.getLang = function (key, defaultk) {
+AtDCore.prototype.getLang = function( key, defaultk ) {
 	return ( window.AtD_l10n_r0ar && window.AtD_l10n_r0ar[key] ) || defaultk;
 };
 
-AtDCore.prototype.addI18n = function (obj) {
+AtDCore.prototype.addI18n = function( obj ) {
 	// Back-compat
 	window.AtD_l10n_r0ar = obj;
 };
@@ -41,89 +41,88 @@ AtDCore.prototype.addI18n = function (obj) {
  * Setters
  */
 
-AtDCore.prototype.setIgnoreStrings = function (string) {
+AtDCore.prototype.setIgnoreStrings = function(string) {
 	var parent = this;
 
-	this.map(string.split(/,\s*/g), function (string) {
+	this.map(string.split(/,\s*/g), function(string) {
 		parent.ignore_strings[string] = 1;
 	});
 };
 
-AtDCore.prototype.showTypes = function (string) {
+AtDCore.prototype.showTypes = function(string) {
 	var show_types = string.split(/,\s*/g);
 	var types = {};
 
 	/* set some default types that we want to make optional */
 
-	/* grammar checker options */
-	types['Double Negatives'] = 1;
-	types['Hidden Verbs'] = 1;
-	types['Passive voice'] = 1;
-	types['Bias Language'] = 1;
+		/* grammar checker options */
+	types['Double Negatives']     = 1;
+	types['Hidden Verbs']         = 1;
+	types['Passive voice']        = 1;
+	types['Bias Language']        = 1;
 
-	/* style checker options */
-	types['Cliches'] = 1;
-	types['Complex Expression'] = 1;
-	types['Diacritical Marks'] = 1;
-	types['Jargon Language'] = 1;
-	types['Phrases to Avoid'] = 1;
+		/* style checker options */
+	types['Cliches']              = 1;
+	types['Complex Expression']   = 1;
+	types['Diacritical Marks']    = 1;
+	types['Jargon Language']      = 1;
+	types['Phrases to Avoid']     = 1;
 	types['Redundant Expression'] = 1;
 
-	var ignore_types = [];
+        var ignore_types = [];
 
-	this.map(show_types, function (string) {
-		types[string] = undefined;
-	});
+        this.map(show_types, function(string) {
+                types[string] = undefined;
+        });
 
-	this.map(this.ignore_types, function (string) {
-		if (types[string] !== undefined) {
-			ignore_types.push(string);
+        this.map(this.ignore_types, function(string) {
+                if (types[string] !== undefined) {
+                        ignore_types.push(string);
 		}
-	});
+        });
 
-	this.ignore_types = ignore_types;
+        this.ignore_types = ignore_types;
 };
 
 /*
  * Error Parsing Code
  */
 
-AtDCore.prototype.makeError = function (error_s, tokens, type, seps/*, pre*/) {
+AtDCore.prototype.makeError = function(error_s, tokens, type, seps/*, pre*/) {
 	var struct = {};
 	struct.type = type;
 	struct.string = error_s;
 	struct.tokens = tokens;
 
 	if (new RegExp('\\b' + error_s + '\\b').test(error_s)) {
-		struct.regexp = new RegExp('(?!' + error_s + '<)\\b' + error_s.replace(/\s+/g, seps) + '\\b');
+		struct.regexp = new RegExp('(?!'+error_s+'<)\\b' + error_s.replace(/\s+/g, seps) + '\\b');
 	}
 	else if (new RegExp(error_s + '\\b').test(error_s)) {
-		struct.regexp = new RegExp('(?!' + error_s + '<)' + error_s.replace(/\s+/g, seps) + '\\b');
+		struct.regexp = new RegExp('(?!'+error_s+'<)' + error_s.replace(/\s+/g, seps) + '\\b');
 	}
 	else if (new RegExp('\\b' + error_s).test(error_s)) {
-		struct.regexp = new RegExp('(?!' + error_s + '<)\\b' + error_s.replace(/\s+/g, seps));
+		struct.regexp = new RegExp('(?!'+error_s+'<)\\b' + error_s.replace(/\s+/g, seps));
 	}
 	else {
-		struct.regexp = new RegExp('(?!' + error_s + '<)' + error_s.replace(/\s+/g, seps));
+		struct.regexp = new RegExp('(?!'+error_s+'<)' + error_s.replace(/\s+/g, seps));
 	}
 
-	struct.used = false;
-	/* flag whether we've used this rule or not */
+	struct.used   = false; /* flag whether we've used this rule or not */
 
 	return struct;
 };
 
-AtDCore.prototype.addToErrorStructure = function (errors, list, type, seps) {
+AtDCore.prototype.addToErrorStructure = function(errors, list, type, seps) {
 	var parent = this;
 
-	this.map(list, function (error) {
+	this.map(list, function(error) {
 		var tokens = error['word'].split(/\s+/);
-		var pre = error['pre'];
-		var first = tokens[0];
+		var pre    = error['pre'];
+		var first  = tokens[0];
 
 		if (errors['__' + first] === undefined) {
 			errors['__' + first] = {};
-			errors['__' + first].pretoks = {};
+			errors['__' + first].pretoks  = {};
 			errors['__' + first].defaults = [];
 		}
 
@@ -139,8 +138,8 @@ AtDCore.prototype.addToErrorStructure = function (errors, list, type, seps) {
 	});
 };
 
-AtDCore.prototype.buildErrorStructure = function (spellingList, enrichmentList, grammarList) {
-	var seps = this._getSeparators();
+AtDCore.prototype.buildErrorStructure = function(spellingList, enrichmentList, grammarList) {
+	var seps   = this._getSeparators();
 	var errors = {};
 
 	this.addToErrorStructure(errors, spellingList, 'hiddenSpellError', seps);
@@ -149,24 +148,24 @@ AtDCore.prototype.buildErrorStructure = function (spellingList, enrichmentList, 
 	return errors;
 };
 
-AtDCore.prototype._getSeparators = function () {
+AtDCore.prototype._getSeparators = function() {
 	var re = '', i;
 	var str = '"s!#$%&()*+,./:;<=>?@[\\]^_{|}';
 
 	// Build word separator regexp
-	for (i = 0; i < str.length; i++) {
+	for (i=0; i<str.length; i++) {
 		re += '\\' + str.charAt(i);
 	}
 
-	return '(?:(?:[\xa0' + re + '])|(?:\\-\\-))+';
+	return '(?:(?:[\xa0' + re  + '])|(?:\\-\\-))+';
 };
 
-AtDCore.prototype.processXML = function (responseXML) {
+AtDCore.prototype.processXML = function(responseXML) {
 
 	/* types of errors to ignore */
 	var types = {};
 
-	this.map(this.ignore_types, function (type) {
+	this.map(this.ignore_types, function(type) {
 		types[type] = 1;
 	});
 
@@ -177,14 +176,14 @@ AtDCore.prototype.processXML = function (responseXML) {
 	var errors = responseXML.getElementsByTagName('error');
 
 	/* words to mark */
-	var grammarErrors = [];
-	var spellingErrors = [];
-	var enrichment = [];
+	var grammarErrors    = [];
+	var spellingErrors   = [];
+	var enrichment       = [];
 
 	for (var i = 0; i < errors.length; i++) {
 		if (errors[i].getElementsByTagName('string').item(0).firstChild !== null) {
-			var errorString = errors[i].getElementsByTagName('string').item(0).firstChild.data;
-			var errorType = errors[i].getElementsByTagName('type').item(0).firstChild.data;
+			var errorString      = errors[i].getElementsByTagName('string').item(0).firstChild.data;
+			var errorType        = errors[i].getElementsByTagName('type').item(0).firstChild.data;
 			var errorDescription = errors[i].getElementsByTagName('description').item(0).firstChild.data;
 
 			var errorContext;
@@ -196,7 +195,7 @@ AtDCore.prototype.processXML = function (responseXML) {
 			}
 
 			/* create a hashtable with information about the error in the editor object, we will use this later
-			 to populate a popup menu with information and suggestions about the error */
+			   to populate a popup menu with information and suggestions about the error */
 
 			if (this.ignore_strings[errorString] === undefined) {
 				var suggestion = {};
@@ -204,11 +203,11 @@ AtDCore.prototype.processXML = function (responseXML) {
 				suggestion['suggestions'] = [];
 
 				/* used to find suggestions when a highlighted error is clicked on */
-				suggestion['matcher'] = new RegExp('^' + errorString.replace(/\s+/, this._getSeparators()) + '$');
+				suggestion['matcher']     = new RegExp('^' + errorString.replace(/\s+/, this._getSeparators()) + '$');
 
-				suggestion['context'] = errorContext;
-				suggestion['string'] = errorString;
-				suggestion['type'] = errorType;
+				suggestion['context']     = errorContext;
+				suggestion['string']      = errorString;
+				suggestion['type']        = errorType;
 
 				this.suggestions.push(suggestion);
 
@@ -227,21 +226,20 @@ AtDCore.prototype.processXML = function (responseXML) {
 
 				if (types[errorDescription] === undefined) {
 					if (errorType === 'suggestion') {
-						enrichment.push({word: errorString, pre: errorContext});
+						enrichment.push({ word: errorString, pre: errorContext });
 					}
 
 					if (errorType === 'grammar') {
-						grammarErrors.push({word: errorString, pre: errorContext});
+						grammarErrors.push({ word: errorString, pre: errorContext });
 					}
 				}
 
 				if (errorType === 'spelling' || errorDescription === 'Homophone') {
-					spellingErrors.push({word: errorString, pre: errorContext});
+					spellingErrors.push({ word: errorString, pre: errorContext });
 				}
 
 				if (errorDescription === 'Cliches') {
-					suggestion['description'] = 'Clichés';
-					/* done here for backwards compatability with current user settings */
+					suggestion['description'] = 'Clichés'; /* done here for backwards compatability with current user settings */
 				}
 
 				if (errorDescription === 'Spelling') {
@@ -260,7 +258,7 @@ AtDCore.prototype.processXML = function (responseXML) {
 	} // end for loop
 
 	var errorStruct;
-	var ecount = spellingErrors.length + grammarErrors.length + enrichment.length;
+        var ecount = spellingErrors.length + grammarErrors.length + enrichment.length;
 
 	if (ecount > 0) {
 		errorStruct = this.buildErrorStructure(spellingErrors, enrichment, grammarErrors);
@@ -269,15 +267,15 @@ AtDCore.prototype.processXML = function (responseXML) {
 	}
 
 	/* save some state in this object, for retrieving suggestions later */
-	return {errors: errorStruct, count: ecount, suggestions: this.suggestions};
+	return { errors: errorStruct, count: ecount, suggestions: this.suggestions };
 };
 
-AtDCore.prototype.findSuggestion = function (element) {
-	var text = element.innerHTML;
-	var context = ( this.getAttrib(element, 'pre') + '' ).replace(/[\\,!\\?\\."\s]/g, '');
-	if (this.getAttrib(element, 'pre') === undefined) {
-		alert(element.innerHTML);
-	}
+AtDCore.prototype.findSuggestion = function(element) {
+        var text = element.innerHTML;
+        var context = ( this.getAttrib(element, 'pre') + '' ).replace(/[\\,!\\?\\."\s]/g, '');
+        if (this.getAttrib(element, 'pre') === undefined) {
+           alert(element.innerHTML);
+        }
 
 	var errorDescription;
 	var len = this.suggestions.length;
@@ -297,12 +295,12 @@ AtDCore.prototype.findSuggestion = function (element) {
 
 function TokenIterator(tokens) {
 	this.tokens = tokens;
-	this.index = 0;
-	this.count = 0;
-	this.last = 0;
+	this.index  = 0;
+	this.count  = 0;
+	this.last   = 0;
 }
 
-TokenIterator.prototype.next = function () {
+TokenIterator.prototype.next = function() {
 	var current = this.tokens[this.index];
 	this.count = this.last;
 	this.last += current.length + 1;
@@ -322,15 +320,15 @@ TokenIterator.prototype.next = function () {
 	return current;
 };
 
-TokenIterator.prototype.hasNext = function () {
+TokenIterator.prototype.hasNext = function() {
 	return this.index < this.tokens.length;
 };
 
-TokenIterator.prototype.hasNextN = function (n) {
+TokenIterator.prototype.hasNextN = function(n) {
 	return (this.index + n) < this.tokens.length;
 };
 
-TokenIterator.prototype.skip = function (m, n) {
+TokenIterator.prototype.skip = function(m, n) {
 	this.index += m;
 	this.last += n;
 
@@ -339,11 +337,11 @@ TokenIterator.prototype.skip = function (m, n) {
 	}
 };
 
-TokenIterator.prototype.getCount = function () {
+TokenIterator.prototype.getCount = function() {
 	return this.count;
 };
 
-TokenIterator.prototype.peek = function (n) {
+TokenIterator.prototype.peek = function(n) {
 	var peepers = [];
 	var end = this.index + n;
 	for (var x = this.index; x < end; x++) {
@@ -355,7 +353,7 @@ TokenIterator.prototype.peek = function (n) {
 /*
  *  code to manage highlighting of errors
  */
-AtDCore.prototype.markMyWords = function (container_nodes, errors) {
+AtDCore.prototype.markMyWords = function(container_nodes, errors) {
 	var seps = new RegExp(this._getSeparators()),
 		nl = [],
 		ecount = 0, /* track number of highlighted errors */
@@ -375,39 +373,39 @@ AtDCore.prototype.markMyWords = function (container_nodes, errors) {
 	 *
 	 * @return array
 	 */
-	function splitTextNode(textnode, regexp, replacement) {
+	function splitTextNode( textnode, regexp, replacement ) {
 		var text = textnode.nodeValue,
-			index = text.search(regexp),
-			match = text.match(regexp),
+			index = text.search( regexp ),
+			match = text.match( regexp ),
 			captured = [],
 			cursor;
 
-		if (index < 0 || !match.length) {
-			return [textnode];
+		if ( index < 0 || ! match.length ) {
+			return [ textnode ];
 		}
 
-		if (index > 0) {
+		if ( index > 0 ) {
 			// capture left text node
-			captured.push(document.createTextNode(text.substr(0, index)));
+			captured.push( document.createTextNode( text.substr( 0, index ) ) );
 		}
 
 		// capture the replacement of the matched string
-		captured.push(parent.create(match[0].replace(regexp, replacement)));
+		captured.push( parent.create( match[0].replace( regexp, replacement ) ) );
 
 		cursor = index + match[0].length;
 
-		if (cursor < text.length) {
+		if ( cursor < text.length ) {
 			// capture right text node
-			captured.push(document.createTextNode(text.substr(cursor)));
+			captured.push( document.createTextNode( text.substr( cursor ) ) );
 		}
 
 		return captured;
 	}
 
-	function _isInPre(node) {
-		if (node) {
-			while (node.parentNode) {
-				if (node.nodeName === 'PRE') {
+	function _isInPre( node ) {
+		if ( node ) {
+			while ( node.parentNode ) {
+				if ( node.nodeName === 'PRE' ) {
 					return true;
 				}
 				node = node.parentNode;
@@ -420,9 +418,9 @@ AtDCore.prototype.markMyWords = function (container_nodes, errors) {
 	/* Collect all text nodes */
 	/* Our goal--ignore nodes that are already wrapped */
 
-	this._walk(container_nodes, function (n) {
-		if (n.nodeType === 3 && !parent.isMarkedNode(n) && !_isInPre(n)) {
-			nl.push(n);
+	this._walk( container_nodes, function( n ) {
+		if ( n.nodeType === 3 && ! parent.isMarkedNode( n ) && ! _isInPre( n ) ) {
+			nl.push( n );
 		}
 	});
 
@@ -430,27 +428,25 @@ AtDCore.prototype.markMyWords = function (container_nodes, errors) {
 
 	var iterator;
 
-	this.map(nl, function (n) {
+	this.map( nl, function( n ) {
 		var v;
 
-		if (n.nodeType === 3) {
-			v = n.nodeValue;
-			/* we don't want to mangle the HTML so use the actual encoded string */
-			var tokens = n.nodeValue.split(seps);
-			/* split on the unencoded string so we get access to quotes as " */
+		if ( n.nodeType === 3 ) {
+			v = n.nodeValue; /* we don't want to mangle the HTML so use the actual encoded string */
+			var tokens = n.nodeValue.split( seps ); /* split on the unencoded string so we get access to quotes as " */
 			var previous = '';
 
 			var doReplaces = [];
 
 			iterator = new TokenIterator(tokens);
 
-			while (iterator.hasNext()) {
+			while ( iterator.hasNext() ) {
 				var token = iterator.next();
-				var current = errors['__' + token];
+				var current  = errors['__' + token];
 
 				var defaults;
 
-				if (current !== undefined && current.pretoks !== undefined) {
+				if ( current !== undefined && current.pretoks !== undefined ) {
 					defaults = current.defaults;
 					current = current.pretoks['__' + previous];
 
@@ -460,10 +456,10 @@ AtDCore.prototype.markMyWords = function (container_nodes, errors) {
 					prev = v.substr(0, iterator.getCount());
 					curr = v.substr(prev.length, v.length);
 
-					var checkErrors = function (error) {
-						if (error !== undefined && !error.used && foundStrings['__' + error.string] === undefined && error.regexp.test(curr)) {
-							foundStrings['__' + error.string] = 1;
-							doReplaces.push([error.regexp, '<span class="' + error.type + '" pre="' + previous + '"' + bogus + '>$&</span>']);
+					var checkErrors = function( error ) {
+						if ( error !== undefined && ! error.used && foundStrings[ '__' + error.string ] === undefined && error.regexp.test( curr ) ) {
+							foundStrings[ '__' + error.string ] = 1;
+							doReplaces.push([ error.regexp, '<span class="'+error.type+'" pre="'+previous+'"' + bogus + '>$&</span>' ]);
 
 							error.used = true;
 							done = true;
@@ -487,44 +483,44 @@ AtDCore.prototype.markMyWords = function (container_nodes, errors) {
 			} // end while
 
 			/* do the actual replacements on this span */
-			if (doReplaces.length > 0) {
+			if ( doReplaces.length > 0 ) {
 				var newNode = n;
 
-				for (var x = 0; x < doReplaces.length; x++) {
+				for ( var x = 0; x < doReplaces.length; x++ ) {
 					var regexp = doReplaces[x][0], result = doReplaces[x][1];
 
 					/* it's assumed that this function is only being called on text nodes (nodeType == 3), the iterating is necessary
-					 because eventually the whole thing gets wrapped in an mceItemHidden span and from there it's necessary to
-					 handle each node individually. */
-					var bringTheHurt = function (node) {
+					   because eventually the whole thing gets wrapped in an mceItemHidden span and from there it's necessary to
+					   handle each node individually. */
+					var bringTheHurt = function( node ) {
 						var span, splitNodes;
 
-						if (node.nodeType === 3) {
+						if ( node.nodeType === 3 ) {
 							ecount++;
 
 							/* sometimes IE likes to ignore the space between two spans, solution is to insert a placeholder span with
-							 a non-breaking space.  The markup removal code substitutes this span for a space later */
-							if (parent.isIE() && node.nodeValue.length > 0 && node.nodeValue.substr(0, 1) === ' ') {
-								return parent.create(emptySpan + node.nodeValue.substr(1, node.nodeValue.length - 1).replace(regexp, result), false);
+							   a non-breaking space.  The markup removal code substitutes this span for a space later */
+							if ( parent.isIE() && node.nodeValue.length > 0 && node.nodeValue.substr(0, 1) === ' ' ) {
+								return parent.create( emptySpan + node.nodeValue.substr( 1, node.nodeValue.length - 1 ).replace( regexp, result ), false );
 							} else {
-								if (textOnlyMode) {
-									return parent.create(node.nodeValue.replace(regexp, result), false);
+								if ( textOnlyMode ) {
+									return parent.create( node.nodeValue.replace( regexp, result ), false );
 								}
 
-								span = parent.create('<span />');
-								if (typeof textOnlyMode === 'undefined') {
+								span = parent.create( '<span />' );
+								if ( typeof textOnlyMode === 'undefined' ) {
 									// cache this to avoid adding / removing nodes unnecessarily
 									textOnlyMode = typeof span.appendChild !== 'function';
-									if (textOnlyMode) {
-										parent.remove(span);
-										return parent.create(node.nodeValue.replace(regexp, result), false);
+									if ( textOnlyMode ) {
+										parent.remove( span );
+										return parent.create( node.nodeValue.replace( regexp, result ), false );
 									}
 								}
 
 								// "Visual" mode
-								splitNodes = splitTextNode(node, regexp, result);
-								for (var i = 0; i < splitNodes.length; i++) {
-									span.appendChild(splitNodes[i]);
+								splitNodes = splitTextNode( node, regexp, result );
+								for ( var i = 0; i < splitNodes.length; i++ ) {
+									span.appendChild( splitNodes[i] );
 								}
 
 								node = span;
@@ -534,23 +530,22 @@ AtDCore.prototype.markMyWords = function (container_nodes, errors) {
 						else {
 							var contents = parent.contents(node);
 
-							for (var y = 0; y < contents.length; y++) {
-								if (contents[y].nodeType === 3 && regexp.test(contents[y].nodeValue)) {
+							for ( var y = 0; y < contents.length; y++ ) {
+								if ( contents[y].nodeType === 3 && regexp.test( contents[y].nodeValue ) ) {
 									var nnode;
 
-									if (parent.isIE() && contents[y].nodeValue.length > 0 && contents[y].nodeValue.substr(0, 1) === ' ') {
-										nnode = parent.create(emptySpan + contents[y].nodeValue.substr(1, contents[y].nodeValue.length - 1).replace(regexp, result), true);
+									if ( parent.isIE() && contents[y].nodeValue.length > 0 && contents[y].nodeValue.substr(0, 1) === ' ') {
+										nnode = parent.create( emptySpan + contents[y].nodeValue.substr( 1, contents[y].nodeValue.length - 1 ).replace( regexp, result ), true );
 									} else {
-										nnode = parent.create(contents[y].nodeValue.replace(regexp, result), true);
+										nnode = parent.create( contents[y].nodeValue.replace( regexp, result ), true );
 									}
 
-									parent.replaceWith(contents[y], nnode);
-									parent.removeParent(nnode);
+									parent.replaceWith( contents[y], nnode );
+									parent.removeParent( nnode );
 
 									ecount++;
 
-									return node;
-									/* we did a replacement so we can call it quits, errors only get used once */
+									return node; /* we did a replacement so we can call it quits, errors only get used once */
 								}
 							}
 
@@ -569,7 +564,7 @@ AtDCore.prototype.markMyWords = function (container_nodes, errors) {
 	return ecount;
 };
 
-AtDCore.prototype._walk = function (elements, f) {
+AtDCore.prototype._walk = function(elements, f) {
 	var i;
 	for (i = 0; i < elements.length; i++) {
 		f.call(f, elements[i]);
@@ -577,15 +572,14 @@ AtDCore.prototype._walk = function (elements, f) {
 	}
 };
 
-AtDCore.prototype.removeWords = function (node, w) {
+AtDCore.prototype.removeWords = function(node, w) {
 	var count = 0;
 	var parent = this;
 
-	this.map(this.findSpans(node).reverse(), function (n) {
-		if (n && (parent.isMarkedNode(n) || parent.hasClass(n, 'mceItemHidden') || parent.isEmptySpan(n))) {
+	this.map(this.findSpans(node).reverse(), function(n) {
+		if (n && (parent.isMarkedNode(n) || parent.hasClass(n, 'mceItemHidden') || parent.isEmptySpan(n)) ) {
 			if (n.innerHTML === '&nbsp;') {
-				var nnode = document.createTextNode(' ');
-				/* hax0r */
+				var nnode = document.createTextNode(' '); /* hax0r */
 				parent.replaceWith(n, nnode);
 			} else if (!w || n.innerHTML === w) {
 				parent.removeParent(n);
@@ -597,18 +591,18 @@ AtDCore.prototype.removeWords = function (node, w) {
 	return count;
 };
 
-AtDCore.prototype.isEmptySpan = function (node) {
+AtDCore.prototype.isEmptySpan = function(node) {
 	return (this.getAttrib(node, 'class') === '' && this.getAttrib(node, 'style') === '' && this.getAttrib(node, 'id') === '' && !this.hasClass(node, 'Apple-style-span') && this.getAttrib(node, 'mce_name') === '');
 };
 
-AtDCore.prototype.isMarkedNode = function (node) {
+AtDCore.prototype.isMarkedNode = function(node) {
 	return (this.hasClass(node, 'hiddenGrammarError') || this.hasClass(node, 'hiddenSpellError') || this.hasClass(node, 'hiddenSuggestion'));
 };
 
 /*
  * Context Menu Helpers
  */
-AtDCore.prototype.applySuggestion = function (element, suggestion) {
+AtDCore.prototype.applySuggestion = function(element, suggestion) {
 	if (suggestion === '(omit)') {
 		this.remove(element);
 	}
@@ -622,16 +616,16 @@ AtDCore.prototype.applySuggestion = function (element, suggestion) {
 /*
  * Check for an error
  */
-AtDCore.prototype.hasErrorMessage = function (xmlr) {
+AtDCore.prototype.hasErrorMessage = function(xmlr) {
 	return (xmlr !== undefined && xmlr.getElementsByTagName('message').item(0) !== null);
 };
 
-AtDCore.prototype.getErrorMessage = function (xmlr) {
+AtDCore.prototype.getErrorMessage = function(xmlr) {
 	return xmlr.getElementsByTagName('message').item(0);
 };
 
 /* this should always be an error, alas... not practical */
-AtDCore.prototype.isIE = function () {
+AtDCore.prototype.isIE = function() {
 	return navigator.appName === 'Microsoft Internet Explorer';
 };
 

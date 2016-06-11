@@ -1,11 +1,11 @@
-.wp-customizer .expanded .widget-conditional .widget-conditional-inner {
+.wp-customizer  .expanded .widget-conditional .widget-conditional-inner {
 	width: 98%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;
 }
 
-.wp-customizer .expanded .widget-conditional .form {
+.wp-customizer  .expanded .widget-conditional .form{
 	overflow: scroll;
 	margin-bottom: 20px;
 }
@@ -24,13 +24,12 @@
 .widget-conditional {
 	margin-bottom: 12px;
 }
-
-.widget-conditional .conditions {
+.widget-conditional .conditions{
 	margin-bottom: 12px;
 }
 .widget-conditional .condition,
 .widget-conditional .condition-top {
-	clear: both;
+	clear:both;
 }
 .widget-conditional .condition {
 	padding-top: 12px;

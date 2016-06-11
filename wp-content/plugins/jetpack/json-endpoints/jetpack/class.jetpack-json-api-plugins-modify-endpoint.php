@@ -1,197 +1,189 @@
 <?php
 
-class Jetpack_JSON_API_Plugins_Modify_Endpoint extends Jetpack_JSON_API_Plugins_Endpoint
-{
-    // POST  /sites/%s/plugins/%s
-    // POST  /sites/%s/plugins
+class Jetpack_JSON_API_Plugins_Modify_Endpoint extends Jetpack_JSON_API_Plugins_Endpoint {
+	// POST  /sites/%s/plugins/%s
+	// POST  /sites/%s/plugins
 
-    protected $needed_capabilities = 'activate_plugins';
-    protected $action = 'default_action';
-    protected $expected_actions = array('update', 'install', 'delete');
+	protected $needed_capabilities = 'activate_plugins';
+	protected $action              = 'default_action';
+	protected $expected_actions    = array( 'update', 'install', 'delete' );
 
-    public function callback($path = '', $blog_id = 0, $object = null)
-    {
-        Jetpack_JSON_API_Endpoint::validate_input($object);
-        switch ($this->action) {
-            case 'update' :
-                $this->needed_capabilities = 'update_plugins';
-                break;
-            case 'install' :
-                $this->needed_capabilities = 'install_plugins';
-                break;
-        }
-        if (isset($args['autoupdate'])) {
-            $this->needed_capabilities = 'update_plugins';
-        }
+	public function callback( $path = '', $blog_id = 0, $object = null ) {
+		Jetpack_JSON_API_Endpoint::validate_input( $object );
+		switch ( $this->action ) {
+			case 'update' :
+				$this->needed_capabilities = 'update_plugins';
+				break;
+			case 'install' :
+				$this->needed_capabilities = 'install_plugins';
+				break;
+		}
+		if ( isset( $args['autoupdate'] ) ) {
+			$this->needed_capabilities = 'update_plugins';
+		}
 
-        return parent::callback($path, $blog_id, $object);
-    }
+		return parent::callback( $path, $blog_id, $object );
+	}
 
-    protected function update()
-    {
+	public function default_action() {
+		$args = $this->input();
 
-        wp_clean_plugins_cache();
-        ob_start();
-        wp_update_plugins(); // Check for Plugin updates
-        ob_end_clean();
+		if ( isset( $args['autoupdate'] ) && is_bool( $args['autoupdate'] ) ) {
+			if ( $args['autoupdate'] ) {
+				$this->autoupdate_on();
+			} else {
+				$this->autoupdate_off();
+			}
+		}
 
-        $update_plugins = get_site_transient('update_plugins');
+		if ( isset( $args['active'] ) && is_bool( $args['active'] ) ) {
+			if ( $args['active'] ) {
+				return $this->activate();
+			} else {
+				return $this->deactivate();
+			}
+		}
 
-        if (isset($update_plugins->response)) {
-            $plugin_updates_needed = array_keys($update_plugins->response);
-        } else {
-            $plugin_updates_needed = array();
-        }
+		return true;
+	}
 
-        $update_attempted = false;
+	protected function autoupdate_on() {
+		$autoupdate_plugins = Jetpack_Options::get_option( 'autoupdate_plugins', array() );
+		$autoupdate_plugins = array_unique( array_merge( $autoupdate_plugins, $this->plugins ) );
+		Jetpack_Options::update_option( 'autoupdate_plugins', $autoupdate_plugins );
+	}
 
-        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+	protected function autoupdate_off() {
+		$autoupdate_plugins = Jetpack_Options::get_option( 'autoupdate_plugins', array() );
+		$autoupdate_plugins = array_diff( $autoupdate_plugins, $this->plugins );
+		Jetpack_Options::update_option( 'autoupdate_plugins', $autoupdate_plugins );
+	}
 
-        // unhook this functions that output things before we send our response header.
-        remove_action('upgrader_process_complete', array('Language_Pack_Upgrader', 'async_upgrade'), 20);
-        remove_action('upgrader_process_complete', 'wp_version_check');
-        remove_action('upgrader_process_complete', 'wp_update_themes');
+	protected function activate() {
+		foreach ( $this->plugins as $plugin ) {
+			if ( ( ! $this->network_wide && Jetpack::is_plugin_active( $plugin ) ) || is_plugin_active_for_network( $plugin ) ) {
+				$this->log[ $plugin ]['error'] = __( 'The Plugin is already active.', 'jetpack' );
+				$has_errors = true;
+				continue;
+			}
 
-        foreach ($this->plugins as $plugin) {
+			if ( ! $this->network_wide && is_network_only_plugin( $plugin ) && is_multisite() ) {
+				$this->log[ $plugin ]['error'] = __( 'Plugin can only be Network Activated', 'jetpack' );
+				$has_errors = true;
+				continue;
+			}
 
-            if (!in_array($plugin, $plugin_updates_needed)) {
-                $this->log[$plugin][] = __('No update needed', 'jetpack');
-                continue;
-            }
+			$result = activate_plugin( $plugin, '', $this->network_wide );
 
-            /**
-             * Pre-upgrade action
-             *
-             * @since 3.9.3
-             *
-             * @param array $plugin Plugin data
-             * @param array $plugin Array of plugin objects
-             * @param bool $updated_attempted false for the first update, true subsequently
-             */
-            do_action('jetpack_pre_plugin_upgrade', $plugin, $this->plugins, $update_attempted);
+			if ( is_wp_error( $result ) ) {
+				$this->log[ $plugin ]['error'] = $result->get_error_messages();
+				$has_errors = true;
+				continue;
+			}
 
-            $update_attempted = true;
+			$success = Jetpack::is_plugin_active( $plugin );
+			if ( $success && $this->network_wide ) {
+				$success &= is_plugin_active_for_network( $plugin );
+			}
 
-            // Object created inside the for loop to clean the messages for each plugin
-            $skin = new Automatic_Upgrader_Skin();
-            // The Automatic_Upgrader_Skin skin shouldn't output anything.
-            $upgrader = new Plugin_Upgrader($skin);
-            $upgrader->init();
-            // This avoids the plugin to be deactivated.
-            defined('DOING_CRON') or define('DOING_CRON', true);
-            $result = $upgrader->upgrade($plugin);
+			if ( ! $success ) {
+				$this->log[ $plugin ]['error'] = $result->get_error_messages;
+				$has_errors = true;
+				continue;
+			}
+			$this->log[ $plugin ][] = __( 'Plugin activated.', 'jetpack' );
+		}
+		if ( ! $this->bulk && isset( $has_errors ) ) {
+			$plugin = $this->plugins[0];
+			return new WP_Error( 'activation_error', $this->log[ $plugin ]['error'] );
+		}
+	}
 
-            $this->log[$plugin][] = $upgrader->skin->get_upgrade_messages();
-        }
+	protected function deactivate() {
+		foreach ( $this->plugins as $plugin ) {
+			if ( ! Jetpack::is_plugin_active( $plugin ) ) {
+				$error = $this->log[ $plugin ]['error'] = __( 'The Plugin is already deactivated.', 'jetpack' );
+				continue;
+			}
 
-        if (!$this->bulk && !$result && $update_attempted) {
-            return new WP_Error('update_fail', __('There was an error updating your plugin', 'jetpack'), 400);
-        }
+			deactivate_plugins( $plugin, false, $this->network_wide );
 
-        return $this->default_action();
-    }
+			$success = ! Jetpack::is_plugin_active( $plugin );
+			if ( $success && $this->network_wide ) {
+				$success &= ! is_plugin_active_for_network( $plugin );
+			}
 
-    public function default_action()
-    {
-        $args = $this->input();
+			if ( ! $success ) {
+				$error = $this->log[ $plugin ]['error'] = __( 'There was an error deactivating your plugin', 'jetpack' );
+				continue;
+			}
+			$this->log[ $plugin ][] = __( 'Plugin deactivated.', 'jetpack' );
+		}
+		if ( ! $this->bulk && isset( $error ) ) {
+			return new WP_Error( 'deactivation_error', $error );
+		}
+	}
 
-        if (isset($args['autoupdate']) && is_bool($args['autoupdate'])) {
-            if ($args['autoupdate']) {
-                $this->autoupdate_on();
-            } else {
-                $this->autoupdate_off();
-            }
-        }
+	protected function update() {
 
-        if (isset($args['active']) && is_bool($args['active'])) {
-            if ($args['active']) {
-                return $this->activate();
-            } else {
-                return $this->deactivate();
-            }
-        }
+		wp_clean_plugins_cache();
+		ob_start();
+		wp_update_plugins(); // Check for Plugin updates
+		ob_end_clean();
 
-        return true;
-    }
+		$update_plugins = get_site_transient( 'update_plugins' );
 
-    protected function autoupdate_on()
-    {
-        $autoupdate_plugins = Jetpack_Options::get_option('autoupdate_plugins', array());
-        $autoupdate_plugins = array_unique(array_merge($autoupdate_plugins, $this->plugins));
-        Jetpack_Options::update_option('autoupdate_plugins', $autoupdate_plugins);
-    }
+		if ( isset( $update_plugins->response ) ) {
+			$plugin_updates_needed = array_keys( $update_plugins->response );
+		} else {
+			$plugin_updates_needed = array();
+		}
 
-    protected function autoupdate_off()
-    {
-        $autoupdate_plugins = Jetpack_Options::get_option('autoupdate_plugins', array());
-        $autoupdate_plugins = array_diff($autoupdate_plugins, $this->plugins);
-        Jetpack_Options::update_option('autoupdate_plugins', $autoupdate_plugins);
-    }
+		$update_attempted = false;
 
-    protected function activate()
-    {
-        foreach ($this->plugins as $plugin) {
-            if ((!$this->network_wide && Jetpack::is_plugin_active($plugin)) || is_plugin_active_for_network($plugin)) {
-                $this->log[$plugin]['error'] = __('The Plugin is already active.', 'jetpack');
-                $has_errors = true;
-                continue;
-            }
+		include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
-            if (!$this->network_wide && is_network_only_plugin($plugin) && is_multisite()) {
-                $this->log[$plugin]['error'] = __('Plugin can only be Network Activated', 'jetpack');
-                $has_errors = true;
-                continue;
-            }
+		// unhook this functions that output things before we send our response header.
+		remove_action( 'upgrader_process_complete', array( 'Language_Pack_Upgrader', 'async_upgrade' ), 20 );
+		remove_action( 'upgrader_process_complete', 'wp_version_check' );
+		remove_action( 'upgrader_process_complete', 'wp_update_themes' );
 
-            $result = activate_plugin($plugin, '', $this->network_wide);
+		foreach ( $this->plugins as $plugin ) {
 
-            if (is_wp_error($result)) {
-                $this->log[$plugin]['error'] = $result->get_error_messages();
-                $has_errors = true;
-                continue;
-            }
+			if ( ! in_array( $plugin, $plugin_updates_needed ) ) {
+				$this->log[ $plugin ][] = __( 'No update needed', 'jetpack' );
+				continue;
+			}
 
-            $success = Jetpack::is_plugin_active($plugin);
-            if ($success && $this->network_wide) {
-                $success &= is_plugin_active_for_network($plugin);
-            }
+			/**
+			 * Pre-upgrade action
+			 * 
+			 * @since 3.9.3
+			 * 
+			 * @param array $plugin Plugin data
+			 * @param array $plugin Array of plugin objects
+			 * @param bool $updated_attempted false for the first update, true subsequently
+			 */
+			do_action('jetpack_pre_plugin_upgrade', $plugin, $this->plugins, $update_attempted);
 
-            if (!$success) {
-                $this->log[$plugin]['error'] = $result->get_error_messages;
-                $has_errors = true;
-                continue;
-            }
-            $this->log[$plugin][] = __('Plugin activated.', 'jetpack');
-        }
-        if (!$this->bulk && isset($has_errors)) {
-            $plugin = $this->plugins[0];
-            return new WP_Error('activation_error', $this->log[$plugin]['error']);
-        }
-    }
+			$update_attempted = true;
 
-    protected function deactivate()
-    {
-        foreach ($this->plugins as $plugin) {
-            if (!Jetpack::is_plugin_active($plugin)) {
-                $error = $this->log[$plugin]['error'] = __('The Plugin is already deactivated.', 'jetpack');
-                continue;
-            }
+			// Object created inside the for loop to clean the messages for each plugin
+			$skin = new Automatic_Upgrader_Skin();
+			// The Automatic_Upgrader_Skin skin shouldn't output anything.
+			$upgrader = new Plugin_Upgrader( $skin );
+			$upgrader->init();
+			// This avoids the plugin to be deactivated.
+			defined( 'DOING_CRON' ) or define( 'DOING_CRON', true );
+			$result = $upgrader->upgrade( $plugin );
 
-            deactivate_plugins($plugin, false, $this->network_wide);
+			$this->log[ $plugin ][] = $upgrader->skin->get_upgrade_messages();
+		}
 
-            $success = !Jetpack::is_plugin_active($plugin);
-            if ($success && $this->network_wide) {
-                $success &= !is_plugin_active_for_network($plugin);
-            }
+		if ( ! $this->bulk && ! $result && $update_attempted ) {
+			return new WP_Error( 'update_fail', __( 'There was an error updating your plugin', 'jetpack' ), 400 );
+		}
 
-            if (!$success) {
-                $error = $this->log[$plugin]['error'] = __('There was an error deactivating your plugin', 'jetpack');
-                continue;
-            }
-            $this->log[$plugin][] = __('Plugin deactivated.', 'jetpack');
-        }
-        if (!$this->bulk && isset($error)) {
-            return new WP_Error('deactivation_error', $error);
-        }
-    }
+		return $this->default_action();
+	}
 }

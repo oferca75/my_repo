@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Module Name: Related Posts
  * Module Description: Display similar content.
@@ -13,83 +12,77 @@
  * Feature: Recommended, Jumpstart, Traffic
  * Additional Search Queries: related, related posts
  */
-class Jetpack_RelatedPosts_Module
-{
-    /**
-     * Class variables
-     */
-    private static $__instance = null;
+class Jetpack_RelatedPosts_Module {
+	/**
+	 * Class variables
+	 */
+	private static $__instance = null;
 
-    /**
-     * Register actions and filters
-     *
-     * @uses add_action, add_filter
-     * @return null
-     */
-    private function __construct()
-    {
-        add_action('jetpack_module_loaded_related-posts', array($this, 'action_on_load'));
-        add_action('jetpack_activate_module_related-posts', array($this, 'action_on_activate'));
-    }
+	/**
+	 * Singleton implementation
+	 *
+	 * @return object
+	 */
+	public static function instance() {
+		if ( ! is_a( self::$__instance, 'Jetpack_RelatedPosts_Module' ) )
+			self::$__instance = new Jetpack_RelatedPosts_Module();
 
-    /**
-     * Singleton implementation
-     *
-     * @return object
-     */
-    public static function instance()
-    {
-        if (!is_a(self::$__instance, 'Jetpack_RelatedPosts_Module'))
-            self::$__instance = new Jetpack_RelatedPosts_Module();
+		return self::$__instance;
+	}
 
-        return self::$__instance;
-    }
+	/**
+	 * Register actions and filters
+	 *
+	 * @uses add_action, add_filter
+	 * @return null
+	 */
+	private function __construct() {
+		add_action( 'jetpack_module_loaded_related-posts', array( $this, 'action_on_load' ) );
+		add_action( 'jetpack_activate_module_related-posts', array( $this, 'action_on_activate' ) );
+	}
 
-    /**
-     * This action triggers when module is activated.
-     *
-     * @uses Jetpack::init, Jetpack_Sync::reindex_needed, Jetpack_Sync::reindex_trigger
-     * @return null
-     */
-    public function action_on_activate()
-    {
-        if (Jetpack::init()->sync->reindex_needed()) {
-            Jetpack::init()->sync->reindex_trigger();
-        }
-    }
+	/**
+	 * This action triggers when module is activated.
+	 *
+	 * @uses Jetpack::init, Jetpack_Sync::reindex_needed, Jetpack_Sync::reindex_trigger
+	 * @return null
+	 */
+	public function action_on_activate() {
+		if ( Jetpack::init()->sync->reindex_needed() ) {
+			Jetpack::init()->sync->reindex_trigger();
+		}
+	}
 
-    /**
-     * This action triggers if the module is in an active state, load related posts and options.
-     *
-     * @uses Jetpack_RelatedPosts::init, is_admin, Jetpack::enable_module_configurable, Jetpack::module_configuration_load, Jetpack_Sync::sync_posts
-     * @return null
-     */
-    public function action_on_load()
-    {
-        require_once 'related-posts/jetpack-related-posts.php';
-        Jetpack_RelatedPosts::init();
+	/**
+	 * This action triggers if the module is in an active state, load related posts and options.
+	 *
+	 * @uses Jetpack_RelatedPosts::init, is_admin, Jetpack::enable_module_configurable, Jetpack::module_configuration_load, Jetpack_Sync::sync_posts
+	 * @return null
+	 */
+	public function action_on_load() {
+		require_once 'related-posts/jetpack-related-posts.php';
+		Jetpack_RelatedPosts::init();
 
-        if (is_admin()) {
-            // Enable "Configure" button on module card
-            Jetpack::enable_module_configurable(__FILE__);
-            Jetpack::module_configuration_load(__FILE__, array($this, 'module_configuration_load'));
+		if ( is_admin() ) {
+			// Enable "Configure" button on module card
+			Jetpack::enable_module_configurable( __FILE__ );
+			Jetpack::module_configuration_load( __FILE__, array( $this, 'module_configuration_load' ) );
 
-            // Sync new posts
-            Jetpack_Sync::sync_posts(__FILE__);
-        }
-    }
+			// Sync new posts
+			Jetpack_Sync::sync_posts( __FILE__ );
+		}
+	}
 
-    /**
-     * Redirect configure button to Settings > Reading
-     *
-     * @uses wp_safe_redirect, admin_url
-     * @return null
-     */
-    public function module_configuration_load()
-    {
-        wp_safe_redirect(admin_url('options-reading.php#jetpack_relatedposts'));
-        exit;
-    }
+	/**
+	 * Redirect configure button to Settings > Reading
+	 *
+	 * @uses wp_safe_redirect, admin_url
+	 * @return null
+	 */
+	public function module_configuration_load() {
+		wp_safe_redirect( admin_url( 'options-reading.php#jetpack_relatedposts' ) );
+		exit;
+	}
 
 }
 

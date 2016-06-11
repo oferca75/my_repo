@@ -93,7 +93,7 @@ body.settings_page_sharing ul.services-hidden {
 #available-services .service:hover, #enabled-services .service:hover {
 	background: #fff;
 	border: 1px solid #bbb;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 /* Generic style icons */
@@ -146,8 +146,7 @@ li.service.share-google-plus-1 span:before {
 li.service.share-facebook span:before {
 	content: '\f204';
 }
-
-li.service.share-press-this span:before { /* Fixme: remove this button in favor of reblog */
+li.service.share-press-this span:before {	/* Fixme: remove this button in favor of reblog */
 	content: '\f205';
 }
 
@@ -181,24 +180,24 @@ div.sd-social-icon ul.preview li.preview-item.preview-custom a span {
 }
 
 .services ul li.end-fix {
-	clear: both;
-	float: none;
-	visibility: hidden;
-	padding: 0;
-	margin: 0;
-	height: 20px;
-	width: 0;
+	clear:both;
+	float:none;
+	visibility:hidden;
+	padding:0;
+	margin:0;
+	height:20px;
+	width:0;
 }
 
-#enabled-services h2 {
-	font-size: 20px;
-	padding-top: 0px;
+#enabled-services h2{
+	font-size:20px;
+	padding-top:0px;
 	font-weight: normal !important;
 	color: #999;
 }
 
 body.settings_page_sharing #live-preview h2 {
-	font-size: 20px;
+	font-size:20px;
 	font-weight: normal !important;
 	color: #e3e3e3;
 }
@@ -221,19 +220,19 @@ body.settings_page_sharing .advanced-form {
 	margin-left: -24px;
 	display: none;
 	border-top: 1px #e3e3e3 solid;
-	margin-top: 4px;
+	margin-top:4px;
 }
 
 body.settings_page_sharing .utility {
 	float: right;
-	padding-top: 10px;
+	padding-top:10px;
 	padding-right: 10px;
 	font-size: 10px;
 }
 
 body.settings_page_sharing .advanced input[type=submit] {
 	float: left;
-	margin-top: 10px;
+	margin-top:10px;
 	margin-right: 10px;
 }
 
@@ -282,37 +281,37 @@ body.settings_page_sharing .advanced input[type=submit] {
 .preview-digg .option-smart-on {
 	background: url(images/smart-digg.png) no-repeat top left;
 	background-size: 76px 17px;
-	width: 76px;
-	height: 17px;
+	width:76px;
+	height:17px;
 	margin-top: 2px;
 }
 
 .preview-reddit .option-smart-on {
 	background: url(images/smart-reddit.png) no-repeat top left;
 	background-size: 104px 21px;
-	width: 104px;
-	height: 21px;
+	width:104px;
+	height:21px;
 }
 
 .preview-facebook .option-smart-on {
 	background: url(images/smart-like.png) no-repeat top left;
 	background-size: 85px 20px;
-	width: 85px;
-	height: 20px;
+	width:85px;
+	height:20px;
 }
 
 .preview-twitter .option-smart-on {
 	background: url(images/smart-twitter.png?1) no-repeat top left;
 	background-size: 60px 20px;
-	width: 60px;
-	height: 20px;
+	width:60px;
+	height:20px;
 }
 
 .preview-linkedin .option-smart-on {
 	background: url(images/linkedin-smart.png) no-repeat top center;
 	background-size: 99px 18px;
-	width: 99px;
-	height: 18px;
+	width:99px;
+	height:18px;
 	margin-top: 1px;
 }
 

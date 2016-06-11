@@ -11,7 +11,7 @@
  * Additional Search Queries: favicon, icon, site icon
  */
 
-include dirname(__FILE__) . '/site-icon/jetpack-site-icon.php';
-include dirname(__FILE__) . '/site-icon/site-icon-functions.php';
+include dirname( __FILE__ ) . '/site-icon/jetpack-site-icon.php';
+include dirname( __FILE__ ) . '/site-icon/site-icon-functions.php';
 
-Jetpack_Sync::sync_options(__FILE__, 'jetpack_site_icon_url');
+Jetpack_Sync::sync_options( __FILE__, 'jetpack_site_icon_url' );

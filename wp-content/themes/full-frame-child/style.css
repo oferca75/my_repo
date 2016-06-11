@@ -389,6 +389,6 @@ div [data-u="numbertemplate"],div [data-u="prototype"]{
   background: #eeeeee;
 }
 
-header.entry-header{
-    margin=top:20px;
+.site-content header.entry-header{
+    margin-top:20px;
 }

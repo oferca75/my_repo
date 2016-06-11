@@ -1,5 +1,3 @@
 <?php
 
-class Jetpack_Error extends WP_Error
-{
-}
+class Jetpack_Error extends WP_Error {}

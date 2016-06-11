@@ -1,44 +1,42 @@
 <?php
 
-class Jetpack_Data
-{
+class Jetpack_Data {
 	/**
 	 * Gets locally stored token
 	 *
 	 * @return object|false
 	 */
-	public static function get_access_token($user_id = false)
-	{
-		if ($user_id) {
-			if (!$tokens = Jetpack_Options::get_option('user_tokens')) {
+	public static function get_access_token( $user_id = false ) {
+		if ( $user_id ) {
+			if ( !$tokens = Jetpack_Options::get_option( 'user_tokens' ) ) {
 				return false;
 			}
-			if ($user_id === JETPACK_MASTER_USER) {
-				if (!$user_id = Jetpack_Options::get_option('master_user')) {
+			if ( $user_id === JETPACK_MASTER_USER ) {
+				if ( !$user_id = Jetpack_Options::get_option( 'master_user' ) ) {
 					return false;
 				}
 			}
-			if (!isset($tokens[$user_id]) || !$token = $tokens[$user_id]) {
+			if ( !isset( $tokens[$user_id] ) || !$token = $tokens[$user_id] ) {
 				return false;
 			}
-			$token_chunks = explode('.', $token);
-			if (empty($token_chunks[1]) || empty($token_chunks[2])) {
+			$token_chunks = explode( '.', $token );
+			if ( empty( $token_chunks[1] ) || empty( $token_chunks[2] ) ) {
 				return false;
 			}
-			if ($user_id != $token_chunks[2]) {
+			if ( $user_id != $token_chunks[2] ) {
 				return false;
 			}
 			$token = "{$token_chunks[0]}.{$token_chunks[1]}";
 		} else {
-			$token = Jetpack_Options::get_option('blog_token');
-			if (empty($token)) {
+			$token = Jetpack_Options::get_option( 'blog_token' );
+			if ( empty( $token ) ) {
 				return false;
 			}
 		}
 
-		return (object)array(
+		return (object) array(
 			'secret' => $token,
-			'external_user_id' => (int)$user_id,
+			'external_user_id' => (int) $user_id,
 		);
 	}
 
@@ -50,12 +48,11 @@ class Jetpack_Data
 	 *
 	 * @return bool|WP_Error
 	 */
-	public static function is_usable_domain($domain, $extra = array())
-	{
+	public static function is_usable_domain( $domain, $extra = array() ) {
 
 		// If it's empty, just fail out.
-		if (!$domain) {
-			return new WP_Error('fail_domain_empty', sprintf(__('Domain `%1$s` just failed is_usable_domain check as it is empty.', 'jetpack'), $domain));
+		if ( ! $domain ) {
+			return new WP_Error( 'fail_domain_empty', sprintf( __( 'Domain `%1$s` just failed is_usable_domain check as it is empty.', 'jetpack' ), $domain ) );
 		}
 
 		// None of the explicit localhosts.
@@ -69,34 +66,34 @@ class Jetpack_Data
 			'src.wordpress-develop.dev',   // VVV
 			'build.wordpress-develop.dev', // VVV
 		);
-		if (in_array($domain, $forbidden_domains)) {
-			return new WP_Error('fail_domain_forbidden', sprintf(__('Domain `%1$s` just failed is_usable_domain check as it is in the forbidden array.', 'jetpack'), $domain));
+		if ( in_array( $domain, $forbidden_domains ) ) {
+			return new WP_Error( 'fail_domain_forbidden', sprintf( __( 'Domain `%1$s` just failed is_usable_domain check as it is in the forbidden array.', 'jetpack' ), $domain ) );
 		}
 
 		// No .dev or .local domains
-		if (preg_match('#\.(dev|local)$#i', $domain)) {
-			return new WP_Error('fail_domain_tld', sprintf(__('Domain `%1$s` just failed is_usable_domain check as it uses an invalid top level domain.', 'jetpack'), $domain));
+		if ( preg_match( '#\.(dev|local)$#i', $domain ) ) {
+			return new WP_Error( 'fail_domain_tld', sprintf( __( 'Domain `%1$s` just failed is_usable_domain check as it uses an invalid top level domain.', 'jetpack' ), $domain ) );
 		}
 
 		// No WPCOM subdomains
-		if (preg_match('#\.wordpress\.com$#i', $domain)) {
-			return new WP_Error('fail_subdomain_wpcom', sprintf(__('Domain `%1$s` just failed is_usable_domain check as it is a subdomain of WordPress.com.', 'jetpack'), $domain));
+		if ( preg_match( '#\.wordpress\.com$#i', $domain ) ) {
+			return new WP_Error( 'fail_subdomain_wpcom', sprintf( __( 'Domain `%1$s` just failed is_usable_domain check as it is a subdomain of WordPress.com.', 'jetpack' ), $domain ) );
 		}
 
 		// If PHP was compiled without support for the Filter module (very edge case)
-		if (!function_exists('filter_var')) {
+		if ( ! function_exists( 'filter_var' ) ) {
 			// Just pass back true for now, and let wpcom sort it out.
 			return true;
 		}
 
 		// Check the IP to make sure it's pingable.
-		$ip = gethostbyname($domain);
+		$ip = gethostbyname( $domain );
 
 		// Doing this again as I was getting some false positives when gethostbyname() flaked out and returned the domain.
-		$ip = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? $ip : gethostbyname($ip);
+		$ip = filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ? $ip : gethostbyname( $ip );
 
-		if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_IPV4) && !self::php_bug_66229_check($ip)) {
-			return new WP_Error('fail_domain_bad_ip_range', sprintf(__('Domain `%1$s` just failed is_usable_domain check as its IP `%2$s` is either invalid, or in a reserved or private range.', 'jetpack'), $domain, $ip));
+		if ( ! filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_IPV4 ) && ! self::php_bug_66229_check( $ip ) ) {
+			return new WP_Error( 'fail_domain_bad_ip_range', sprintf( __( 'Domain `%1$s` just failed is_usable_domain check as its IP `%2$s` is either invalid, or in a reserved or private range.', 'jetpack' ), $domain, $ip ) );
 		}
 
 		return true;
@@ -108,19 +105,18 @@ class Jetpack_Data
 	 *
 	 * This function mirrors Jetpack_Data::php_bug_66229_check() in the WPCOM codebase.
 	 */
-	public static function php_bug_66229_check($ip)
-	{
-		if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+	public static function php_bug_66229_check( $ip ) {
+		if ( ! filter_var( $ip, FILTER_VALIDATE_IP ) ) {
 			return false;
 		}
 
-		$ip_arr = array_map('intval', explode('.', $ip));
+		$ip_arr = array_map( 'intval', explode( '.', $ip ) );
 
-		if (128 == $ip_arr[0] && 0 == $ip_arr[1]) {
+		if ( 128 == $ip_arr[0] && 0 == $ip_arr[1] ) {
 			return true;
 		}
 
-		if (191 == $ip_arr[0] && 255 == $ip_arr[1]) {
+		if ( 191 == $ip_arr[0] && 255 == $ip_arr[1] ) {
 			return true;
 		}
 

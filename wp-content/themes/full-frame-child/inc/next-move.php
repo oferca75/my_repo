@@ -88,7 +88,8 @@ if (!function_exists('next-move')) :
                            title='<?php echo the_title_attribute('echo=0') ?>'>
                             <div class='next-overlay'></div>
                             <?php
-                            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', get_the_content(), $match)) {
+                            $postContent = explode("\r\n",get_the_content())[0];
+                            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $postContent, $match)) {
                                 $video_id = $match[1];
                             }
                             global $post;

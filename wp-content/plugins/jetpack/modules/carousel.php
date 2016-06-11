@@ -14,4 +14,4 @@
  * Additional Search Queries: gallery, carousel, diaporama, slideshow, images, lightbox, exif, metadata, image
  */
 
-include dirname(__FILE__) . '/carousel/jetpack-carousel.php';
+include dirname( __FILE__ ) . '/carousel/jetpack-carousel.php';
