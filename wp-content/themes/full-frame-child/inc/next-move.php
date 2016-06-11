@@ -41,9 +41,11 @@ if (!function_exists('next-move')) :
             $loop = new WP_Query( $nextMoveLoopArgs );
             $nextMoveTechniqueTitle = $_COOKIE["last_viewed"];
             $dispStr = "Other techniques you can do from the <strong>" . eliminateKeywords($nextMoveTechniqueTitle)."</strong>";
-        } elseif ($_COOKIE["last_viewed"] != $postTitle) {
+        } else {
             $nextMoveTechniqueTitle = $postTitle;
-            setcookie("last_viewed", $nextMoveTechniqueTitle, time() + (60 * 60 * 24 * 30), "/"); // 30 days
+            if ($_COOKIE["last_viewed"] != $postTitle){
+                setcookie("last_viewed", $nextMoveTechniqueTitle, time() + (60 * 60 * 24 * 30), "/"); // 30 days
+            }
             if (function_exists("nextMoveText")) {
                 $dispStr = nextMoveText($nextMoveTechniqueTitle);
             }
@@ -58,9 +60,9 @@ if (!function_exists('next-move')) :
                     else $nextPositionText = nextMoveText($postTitle,true);
              ?>
              style="position: relative; margin: 0 auto; top: 12px;
-                 width: <?php echo $nextMoveWidth ?>; height: 325px;
-                 overflow: visible; visibility: visible;">
-            <?php echo '<h2 class="next-move-title">'.$nextPositionText.':</h2><h4>'. $dispStr .'</h4>'; ?>
+                 width: <?php echo $nextMoveWidth ?>; height: 338px; background: #fcfcfc;
+                 overflow: hidden; visibility: visible;">
+            <?php echo '<h2 class="next-move-title">'.$nextPositionText.'</h2><h4>'. $dispStr .':</h4>'; ?>
 
             <!-- Loading Screen -->
             <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -71,7 +73,8 @@ if (!function_exists('next-move')) :
             </div>
 
             <div data-u="slides"
-                 style="cursor: default; position: relative; top: 96px; width: 1235px; height: 200px; overflow: hidden;">
+                 style="cursor: default; position: relative;
+                 top: 95px; width: 1235px; height: 200px; overflow: hidden;">
                 <?php
                 ob_start();
                 $nextMoveCounter = 0;
@@ -130,10 +133,7 @@ if (!function_exists('next-move')) :
                   data-autocenter="2"></span>
             <span data-u="arrowright" class="jssora03r" style="top:0px;right:8px;width:55px;height:55px;"
                   data-autocenter="2"></span>
-<?php
-      global $arrowSVG;
-          echo '<div class="history next-arrow">' . $arrowSVG . "</div>";
-        ?>
+
         </div>
 
 

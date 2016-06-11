@@ -76,6 +76,7 @@ add_action('wp_enqueue_scripts', 'front_page_scripts');
 function general_scripts()
 {
     wp_enqueue_style('jssor', get_stylesheet_directory_uri() . '/css/jssor.css');
+    wp_enqueue_style('resp', get_stylesheet_directory_uri() . '/css/responsive.css');
     wp_enqueue_script('carousel', get_stylesheet_directory_uri() . '/js/jssor/jssor.slider.mini.js', array(), '1.0.0', true);
     wp_enqueue_script('jssor', get_stylesheet_directory_uri() . '/js/jssor-init.js', array(), '1.0.0', true);
     wp_enqueue_script('general', get_stylesheet_directory_uri() . '/js/general.js', array(), '1.0.0', true);

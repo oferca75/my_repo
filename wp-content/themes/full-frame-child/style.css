@@ -26,7 +26,7 @@
 .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe,
 .single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe,
 .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed {
-    height: 500px !important;
+    height: 500px;
     position: relative;
 }
 
@@ -42,13 +42,12 @@
 .next-overlay {
     background: whitesmoke;
     opacity: 0.185;
-    width: 275px;
-    height: 125px;
+    width: 195px;
+    height: 165px;
     position: absolute;
     float: left;
     z-index: 99999;
     cursor: pointer;
-    margin-top: -10px;
     margin-left: 10px;
 
 }
@@ -109,8 +108,6 @@
     text-align: left;
     float: left;
     padding: 0px 10px 0px 10px;
-/*     font-weight: bold; */
-    text-align:center;
 }
 
 .yarpp-related-none {
@@ -150,18 +147,21 @@
     transform: rotate(270deg) translateZ(0px) scale(0.4);
     margin-top: 35px;
 }
-#jssor_1 .next-arrow{
-  transform: rotate(90deg) translateZ(0px) scale(0.6);
-    bottom: 0px;
+.next-step.next-arrow{
+    transform: rotate(90deg) translateZ(0px) scale(0.63);
+    top: 542px;
     height: 20px;
-    position: absolute;
-    left: 35%;
+    left: 38%;
     overflow: visible;
+    margin-top: -37px;
+    visibility: hidden;
 }
 
-#jssor_1 .next-arrow svg{
+.next-step.next-arrow svg{
 /*color: #93b9c4;*/
-    color: #445e3a;
+    /*color: #445e3a;*/
+    color: #5f6f87;
+
 }
 
 .lastViewedcontent .lastViewedExcerpt,.lastViewedcontent .next-overlay{
@@ -249,6 +249,11 @@ body,.yarpp-thumbnails-horizontal,.entry-footer{
     font-size: 20px !important;
     color: black !important;
 }
+.yarpp-thumbnail img {
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+
+}
 .next-arrow svg {
     fill:currentColor;
 }
@@ -269,7 +274,6 @@ body,.yarpp-thumbnails-horizontal,.entry-footer{
 h2.next-move-title{
     margin: 0px;
     line-height: 50px;
-    background: white;
     margin-top: 10px;
     color: #316b1c;
     font-size: 30px;
@@ -289,10 +293,6 @@ h2.next-move-title{
     /*padding: 0px 10px 0px 10px !important;*/
 }
 
-#content .wrapper{
-    padding-top: 4px;
-    margin-top: 12px;
-}
 
 .home .next-move-title{
     display: none;
@@ -327,9 +327,6 @@ h2.next-move-title{
 
 #feature-slider .entry-header{
     margin-top:7px;
-}
-div[data-u="slides"] iframe,div[data-u="slides"] img{
-    max-height:140px;
 }
 
 h2,#jssor_1 h3{
@@ -391,4 +388,17 @@ div [data-u="numbertemplate"],div [data-u="prototype"]{
 
 .site-content header.entry-header{
     margin-top:20px;
+}
+
+.wrapper {
+    padding-top: 16px !important;
+}
+
+#feature-slider .entry-container{
+    width:100%;
+    left:0px;
+}
+
+.close-history{
+    display: none;
 }

@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
         $AutoPlay: true,
         $AutoPlaySteps: 4,
         $SlideDuration: 260,
-        $SlideWidth: 160,
+        $SlideWidth: 205,
         // $SlideHeight: 140,
         $Idle:8000,
         $SlideSpacing: -10,
@@ -29,6 +29,15 @@ jQuery(document).ready(function ($) {
         if (refSize) {
             refSize = Math.min(refSize, screen.width);
             jssor_1_slider.$ScaleWidth(refSize);
+            var factor = refSize*0.3/1235;
+            var scale = factor;
+            scale = Math.min(1,scale * 2);
+            var baseMargin = -37;
+            var marginTop = Math.max(baseMargin,baseMargin * factor * 2 - 10);
+            jQuery(".next-step.next-arrow").css("transform","rotate(90deg) translateZ(0px) scale("+ scale+")");
+            jQuery(".next-step.next-arrow").css("margin-top",marginTop+"px");
+            jQuery(".next-step.next-arrow").css("visibility","visible");
+
         }
         else {
             window.setTimeout(ScaleSlider, 30);

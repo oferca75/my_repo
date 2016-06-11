@@ -19,7 +19,10 @@
     <div class="entry-container">
         <?php  do_action('fullframe_before_post_container'); ?>
 
-
+        <?php
+        global $arrowSVG;
+        echo '<div class="next-step next-arrow">' . $arrowSVG . "</div>";
+        ?>
         <header class="entry-header">
             <div class="fight-path">
                 <?php

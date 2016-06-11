@@ -1,0 +1,41 @@
+@media screen and (max-width: 540px) {
+    #feature-slider .entry-title {
+        font-size: 13px !important;
+    }
+
+    .yarpp-thumbnail-title {
+        font-size: 36px !important;
+        padding: 0px 5px 0px 5px !important;
+    }
+
+    #jssor_1 h2 {
+        font-size: 50px !important;
+        margin-bottom: 15px;
+    }
+
+    #jssor_1 h4 {
+        font-size: 40px !important;
+
+    }
+
+    div[data-u="slides"], [data-u="slides"] > div {
+        height: 380px !important;
+    }
+
+    div[data-u="slides"] {
+        top: 140px !important;
+    }
+
+    #jssor_1 {
+        height: 135px !important;
+    }
+
+    .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe, .single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe, .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed{
+        height: auto !important;
+    }
+
+    .entry-container>.entry-content>p {
+        height: 150px !important;
+        overflow: hidden !important;
+    }
+}

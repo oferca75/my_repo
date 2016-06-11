@@ -209,7 +209,7 @@ class lastviewed extends WP_Widget
         $widgetID = str_replace('lastviewed-', '', $widgetID);
         $widgetOptions = get_option($this->option_name);
         // Ofer Start Change
-        $lastviewedTitle = "Your fight path...";//$widgetOptions[$widgetID]['lastviewedTitle'];
+        $lastviewedTitle = "Your path...";//$widgetOptions[$widgetID]['lastviewedTitle'];
         $lastViewed_total = $widgetOptions[$widgetID]['lastViewed_total'];
         $lastViewed_truncate = $widgetOptions[$widgetID]['lastViewed_truncate'] ? $widgetOptions[$widgetID]['lastViewed_truncate'] : false;
         $lastViewed_linkname = $widgetOptions[$widgetID]['lastViewed_linkname'];
@@ -253,7 +253,8 @@ class lastviewed extends WP_Widget
             echo $before_widget;
 
             if ($lastviewedTitle) {
-                echo $before_title . $lastviewedTitle . $after_title;
+                $close = "<div class='widgettitle close-history'>Close [X]</div>";
+                echo $close.$before_title .  $lastviewedTitle . $after_title;
             }
 
             if (!$lastViewed_showPostTitle && !$lastViewed_showExcerpt && !$hasThumb) {

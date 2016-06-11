@@ -31,8 +31,8 @@ function catTreeNreadcrmbHighlight(click) {
 jQuery(document).ready(function ($) {
     $(".widget_lastviewed .widgettitle").click(function () {
         $(".fight-path .lastViewedList").toggle("slow");
-        jQuery('#jssor_1 .next-arrow').toggle();
-
+        jQuery('.next-step.next-arrow').toggle("slow")
+        $(".widgettitle").toggle();
     })
 
     jQuery.fx.off = true;
