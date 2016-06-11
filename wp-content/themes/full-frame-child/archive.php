@@ -27,7 +27,7 @@ $post = get_post($post1->ID);
         <header class="entry-header">
             <div class="fight-path">
                 <?php
-                if (!is_page() || true) { // lastviewed causes strange bug
+                if (!is_archive()) { // lastviewed causes strange bug
                     global $dd_lastviewed_id;
                     echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
                 }

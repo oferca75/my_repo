@@ -30,10 +30,10 @@
     position: relative;
 }
 
-.archive .entry-content > p > .fluid-width-video-wrapper iframe, .archive .entry-content > p > .fluid-width-video-wrapper object, .archive .entry-content > p > .fluid-width-video-wrapper embed {
-    width: 300px !important;
-    height: 150px !important;
-}
+/*.archive .entry-content > p > .fluid-width-video-wrapper iframe, .archive .entry-content > p > .fluid-width-video-wrapper object, .archive .entry-content > p > .fluid-width-video-wrapper embed {*/
+    /*width: 300px !important;*/
+    /*height: 150px !important;*/
+/*}*/
 
 .home .fluid-width-video-wrapper {
     padding-top: 10% !important;

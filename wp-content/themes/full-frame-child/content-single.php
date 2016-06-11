@@ -6,6 +6,7 @@
  * @subpackage Full Frame
  * @since Full Frame 1.0
  */
+$postId = the_ID();
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -28,6 +29,7 @@
                 <?php
                 global $dd_lastviewed_id;
                 echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
+
                 $title = get_the_title();
                 $newTitle = eliminateKeywords($title);
                 if (function_exists("getTrueTitle"))

@@ -15,7 +15,7 @@ replaceAll = function (target, search, replacement) {
 function catTreeNreadcrmbHighlight(click) {
 
     var text = click ? jQuery(this).text() : jQuery(this).attr("class").split(" ")[1];
-    var cand = replaceAll(cand, " ", "-");
+    var cand = replaceAll(text, " ", "-");
     jQuery("li.cat-item a." + cand).each(function () {
         var $el = jQuery(this).prev();
         var vertex = false;
@@ -57,7 +57,8 @@ jQuery(document).ready(function ($) {
     if (thumbArray.length > 0)
         {
             var thumbWidth = jQuery(thumbArray[0]).css("width").replace(/\D/g, '');
-            var containerWidth = jQuery('.next-arrow').offset().left * 2;
+            var nextArrow = jQuery('.next-arrow');
+            var containerWidth = nextArrow.length > 0 ? nextArrow.offset().left * 2:jQuery("#jssor_1").css("width").replace("px","");
             var thumbsWidth = thumbWidth * thumbArray.length;
             if (thumbsWidth < containerWidth)
                 {
