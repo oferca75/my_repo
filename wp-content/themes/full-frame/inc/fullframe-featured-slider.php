@@ -100,7 +100,7 @@ if (!function_exists('fullframe_demo_slider')) :
         $fullframe_demo_slider = '
 								<article class="post hentry slides demo-image displayblock">
 									<figure class="slider-image">
-										<a title="Complete step by step reference to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
+										<a title="The No.#1 online guide to Brazilian " href="' . esc_url(home_url('/')) . '">
 											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Complete step by step reference to Brazilian Jiu Jitsu" title="Complete step by step reference to Brazilian Jiu Jitsu">
 										</a>
 									</figure>  
@@ -115,7 +115,23 @@ if (!function_exists('fullframe_demo_slider')) :
 										</div>   
 									</div>             
 								</article><!-- .slides --> 	
-								
+								<article class="post hentry slides demo-image displaynone">
+									<figure class="The No.#1 online guide to Brazilian Jiu Jitsu Techniques">
+										<a title="The No.#1 online guide to Brazilian Jiu Jitsu Techniques" href="' . esc_url(home_url('/')) . '">
+											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="The No.#1 online guide to Brazilian Jiu Jitsu Techniques" title="The No.#1 online guide to Brazilian Jiu Jitsu Techniques">
+										</a>
+									</figure>
+									<div class="entry-container">
+										<header class="entry-header">
+											<h1 class="entry-title">
+												<a title="The No.#1 online guide to Brazilian Jiu Jitsu Techniques" href="#"><span>The No.#1 online guide to Brazilian Jiu Jitsu Techniques</span></a>
+											</h1>
+											</header>
+										<div class="entry-content">
+											<p>The #1 online guide to BJJ techniques</p>
+										</div>   
+									</div>             
+								</article>
 								<article class="post hentry slides demo-image displaynone">
 									<figure class="Complete step by step reference to Brazilian Jiu Jitsu">
 										<a title="Complete step by step reference to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
@@ -134,23 +150,7 @@ if (!function_exists('fullframe_demo_slider')) :
 									</div>             
 								</article>
 								
-								<article class="post hentry slides demo-image displaynone">
-									<figure class="Complete step by step reference to Brazilian Jiu Jitsu">
-										<a title="Complete step by step reference to Brazilian Jiu Jitsu" href="' . esc_url(home_url('/')) . '">
-											<img src="' . get_template_directory_uri() . '/images/gallery/title.png" class="wp-post-image" alt="Complete step by step reference to Brazilian Jiu Jitsu" title="Complete step by step reference to Brazilian Jiu Jitsu">
-										</a>
-									</figure>
-									<div class="entry-container">
-										<header class="entry-header">
-											<h1 class="entry-title">
-												<a title="Complete step by step reference to Brazilian Jiu Jitsu" href="#"><span>Complete step by step reference to Brazilian Jiu Jitsu</span></a>
-											</h1>
-											</header>
-										<div class="entry-content">
-											<p>The #1 online guide to BJJ techniques</p>
-										</div>   
-									</div>             
-								</article>
+								
 								<!-- .slides --> ';
         return $fullframe_demo_slider;
     }

@@ -1,9 +1,9 @@
 /*
- Theme Name:     Full Frame Child Theme
- Theme URI:      http://www.elegantthemes.com/gallery/foxy/
- Description:    Full Frame Child Theme
- Author:         Elegant Themes
- Author URI:     http://www.elegantthemes.com
+ Theme Name:     Learn Bjj Techniques Theme
+ Theme URI:
+ Description:    Learn Bjj Techniques Theme
+ Author:         mailto:learnbjjtechniques.com
+ Author URI:     mailto:learnbjjtechniques.com
  Template:       full-frame
  Version:        1.0.0
 */
@@ -144,11 +144,11 @@
 
 
 .history.next-arrow {
-    transform: rotate(270deg) translateZ(0px) scale(0.4);
+    transform: rotate(270deg) translateZ(0px) scale(0.53);
     margin-top: 35px;
 }
 .next-step.next-arrow{
-    transform: rotate(90deg) translateZ(0px) scale(0.63);
+    transform: rotate(90deg) translateZ(0px) scale(0.53);
     top: 542px;
     height: 20px;
     left: 38%;
@@ -157,10 +157,10 @@
     visibility: hidden;
 }
 
-.next-step.next-arrow svg{
-/*color: #93b9c4;*/
-    /*color: #445e3a;*/
-    color: #5f6f87;
+.next-arrow svg{
+    /*color: #6e84a3;*/
+    /*color: #819175;*/
+    color: #6c7a63;
 
 }
 
@@ -228,7 +228,7 @@ body,.yarpp-thumbnails-horizontal,.entry-footer{
     margin-left: 4px;
 }
 
-.widget-title, .entry-container>.entry-header>.entry-title{
+.widget-title, .entry-container>.entry-header>.entry-title, .archive {
     border-bottom: 1px solid #DDDDDD;
     line-height: 1.4;
     color: #316b1c !important;
@@ -339,7 +339,7 @@ h2,#jssor_1 h3{
 .lastViewedTitle,.SearchedQueryTitle{
     clear: both;
     line-height: 1.2;
-    margin: 0px 0 10px;
+    margin: 12px 0 10px;
 }
 .SearchedQueryTitle{
     margin-top:30px;
@@ -369,7 +369,9 @@ h2,#jssor_1 h3{
     font-style: italic;
     text-decoration: underline;
 }
-
+.page .fight-path>.widget_lastviewed>.widgettitle {
+    visibility: hidden;
+}
 .jssora03r,.jssora03l{
     top:15px !important;
 }
@@ -386,9 +388,6 @@ div [data-u="numbertemplate"],div [data-u="prototype"]{
   background: #eeeeee;
 }
 
-.site-content header.entry-header{
-    margin-top:20px;
-}
 
 .wrapper {
     padding-top: 16px !important;
@@ -401,4 +400,7 @@ div [data-u="numbertemplate"],div [data-u="prototype"]{
 
 .close-history{
     display: none;
+}
+.widget_lastviewed{
+    margin: 5px 0 5px;
 }

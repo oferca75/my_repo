@@ -26,10 +26,8 @@
         <header class="entry-header">
             <div class="fight-path">
                 <?php
-                if (!is_page()) {
-                    global $dd_lastviewed_id;
-                    echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
-                }
+                global $dd_lastviewed_id;
+                echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
                 $title = get_the_title();
                 $newTitle = eliminateKeywords($title);
                 if (function_exists("getTrueTitle"))

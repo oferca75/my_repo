@@ -30,8 +30,17 @@ do_action('fullframe_after_content');
  * @hooked fullframe_page_end - 200
  *
  */
-do_action('fullframe_footer');
+//do_action('fullframe_footer');
 ?>
+<footer id="colophon" class="site-footer" role="contentinfo">
+
+    <div id="site-generator" class="two">
+        <div class="wrapper">
+            <div id="footer-left-content" class="copyright">Copyright © 2016 <a href="http://jjtechniques.com/">Learn BJJ Online</a>. All Rights Reserved.</div>
+
+            <div id="footer-right-content" class="powered">Learn Bjj Techniques by <a target="_blank" href="mailto:learnbjjtechniques@gmail.com">Ofer C</a></div>
+        </div><!-- .wrapper -->
+    </div><!-- #site-generator --></footer>
 
 <?php
 /**

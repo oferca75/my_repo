@@ -60,7 +60,7 @@ if (!function_exists('next-move')) :
                     else $nextPositionText = nextMoveText($postTitle,true);
              ?>
              style="position: relative; margin: 0 auto; top: 12px;
-                 width: <?php echo $nextMoveWidth ?>; height: 338px; background: #fcfcfc;
+                 width: <?php echo $nextMoveWidth ?>; height: 360px; background: #fcfcfc;
                  overflow: hidden; visibility: visible;">
             <?php echo '<h2 class="next-move-title">'.$nextPositionText.'</h2><h4>'. $dispStr .':</h4>'; ?>
 
@@ -74,7 +74,7 @@ if (!function_exists('next-move')) :
 
             <div data-u="slides"
                  style="cursor: default; position: relative;
-                 top: 95px; width: 1235px; height: 200px; overflow: hidden;">
+                 top: 100px; width: 1235px; height: 200px; overflow: hidden;">
                 <?php
                 ob_start();
                 $nextMoveCounter = 0;

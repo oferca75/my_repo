@@ -1363,21 +1363,21 @@ add_action('fullframe_before_content', 'fullframe_promotion_headline', 40);
  */
 function fullframe_footer_content()
 {
+    echo "55555555555555555";
+    return;
     //fullframe_flush_transients();
     if ((!$fullframe_footer_content = get_transient('fullframe_footer_content'))) {
         echo '<!-- refreshing cache -->';
 
         $fullframe_content = fullframe_get_content();
 
-        $fullframe_footer_content = '
-    	<div id="site-generator" class="two">
-    		<div class="wrapper">
-    			<div id="footer-left-content" class="copyright">' . $fullframe_content['left'] . '</div>
-
-    			<div id="footer-right-content" class="powered">' . /* $fullframe_content['right'] .*/
-            '</div>
-			</div><!-- .wrapper -->
-		</div><!-- #site-generator -->';
+        $fullframe_footer_content = "2222222222222222222222222";
+//    	<div id="site-generator" class="two">
+//    		<div class="wrapper">
+//    			J.J Techniques by <a href="mailto:learnbjjtechniques@gmail.com">Ofer C</a>
+//            </div>
+//			</div><!-- .wrapper -->
+//		</div><!-- #site-generator -->';
 
         set_transient('fullframe_footer_content', $fullframe_footer_content, 86940);
     }

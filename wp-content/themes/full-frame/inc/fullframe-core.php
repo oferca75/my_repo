@@ -1370,14 +1370,13 @@ function fullframe_footer_content()
 
         $fullframe_content = fullframe_get_content();
 
-        $fullframe_footer_content = '
-    	<div id="site-generator" class="two">
-    		<div class="wrapper">
-    			<div id="footer-left-content" class="copyright">' . $fullframe_content['left'] . '</div>
-
-    			<div id="footer-right-content" class="powered">' . $fullframe_content['right'] . '</div>
-			</div><!-- .wrapper -->
-		</div><!-- #site-generator -->';
+        $fullframe_footer_content = "2222222222222222222222222";
+//    	<div id="site-generator" class="two">
+//    		<div class="wrapper">
+//    			J.J Techniques by <a href="mailto:learnbjjtechniques@gmail.com">Ofer C</a>
+//            </div>
+//			</div><!-- .wrapper -->
+//		</div><!-- #site-generator -->';
 
         set_transient('fullframe_footer_content', $fullframe_footer_content, 86940);
     }

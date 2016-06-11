@@ -8,10 +8,14 @@ String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
+replaceAll = function (target, search, replacement) {
+    if (target)
+        return target.replace(new RegExp(search, 'g'), replacement);
+};
 function catTreeNreadcrmbHighlight(click) {
 
     var text = click ? jQuery(this).text() : jQuery(this).attr("class").split(" ")[1];
-    var cand = text.replaceAll(" ", "-");
+    var cand = replaceAll(cand, " ", "-");
     jQuery("li.cat-item a." + cand).each(function () {
         var $el = jQuery(this).prev();
         var vertex = false;
