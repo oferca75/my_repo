@@ -42,11 +42,17 @@ jQuery(document).ready(function ($) {
     jQuery.fx.off = true;
     setTimeout(function () {
         jQuery.fx.off = false
+        jQuery(".entry-header").css("visibility","visible");
     }, 0)
     jQuery(".icon-minus-squared").parent().click();
-    jQuery(".lastViewedcontent .lastViewedTitle").each(function () {
+    var lastViewedArray = jQuery(".lastViewedcontent .lastViewedTitle");
+    if (lastViewedArray.length == 0){
+        jQuery(jQuery(".icon-plus-squared")[0]).parent().click();
+    }
+    lastViewedArray.each(function () {
         catTreeNreadcrmbHighlight.call(this, true);
     })
+
     jQuery("#content article .entry-header .entry-title").each(function () {
             catTreeNreadcrmbHighlight.call(this, false);
         }

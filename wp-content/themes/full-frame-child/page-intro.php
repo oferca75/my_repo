@@ -1,5 +1,5 @@
 <?php
-// Template Name:Blank
+// Template Name:Intro
 /**
  * The template for displaying all pages
  *
@@ -16,23 +16,24 @@
 get_header(); ?>
 
 <main id="main" class="site-main" role="main">
+    <?php get_sidebar('front'); ?>
 
-    <?php while (have_posts()) : the_post(); ?>
+    <div id="intro">
+        <?php while (have_posts()) : the_post(); ?>
 
-        <?php get_template_part('content', 'page'); ?>
+            <?php get_template_part('content', 'page'); ?>
 
-        <?php
-        /**
-         * fullframe_comment_section hook
-         *
-         * @hooked fullframe_get_comment_section - 10
-         */
+            <?php
+            /**
+             * fullframe_comment_section hook
+             *
+             * @hooked fullframe_get_comment_section - 10
+             */
 //        do_action('fullframe_comment_section');
-        ?>
+            ?>
 
-    <?php endwhile; // end of the loop. ?>
-
+        <?php endwhile; // end of the loop. ?>
+    </div>
 </main><!-- #main -->
 
-<?php //get_sidebar(); ?>
 <?php get_footer(); ?>

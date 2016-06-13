@@ -209,7 +209,7 @@ class lastviewed extends WP_Widget
         $widgetID = str_replace('lastviewed-', '', $widgetID);
         $widgetOptions = get_option($this->option_name);
         // Ofer Start Change
-        $lastviewedTitle = "Your path...";//$widgetOptions[$widgetID]['lastviewedTitle'];
+        $lastviewedTitle = "Click for path...";//$widgetOptions[$widgetID]['lastviewedTitle'];
         $lastViewed_total = $widgetOptions[$widgetID]['lastViewed_total'];
         $lastViewed_truncate = $widgetOptions[$widgetID]['lastViewed_truncate'] ? $widgetOptions[$widgetID]['lastViewed_truncate'] : false;
         $lastViewed_linkname = $widgetOptions[$widgetID]['lastViewed_linkname'];

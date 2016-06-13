@@ -6,7 +6,6 @@
  * @subpackage Full Frame
  * @since Full Frame 1.0
  */
-$postId = the_ID();
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
