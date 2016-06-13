@@ -30,7 +30,7 @@
                 echo do_shortcode('[dd_lastviewed widget_id="'.$dd_lastviewed_id.'"]');
 
                 $title = get_the_title();
-                $newTitle = eliminateKeywords($title);
+                $newTitle = headlineText($title,"title");
                 if (function_exists("getTrueTitle"))
                 {
                     $tTitle = getTrueTitle($title);

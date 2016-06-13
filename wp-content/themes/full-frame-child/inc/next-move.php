@@ -40,14 +40,14 @@ if (!function_exists('next-move')) :
             $nextMoveLoopArgs = array('category__in' => array($catId), 'numberposts' => $numberposts);
             $loop = new WP_Query( $nextMoveLoopArgs );
             $nextMoveTechniqueTitle = $_COOKIE["last_viewed"];
-            $dispStr = "Other techniques you can do from the <strong>" . eliminateKeywords($nextMoveTechniqueTitle)."</strong>";
+            $dispStr = "Watch more options from the <strong>" . eliminateKeywords($nextMoveTechniqueTitle)."</strong>";
         } else {
             $nextMoveTechniqueTitle = $postTitle;
             if ($_COOKIE["last_viewed"] != $postTitle){
                 setcookie("last_viewed", $nextMoveTechniqueTitle, time() + (60 * 60 * 24 * 30), "/"); // 30 days
             }
-            if (function_exists("nextMoveText")) {
-                $dispStr = nextMoveText($nextMoveTechniqueTitle);
+            if (function_exists("headlineText")) {
+                $dispStr = headlineText($nextMoveTechniqueTitle);
             }
         }
 
@@ -57,7 +57,7 @@ if (!function_exists('next-move')) :
         <div id="jssor_1"
              <?php
                 if ($gameOver) $nextPositionText = 'Submission. Learn More';
-                    else $nextPositionText = nextMoveText($postTitle,true);
+                    else $nextPositionText = headlineText($postTitle, "next-move-title");
              ?>
              style="position: relative; margin: 0 auto; top: 12px;
                  width: <?php echo $nextMoveWidth ?>; height: 360px; background: #fcfcfc;

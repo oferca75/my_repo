@@ -276,7 +276,6 @@ h2.next-move-title{
     line-height: 50px;
     margin-top: 10px;
     color: #316b1c;
-    font-size: 30px;
 }
 
 .home #jssor_1 {
@@ -474,7 +473,10 @@ div [data-u="numbertemplate"],div [data-u="prototype"]{
 }
 
 
-#featured-content #featured-heading {
-    font-size: 59px;
-    letter-spacing: 0px;
+
+.next-move-title{
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+
 }

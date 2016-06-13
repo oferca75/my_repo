@@ -46,16 +46,17 @@ function endsWith($haystack, $needle)
 $arrowSVG = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" data-original-aspect-ratio=\"0.9424221535275619\" style=\"width: 85px; height: 90px;\"><g transform=\"translate(-5.930088996887207,-2.8621416091918945)\"><path d=\"M52.916595 47.775749l35.930886 -35.930886c1.900117 -1.900117,1.900117 -4.836924,0 -6.56426l-1.036689 -1.036689c-0.863907 -0.863907,-2.072899 -1.381773,-3.282369 -1.381773c-1.208992 0,-2.418462 0.518344,-3.282369 1.381773L40.824286 44.493379c-1.036689 0.863907,-1.381773 2.072899,-1.381773 3.282369s0.518344 2.418462,1.381773 3.282369l40.422246 40.422246c0.863907 0.863907,2.072899 1.381773,3.282369 1.381773c1.208992 0,2.418462 -0.518344,3.282369 -1.381773l1.036689 -1.036689c1.900117 -1.900117,1.900117 -4.836924,0 -6.56426L52.916595 47.775749z\"></path><path d=\"M19.404171 47.775749l35.930886 -35.930886c1.900117 -1.900117,1.900117 -4.836924,0 -6.56426l-1.036689 -1.036689c-0.863907 -0.863907,-2.072899 -1.381773,-3.282369 -1.381773c-1.208992 0,-2.418462 0.518344,-3.282369 1.381773L7.311862 44.493379c-0.863907 0.863907,-1.381773 2.072899,-1.381773 3.282369s0.518344 2.418462,1.381773 3.282369l40.422246 40.422246c0.863907 0.863907,2.072899 1.381773,3.282369 1.381773s2.418462 -0.518344,3.282369 -1.381773l1.036689 -1.036689c1.900117 -1.900117,1.900117 -4.836924,0 -6.56426L19.404171 47.775749z\"></path></g></svg>";
 
 
-function nextMoveText($postTitle, $headline = false)
+function headlineText($postTitle, $type = false)
 {
     $dispStr = "";
+    $mTitle = eliminateKeywords($postTitle);
     if (endsWith($postTitle, "sitions")) {
-        $dispStr .= $headline ? "Next position" : "Types of <strong>" . eliminateKeywords($postTitle) . "</strong>";
+        $dispStr .= $type == "next-move-title" ? "Choose a position" : ($type == "title" ? "Positions from the ".str_replace("Positions","",$mTitle) : "Click to watch one of the <strong>" . $mTitle . "</strong>");
     } else
         if (endsWith($postTitle, "sition")) {
-            $dispStr .= $headline ? "Next Technique" : "Techniques from the <strong>" . eliminateKeywords($postTitle) . "</strong>";
+            $dispStr .= $type == "next-move-title" ? "Choose next technique" : ( $type == "title" ? "The ".$mTitle." position" : "Click to watch a technique from the <strong>" . $mTitle . "</strong>");
         } else {
-            $dispStr .= $headline ? "Next move" : 'What you can do from the  <strong>' . eliminateKeywords($postTitle) . "</strong>";
+            $dispStr .= $type == "next-move-title" ? "Choose next move" : $type == "title" ? "The ". $mTitle ." technique" : 'Click to watch a possible move from the  <strong>' . $mTitle . "</strong>";
 
         };
     return $dispStr;
