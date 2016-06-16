@@ -26,7 +26,7 @@ function catTreeNreadcrmbHighlight(click) {
             vertex = true;
 
             jQuery($el).next().css("font-weight", "bold");
-            jQuery($el).next().css("color", "black");
+            jQuery($el).next().css("color", "#316b1c !important");
             $el = $el.parent().parent().prev().prev();
         }
 

@@ -16,14 +16,14 @@
  *
  * @since Fullframe 1.0
  */
-if (!function_exists('next-move')) :
+//if (!function_exists('next-move')) :
 
-    function next_move()
-    {
+//     function next_move()
+//     {
         if(is_front_page()){
             $dontDisplay = true;
         }
-        $nextMoveWidth = "1235px";
+        $nextMoveWidth = "800px";
         $postTitle = get_the_title();
         $numberposts = 40;
         $postTitle = $postTitle == "Front" || $postTitle == "" ? "Top Positions" : $postTitle;
@@ -90,14 +90,8 @@ if (!function_exists('next-move')) :
                         <a class='yarpp-thumbnail' href='<?php echo get_permalink() ?>'
                            title='<?php echo the_title_attribute('echo=0') ?>'>
                             <div class='next-overlay'></div>
-                            <?php
-                            $postContent = explode("\r\n",get_the_content())[0];
-                            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $postContent, $match)) {
-                                $video_id = $match[1];
-                            }
-                            global $post;
+                            <?php $video_id = get_metadata('post', get_the_ID(), "video_id", true);
 
-                            //$post_thumbnail_html = '<iframe id="_ytid_56590" src="https://www.youtube.com/embed/' . $video_id . '?enablejsapi=1&amp;loop=1&amp;playlist=fvmhXk95ZtA&amp;autoplay=0&amp;cc_load_policy=0&amp;iv_load_policy=1&amp;modestbranding=0&amp;rel=1&amp;showinfo=1&amp;playsinline=0&amp;controls=2&amp;autohide=2&amp;theme=dark&amp;color=red&amp;wmode=opaque&amp;vq=&amp;&amp;enablejsapi=1&amp;origin=http://bjjinteractive.ga" frameborder="0" class="__youtube_prefs__" data-vol="0" allowfullscreen=""></iframe>';
                             $post_thumbnail_html = '<img src="http://img.youtube.com/vi/'.$video_id.'/0.jpg" />'
                             ?>
 
@@ -142,7 +136,7 @@ if (!function_exists('next-move')) :
 
         wp_reset_query();
 
-    }
+//     }
 
-endif;
-add_action('fullframe_before_content', 'next_move', 30);
+//endif;
+//add_action('fullframe_after_post', 'next_move', 30);

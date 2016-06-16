@@ -25,11 +25,11 @@ jQuery(document).ready(function ($) {
     //responsive code begin
     //you can remove responsive code if you don't want the slider scales while window resizing
     function ScaleSlider() {
-        var refSize = location.pathname === "" ? screen.width: 1235;
+        var refSize = location.pathname === "" ? screen.width: 800;
         if (refSize) {
             refSize = Math.min(refSize, screen.width);
             jssor_1_slider.$ScaleWidth(refSize);
-            var factor = refSize*0.3/1235;
+            var factor = refSize*0.3/800;
             var scale = factor;
             scale = Math.min(1,scale * 2);
             var baseMargin = -37;

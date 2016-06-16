@@ -20,8 +20,8 @@
         <?php  do_action('fullframe_before_post_container'); ?>
 
         <?php
-        global $arrowSVG;
-        echo '<div class="next-step next-arrow">' . $arrowSVG . "</div>";
+        //global $arrowSVG;
+         //echo '<div class="next-step next-arrow">' . $arrowSVG . "</div>";
         ?>
         <header class="entry-header">
             <div class="fight-path">
@@ -46,7 +46,15 @@
 
         <div class="entry-content">
 
-            <?php the_content(); ?>
+                <?php $video_id = get_metadata('post', get_the_ID(), "video_id", true); ?>
+                <iframe src="https://www.youtube.com/embed/<?php echo $video_id;?>" frameborder="0" ></iframe>
+ 
+
+
+           <?php the_content();
+         require get_stylesheet_directory() . '/inc/next-move.php';
+                 
+            ?>
 
             <?php
             wp_link_pages(array(

@@ -48,15 +48,11 @@ $post = get_post($post1->ID);
 
         <div class="entry-content">
 
+            <?php $video_id = get_metadata('post', get_the_ID(), "video_id", true); ?>
+            <iframe src="https://www.youtube.com/embed/<?php echo $video_id;?>" frameborder="0" ></iframe>
             <?php
-          $my_postid = $post1->ID;//This is page id or post id
-          $content_post = get_post($my_postid);
-          $content = $content_post->post_content;
-          $content = apply_filters('the_content', $content);
-          $content = str_replace(']]>', ']]&gt;', $content);
-          echo $content;
-          
-         // get_the_content(); ?>
+                require get_stylesheet_directory() . '/inc/next-move.php';
+            echo get_the_content(); ?>
 
             <?php
             wp_link_pages(array(
