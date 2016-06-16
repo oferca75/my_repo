@@ -3,7 +3,7 @@
 $page_title = single_cat_title("", false);
 $post1 = get_page_by_title($page_title, "OBJECT", 'post');
 global $post;
-$post = get_post($post1->ID);
+
 $content_post = get_post($post1->ID);
 $postContent = $content_post->post_content;
 $postContent = str_replace(']]>', ']]&gt;', $postContent);

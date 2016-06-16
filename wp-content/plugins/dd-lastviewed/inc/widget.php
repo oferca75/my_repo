@@ -240,7 +240,16 @@ class lastviewed extends WP_Widget
         extract($args, EXTR_SKIP);
 
         if (is_singular()) {
-            $currentVisitPostId = get_the_ID();
+            $post1 = get_page_by_title($page_title, "OBJECT", 'post');
+            if (is_page()){
+                $page_title = get_the_title();
+                $post = get_page_by_title($page_title, "OBJECT", 'post');
+                $postId = $post->ID;
+            }
+            else{
+                $postId = get_the_ID();
+            }
+            $currentVisitPostId = $postId;
             $idList = array_diff($idList, array($currentVisitPostId)); // strip this id from idlist
         }
 
