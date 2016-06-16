@@ -182,12 +182,12 @@ function startsWith($haystack, $needle) {
 }
 //$wpb_all_query = new WP_Query(array('post_type'=>'post', 'post_status'=>'publish', 'posts_per_page'=>-1));
 //while ( $wpb_all_query->have_posts() ) : $wpb_all_query->the_post();
-//    if (!strrpos(get_the_content(),"&amp;nohtml5=False"))
+//    if (strlen(get_the_content()) > 20)
 //        continue;
 //
 //    $my_post = array(
 //        'ID'           => get_the_ID(),
-//        'post_content' => str_replace("&amp;nohtml5=False","",get_the_content())
+//        'post_content' => ""
 //    );
 //    wp_update_post( $my_post );
 //

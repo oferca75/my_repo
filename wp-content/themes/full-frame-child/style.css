@@ -501,8 +501,7 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     font-style: italic;
     font-weight: bold;
     font-style: italic;
-    background: black;
-    color: white;
+    color: black;
     width: 810px;
 
 }
@@ -520,6 +519,10 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     position: absolute;
     left: 0px;
     cursor: pointer;
+    top:0px;
+    height: 100%;
+    width: 100%;
+
 }
 
 .video-thumb, .tech-video-wrap iframe{

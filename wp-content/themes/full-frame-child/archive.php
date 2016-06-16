@@ -4,6 +4,9 @@ $page_title = single_cat_title("", false);
 $post1 = get_page_by_title($page_title, "OBJECT", 'post');
 global $post;
 $post = get_post($post1->ID);
+$content_post = get_post($post1->ID);
+$postContent = $content_post->post_content;
+$postContent = str_replace(']]>', ']]&gt;', $postContent);
 
 get_header();
 
@@ -58,10 +61,11 @@ $post = get_post($post1->ID);
                     />
 
                 </div>
-                    <?php require get_stylesheet_directory() . '/inc/next-move.php'; ?>
+                    <?php
+                    require get_stylesheet_directory() . '/inc/next-move.php'; ?>
                 <p></p>
                 <?php
-                echo get_the_content();
+                echo $postContent;
                 ?>
 
                 <?php

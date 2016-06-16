@@ -1,4 +1,4 @@
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 780px) {
     #feature-slider .entry-title {
         font-size: 13px !important;
     }
@@ -35,10 +35,45 @@
     }
 
     .entry-container>.entry-content>p {
-        height: 150px !important;
+        height: 25px !important;
         overflow: hidden !important;
     }
     .bjj-header p {
         display: none;
+    }
+
+    .bjj-header #promotion-message {
+        width: 64%;
+    }
+
+    .bjj-header img {
+        float: left;
+    }
+    .video-thumb, .tech-video-wrap iframe, .lastViewedExcerpt img {
+        height: 150px !important;
+    }
+    .next-move-title {
+        width: 800px !important;
+    }
+    .fight-path > .widget_lastviewed > .widgettitle {
+        margin-left:19% !important;
+    }
+    .play-button {
+        position: absolute;
+        left: 0px;
+        cursor: pointer;
+        top: 0px;
+        /* transform: scale(0.5); */
+        width: 100%;
+        height: 100%;
+        left: 2%;
+    }
+}
+
+@media screen and (max-width: 780px) {
+
+
+    .bjj-header #promotion-message {
+        display: none !important;
     }
 }
