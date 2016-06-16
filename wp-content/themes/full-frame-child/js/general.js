@@ -33,12 +33,19 @@ function catTreeNreadcrmbHighlight(click) {
     })
 }
 jQuery(document).ready(function ($) {
-    $(".widget_lastviewed .widgettitle").click(function () {
-        $(".fight-path .lastViewedList").toggle("slow");
-        jQuery('.next-step.next-arrow').toggle("slow")
-        $(".widgettitle").toggle();
-    })
 
+    // Fight Path
+    if ($(".lastViewedList li").length == 0){
+        $(".widget_lastviewed .widgettitle").css("visibility","hidden");
+    }
+    else {
+        $(".widget_lastviewed .widgettitle").click(function () {
+            $(".fight-path .lastViewedList").toggle("slow");
+            jQuery('.next-step.next-arrow').toggle("slow")
+            $(".widgettitle").toggle();
+        })
+    }
+    // HIGHLIGHT TREE PATH
     jQuery.fx.off = true;
     setTimeout(function () {
         jQuery.fx.off = false
@@ -59,21 +66,5 @@ jQuery(document).ready(function ($) {
     )
 
 
-    var thumbArray = jQuery("#jssor_1 .yarpp-thumbnail");
-    if (thumbArray.length > 0)
-        {
-            var thumbWidth = jQuery(thumbArray[0]).css("width").replace(/\D/g, '');
-            var nextArrow = jQuery('.next-arrow');
-            var containerWidth = nextArrow.length > 0 ? nextArrow.offset().left * 2:jQuery("#jssor_1").css("width").replace("px","");
-            var thumbsWidth = thumbWidth * thumbArray.length;
-            if (thumbsWidth < containerWidth)
-                {
-                    var leftDistPx = Math.max(0,(containerWidth - thumbsWidth) / 2 - thumbWidth);
-                    leftDistPx += "px";
-                    thumbArray.each(function(){
-                        jQuery(this).parent().css("left",leftDistPx)
-                    })
-                }
 
-        }
 });

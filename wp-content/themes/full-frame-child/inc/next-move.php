@@ -23,7 +23,7 @@
         if(is_front_page()){
             $dontDisplay = true;
         }
-        $nextMoveWidth = "800px";
+        $nextMoveWidth = "808px";
         $postTitle = get_the_title();
         $numberposts = 40;
         $postTitle = $postTitle == "Front" || $postTitle == "" ? "Top Positions" : $postTitle;
@@ -56,13 +56,16 @@
 
         <div id="jssor_1"
              <?php
-                if ($gameOver) $nextPositionText = 'Submission. Learn More';
-                    else $nextPositionText = headlineText($postTitle, "next-move-title");
+//                if ($gameOver) $nextPositionText = 'Submission. Learn More';
+//                    else $nextPositionText = headlineText($postTitle, "next-move-title");
              ?>
-             style="position: relative; margin: 0 auto; top: 12px;
-                 width: <?php echo $nextMoveWidth ?>; height: 360px; background: #fcfcfc;
+             style="position: relative; margin: 0 auto;
+                 width: <?php echo $nextMoveWidth ?>; height: 235px; background: #fcfcfc;
                  overflow: hidden; visibility: visible;">
-            <?php echo '<h2 class="next-move-title">'.$nextPositionText.'</h2><h4>'. $dispStr .':</h4>'; ?>
+            <?php
+
+            // echo '<h2 class="next-move-title">'.$nextPositionText.'</h2><h4>'. $dispStr .':</h4>';
+            ?><div class="next-move-title"><?php echo $dispStr; ?></div>
 
             <!-- Loading Screen -->
             <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -74,7 +77,10 @@
 
             <div data-u="slides"
                  style="cursor: default; position: relative;
-                 top: 100px; width: 1235px; height: 200px; overflow: hidden;">
+                 width: 650px; height: 200px; overflow: hidden;
+                 margin-left:70px;
+                 margin-top:20px;
+                 ">
                 <?php
                 ob_start();
                 $nextMoveCounter = 0;

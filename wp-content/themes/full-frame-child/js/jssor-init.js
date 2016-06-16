@@ -4,10 +4,10 @@ jQuery(document).ready(function ($) {
         $AutoPlay: true,
         $AutoPlaySteps: 4,
         $SlideDuration: 260,
-        $SlideWidth: 205,
+        $SlideWidth: 150,
         // $SlideHeight: 140,
         $Idle:8000,
-        $SlideSpacing: -10,
+        $SlideSpacing: 15,
         $Cols: 8,
         $ArrowNavigatorOptions: {
             $Class: $JssorArrowNavigator$,
@@ -25,11 +25,12 @@ jQuery(document).ready(function ($) {
     //responsive code begin
     //you can remove responsive code if you don't want the slider scales while window resizing
     function ScaleSlider() {
-        var refSize = location.pathname === "" ? screen.width: 800;
+        var jssor_width = 808;
+        var refSize = location.pathname === "" ? screen.width: jssor_width;
         if (refSize) {
             refSize = Math.min(refSize, screen.width);
             jssor_1_slider.$ScaleWidth(refSize);
-            var factor = refSize*0.3/800;
+            var factor = refSize*0.3/jssor_width;
             var scale = factor;
             scale = Math.min(1,scale * 2);
             var baseMargin = -37;

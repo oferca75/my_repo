@@ -182,25 +182,13 @@ function startsWith($haystack, $needle) {
 }
 //$wpb_all_query = new WP_Query(array('post_type'=>'post', 'post_status'=>'publish', 'posts_per_page'=>-1));
 //while ( $wpb_all_query->have_posts() ) : $wpb_all_query->the_post();
-//    $postContent = explode("\r\n",get_the_content())[0];
-//    if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $postContent, $match)) {
-//        $video_id = $match[1];
-//        echo $match[0];
-//        $counter = 0;
-//        $final = 0;
-//        foreach ($match as $m)
-//            if (startsWith($m,"you"))
-//                $final = $counter;
-//                else $counter++;
-//        $repl = str_replace("https://" . $match[$final], "", get_the_content());
-//        $repl = str_replace("https://www." . $match[$final], "", $repl);
+//    if (!strrpos(get_the_content(),"&amp;nohtml5=False"))
+//        continue;
 //
-//        $my_post = array(
-//            'ID'           => get_the_ID(),
-//            'post_content' => $repl
-//        );
-//        wp_update_post( $my_post );
+//    $my_post = array(
+//        'ID'           => get_the_ID(),
+//        'post_content' => str_replace("&amp;nohtml5=False","",get_the_content())
+//    );
+//    wp_update_post( $my_post );
 //
-//        // add_post_meta( get_the_ID(), 'video_id', $video_id,true);
-//    }
 //endwhile;

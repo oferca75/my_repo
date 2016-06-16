@@ -209,7 +209,7 @@ class lastviewed extends WP_Widget
         $widgetID = str_replace('lastviewed-', '', $widgetID);
         $widgetOptions = get_option($this->option_name);
         // Ofer Start Change
-        $lastviewedTitle = "Click for path...";//$widgetOptions[$widgetID]['lastviewedTitle'];
+        $lastviewedTitle = "You are here...";//$widgetOptions[$widgetID]['lastviewedTitle'];
         $lastViewed_total = $widgetOptions[$widgetID]['lastViewed_total'];
         $lastViewed_truncate = $widgetOptions[$widgetID]['lastViewed_truncate'] ? $widgetOptions[$widgetID]['lastViewed_truncate'] : false;
         $lastViewed_linkname = $widgetOptions[$widgetID]['lastViewed_linkname'];
@@ -281,10 +281,8 @@ class lastviewed extends WP_Widget
                 $strip_content = $lastViewed_content_type == 'plain content'; // 1/0
                 //$content = get_the_content();
                 // Ofer BEGIN
-                if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', get_the_content(), $match)) {
-                    $video_id = $match[1];
-                } else
-                    $video_id = null;
+                $video_id = get_metadata('post', $id, "video_id", true);
+
                 global $post, $default_video_image;
                 $content = '<a href="' . get_the_permalink() . '" rel="bookmark">';
                 $content .= $video_id != null ? '<img src="http://img.youtube.com/vi/' . $video_id . '/0.jpg" />' : '<img height="280" src="' . $default_video_image . '"/>"';

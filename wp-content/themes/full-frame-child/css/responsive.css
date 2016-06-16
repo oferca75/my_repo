@@ -38,4 +38,7 @@
         height: 150px !important;
         overflow: hidden !important;
     }
+    .bjj-header p {
+        display: none;
+    }
 }
