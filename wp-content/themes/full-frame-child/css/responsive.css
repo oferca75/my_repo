@@ -20,14 +20,11 @@
 
     div[data-u="slides"], [data-u="slides"] > div {
         height: 380px !important;
-    }
-
-    div[data-u="slides"] {
-        top: 140px !important;
+        left: 10%;
     }
 
     #jssor_1 {
-        height: 135px !important;
+        height: 207px !important;
     }
 
     .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe, .single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe, .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed{
@@ -35,7 +32,6 @@
     }
 
     .entry-container>.entry-content>p {
-        height: 25px !important;
         overflow: hidden !important;
     }
     .bjj-header p {
@@ -51,10 +47,7 @@
     }
     .video-thumb, .tech-video-wrap iframe, .lastViewedExcerpt img ,.tech-video-wrap ,.play-button,
     .site-content article .fluid-width-video-wrapper{
-        height: 150px !important;
-    }
-    .next-move-title {
-        width: 800px !important;
+        height: 280px !important;
     }
     .fight-path > .widget_lastviewed > .widgettitle {
         margin-left:19% !important;
@@ -68,14 +61,17 @@
     }
     .tech-video-wrap {
         position: relative;
-        height: 364px;
-        width: 80% !important;
-        margin-left: 15%;
+        width: 83% !important;
+        margin-left: 7%;
+        height: 380px;
     }
 }
 
 @media screen and (max-width: 480px) {
-
+    .video-thumb, .tech-video-wrap iframe, .lastViewedExcerpt img ,.tech-video-wrap ,.play-button,
+    .site-content article .fluid-width-video-wrapper{
+        height: 150px !important;
+    }
 
     .bjj-header #promotion-message {
         display: none !important;

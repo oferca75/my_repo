@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
         var jssor_width = 808;
         var refSize = location.pathname === "" ? screen.width: jssor_width;
         if (refSize) {
-            refSize = Math.min(refSize, screen.width*0.4);
+            refSize = Math.min(refSize, screen.width < 600 ? screen.width*0.8 : screen.width*0.4);
             jssor_1_slider.$ScaleWidth(refSize);
             var factor = refSize*0.3/jssor_width;
             var scale = factor;

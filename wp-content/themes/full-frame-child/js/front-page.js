@@ -1,1 +1,0 @@
-jQuery(".featured-heading-wrap>p>b").click(function(){jQuery("#header-toggle").click()})
