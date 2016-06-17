@@ -317,7 +317,7 @@ class lastviewed extends WP_Widget
                 echo '<li class="' . $clearfix . '">';
 
                 global $arrowSVG;
-                echo '<a href="' . $perma . '"></a>';
+                echo '<a href="' . $perma . '">';
                 // Ofer End
                 if ($hasThumb && !$lastViewed_lv_link_thumb) {
                     echo '<div class="lastViewedThumb">' . $thumb . '</div>';

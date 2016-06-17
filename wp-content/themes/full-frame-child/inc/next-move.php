@@ -60,7 +60,7 @@
 //                    else $nextPositionText = headlineText($postTitle, "next-move-title");
              ?>
              style="position: relative; margin: 0 auto;
-                 width: <?php echo $nextMoveWidth ?>; height: 235px; background: #fcfcfc;
+                 width: <?php echo $nextMoveWidth ?>; height: 250px; background: #fcfcfc;
                  overflow: hidden; visibility: visible;">
             <?php
 

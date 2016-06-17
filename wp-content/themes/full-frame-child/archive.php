@@ -65,7 +65,7 @@ $post = get_post($post1->ID);
                     require get_stylesheet_directory() . '/inc/next-move.php'; ?>
                 <p></p>
                 <?php
-                echo $postContent;
+                echo "<p>".$postContent."</p>";
                 ?>
 
                 <?php

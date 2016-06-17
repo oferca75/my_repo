@@ -49,7 +49,8 @@
     .bjj-header img {
         float: left;
     }
-    .video-thumb, .tech-video-wrap iframe, .lastViewedExcerpt img ,.tech-video-wrap {
+    .video-thumb, .tech-video-wrap iframe, .lastViewedExcerpt img ,.tech-video-wrap ,.play-button,
+    .site-content article .fluid-width-video-wrapper{
         height: 150px !important;
     }
     .next-move-title {
@@ -58,12 +59,18 @@
     .fight-path > .widget_lastviewed > .widgettitle {
         margin-left:19% !important;
     }
-    .play-button {
+    .play-button,.video-thumb {
         position: absolute;
         left: 0px;
         cursor: pointer;
         top: 0px;
         left: 2%;
+    }
+    .tech-video-wrap {
+        position: relative;
+        height: 364px;
+        width: 80% !important;
+        margin-left: 15%;
     }
 }
 
