@@ -32,8 +32,9 @@ function catTreeNreadcrmbHighlight(click) {
 
     })
 }
+jQuery(".featured-heading-wrap>p>b, b.search-word").click(function(){jQuery("#header-toggle").click()})
+
 jQuery(document).ready(function ($) {
-    jQuery(".featured-heading-wrap>p>b, b.search-word").click(function(){jQuery("#header-toggle").click()})
     // Fight Path
     if ($(".lastViewedList li").length == 0){
         $(".widget_lastviewed .widgettitle").css("visibility","hidden");

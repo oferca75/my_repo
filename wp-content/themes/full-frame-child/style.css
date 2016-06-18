@@ -286,7 +286,7 @@ body, .yarpp-thumbnails-horizontal, .entry-footer {
     margin-bottom: 20px;
 }
 
-.featured-heading-wrap > p > b {
+.featured-heading-wrap > p > b, b.search-word {
     cursor: pointer;
 }
 
@@ -579,4 +579,11 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     width: 120px;
     /*float: left;*/
     display: inline;
+}
+body.custom-background {
+    background-color: #d0dad8 !important;
+}
+
+.play-button{
+    width:100%;
 }
