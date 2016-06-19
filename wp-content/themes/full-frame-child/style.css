@@ -580,8 +580,12 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     /*float: left;*/
     display: inline;
 }
-body.custom-background {
-    background-color: #d0dad8 !important;
+body.custom-background,.dummy-image {
+    /*background: url(img/bkg5.jpg);*/
+    background-size: contain;
+    background: #a2989a !important;
+    /*background-color: #d0dad8 !important;*/
+
 }
 
 .play-button{

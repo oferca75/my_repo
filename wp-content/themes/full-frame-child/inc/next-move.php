@@ -33,7 +33,7 @@
             $args = array('category__in' => array($catId), 'numberposts' => $numberposts);
             $loop = new WP_Query( $args );
         }
-
+        $nextMoveTechniqueTitle = "";
         if ($loop->post_count<=1 && $_COOKIE["last_viewed"]) {
             $gameOver = true;
             $catId = get_cat_ID($_COOKIE["last_viewed"]);
