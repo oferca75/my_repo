@@ -455,6 +455,7 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     position: relative;
     font: bold italic 45px/1.5 Helvetica, Verdana, sans-serif;
     margin-bottom: 20px;
+    text-align: left;
 }
 
 #intro li p {
@@ -470,7 +471,7 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 }
 
 #intro strong {
-    font-size: 36px;
+    font-size: 34px;
 }
 
 .home .sidebar-primary {
@@ -495,10 +496,6 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     text-shadow: 0px 3px 8px #2a2a2a;
 }
 
-#featured-content #featured-heading {
-    font-size: 50px;
-    letter-spacing: 0px;
-}
 
 .next-move-title {
     font-style: italic;
@@ -579,6 +576,7 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     width: 120px;
     /*float: left;*/
     display: inline;
+
 }
 body.custom-background,.dummy-image {
     /*background: url(img/bkg5.jpg);*/

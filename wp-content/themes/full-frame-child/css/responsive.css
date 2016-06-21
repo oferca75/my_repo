@@ -20,11 +20,16 @@
 
     div[data-u="slides"], [data-u="slides"] > div {
         height: 380px !important;
-        left: 10%;
+        /*left: 10%;*/
     }
 
     #jssor_1 {
         height: 207px !important;
+        max-width: 330px;
+    }
+
+    .slides {
+        max-width: 600px;
     }
 
     .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe, .single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe, .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed{
