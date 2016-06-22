@@ -192,3 +192,27 @@ function startsWith($haystack, $needle) {
 //    wp_update_post( $my_post );
 //
 //endwhile;
+
+
+function getPostContent($postId)
+{
+    $content_post = get_post($postId);
+    $postContent = $content_post->post_content;
+    $postContent = apply_filters('the_content', $postContent);
+    $postContent = str_replace(']]>', ']]&gt;', $postContent);
+    return $postContent;
+}
+
+
+function getQueryPostDesc($postTitle, $dontDisplay, $numberposts)
+{
+    $catId = get_cat_ID($postTitle);
+    if (!$dontDisplay && $catId != 0) {
+        $args = array('category__in' => array($catId), 'numberposts' => $numberposts);
+        $loop = new WP_Query($args);
+        return array($catId, $loop);
+    }
+    return array($catId, $loop);
+}
+
+$jssor_id = 1;

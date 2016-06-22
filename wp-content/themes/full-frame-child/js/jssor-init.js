@@ -20,16 +20,24 @@ jQuery(document).ready(function ($) {
         // }
     };
 
-    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+    $(".jssor_container").each(function(){
+        var jssor_slider = new $JssorSlider$($(this).attr("id"), jssor_1_options);
+        ScaleSlider(jssor_slider);
+        $(window).bind("load", ScaleSlider(jssor_slider));
+        $(window).bind("resize", ScaleSlider(jssor_slider));
+        $(window).bind("orientationchange", ScaleSlider(jssor_slider));
+
+
+    })
 
     //responsive code begin
     //you can remove responsive code if you don't want the slider scales while window resizing
-    function ScaleSlider() {
+    function ScaleSlider(slider) {
         var jssor_width = 808;
         var refSize = location.pathname === "" ? screen.width: jssor_width;
         if (refSize) {
-            refSize = Math.min(refSize, screen.width < 600 ? screen.width*0.8 : screen.width*0.4);
-            jssor_1_slider.$ScaleWidth(refSize);
+            refSize = Math.min(refSize, screen.width < 600 ? screen.width*0.8 : screen.width*0.5);
+            slider.$ScaleWidth(refSize);
             var factor = refSize*0.3/jssor_width;
             var scale = factor;
             scale = Math.min(1,scale * 2);
@@ -44,9 +52,5 @@ jQuery(document).ready(function ($) {
             window.setTimeout(ScaleSlider, 30);
         }
     }
-    ScaleSlider();
-    $(window).bind("load", ScaleSlider);
-    $(window).bind("resize", ScaleSlider);
-    $(window).bind("orientationchange", ScaleSlider);
     //responsive code end
 });

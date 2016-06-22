@@ -51,10 +51,11 @@
             }
         }
 
+            global $jssor_id;
         ?>
 
 
-        <div id="jssor_1"
+        <div id="jssor_<?php echo $jssor_id; ?>" class="jssor_container"
              <?php
 //                if ($gameOver) $nextPositionText = 'Submission. Learn More';
 //                    else $nextPositionText = headlineText($postTitle, "next-move-title");
@@ -84,6 +85,8 @@
                 <?php
                 ob_start();
                 $nextMoveCounter = 0;
+                global $nextMoveArray;
+                $nextMoveArray = array();
                 while (!$dontDisplay && $loop->have_posts()) :
                     $loop->the_post();
                     if ($postTitle == get_the_title() || $nextMoveTechniqueTitle == get_the_title() )
@@ -106,7 +109,12 @@
                                 echo $post_thumbnail_html;
                             ?>
                             <span
-                                class="yarpp-thumbnail-title"><?php echo eliminateKeywords(get_the_title(), array("Control", "control")) ?>
+                                class="yarpp-thumbnail-title"><?php
+                                $nextMoveTitle = eliminateKeywords(get_the_title(), array("Control", "control"));
+                                if (!$gameOver){
+                                    $nextMoveArray[$nextMoveTitle] = get_permalink();
+                                }
+                                echo $nextMoveTitle ?>
                         </span>
                         </a>
                     </div>

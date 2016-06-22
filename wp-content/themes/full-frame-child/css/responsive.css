@@ -8,12 +8,12 @@
         padding: 0px 5px 0px 5px !important;
     }
 
-    #jssor_1 h2 {
+    .jssor_container h2 {
         font-size: 50px !important;
         margin-bottom: 15px;
     }
 
-    #jssor_1 h4 {
+    .jssor_container h4 {
         font-size: 40px !important;
 
     }
@@ -23,7 +23,7 @@
         /*left: 10%;*/
     }
 
-    #jssor_1 {
+    .jssor_container {
         height: 207px !important;
         max-width: 330px;
     }

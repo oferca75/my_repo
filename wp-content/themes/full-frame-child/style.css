@@ -297,17 +297,17 @@ h2.next-move-title {
     color: #316b1c;
 }
 
-.home #jssor_1 {
+.home .jssor_container {
     display: none
 }
 
-#jssor_1 {
+.jssor_container {
     height: 200px;
     background: white;
 
 }
 
-#jssor_1 > div {
+.jssor_container > div {
     /*padding: 0px 10px 0px 10px !important;*/
 }
 
@@ -344,7 +344,7 @@ h2.next-move-title {
     margin-top: 7px;
 }
 
-h2, #jssor_1 h3 {
+h2, .jssor_container h3 {
     font-size: 25px;
 }
 
@@ -520,10 +520,13 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 
 }
 
-.tech-video-wrap{
+.tech-video-wrap, article.post .entry-content>*:nth-child(n+3){
     position: relative;
     width: 70%;
-    margin-left: 15%;}
+    margin-left: 15%;
+    text-align: left;
+}
+
 
 
 .tech-video-wrap, .play-button{
@@ -588,4 +591,8 @@ body.custom-background,.dummy-image {
 
 .play-button{
     width:100%;
+}
+
+.some-facts a{
+    margin: 0px !important;
 }
