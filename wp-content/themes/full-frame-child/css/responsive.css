@@ -25,7 +25,6 @@
 
     .jssor_container {
         height: 207px !important;
-        max-width: 330px;
     }
 
     .slides {
@@ -70,6 +69,9 @@
         margin-left: 7%;
         height: 380px;
     }
+    .video-thumb{
+        visibility: hidden;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -77,8 +79,29 @@
     .site-content article .fluid-width-video-wrapper{
         height: 150px !important;
     }
-
+    .jssor_container {
+        margin-left:-20px !important;
+    }
     .bjj-header #promotion-message {
-        display: none !important;
+        width: 60%;
+    }
+
+    .tech-video-wrap{
+        margin-left: 3% !important;
+    }
+    .next-move-title {
+        font-size: 34px !important;
+        margin-top:10px;
+    }
+}
+
+
+
+@media screen and (max-width: 300px) {
+    .bjj-header img {
+        margin-right: -40px;
+    }
+    .bjj-header #promotion-message {
+        width: 45%;
     }
 }
