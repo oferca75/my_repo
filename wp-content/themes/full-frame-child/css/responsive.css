@@ -4,7 +4,7 @@
     }
 
     .yarpp-thumbnail-title {
-        font-size: 36px !important;
+        font-size: 30px !important;
         padding: 0px 5px 0px 5px !important;
     }
 
@@ -19,13 +19,9 @@
     }
 
     div[data-u="slides"], [data-u="slides"] > div {
-        height: 380px !important;
-        /*left: 10%;*/
+        height: 345px !important;
     }
 
-    .jssor_container {
-        height: 207px !important;
-    }
 
     .slides {
         max-width: 600px;
@@ -39,7 +35,8 @@
         overflow: hidden !important;
     }
     .bjj-header p {
-        display: none;
+        font-size:14px;
+        line-height: 14px;
     }
 
     .bjj-header #promotion-message {
@@ -54,15 +51,15 @@
         height: 280px !important;
     }
     .fight-path > .widget_lastviewed > .widgettitle {
-        margin-left:19% !important;
+        margin-left:29% !important;
     }
+    .fight-path > .widget_lastviewed > .widgettitle {
+        width: 48%;}
+
     .play-button,.video-thumb {
-        position: absolute;
-        left: 0px;
-        cursor: pointer;
-        top: 0px;
-        left: 2%;
+        visibility: hidden;
     }
+
     .tech-video-wrap {
         position: relative;
         width: 83% !important;
@@ -72,27 +69,61 @@
     .video-thumb{
         visibility: hidden;
     }
+
+
+    .jssor_container {
+        min-height: 180px !important;
+    }
+    #feature-slider .entry-container, #promotion-message .section, #content .wrapper, .hentry, .no-results, .not-found, .sidebar,
+    #comments, #nav-below, #infinite-handle, #supplementary .widget, #site-generator{
+        padding: 0px !important;
+    }
+
+
+    .fight-path > .widget_lastviewed > .widgettitle {
+        height: 20px;
+        font-size: 15px;
+        line-height: 14px;
+    }
+
+    article.post .entry-content ul.some-facts, article.post .entry-content h2.some-facts{
+        position: relative;
+        width: 83% !important;
+        margin-left: 9% !important;
+        text-align: left;
+    }
+
+    h2.some-facts{
+        margin-top:20px !important;
+    }
+    .history.next-arrow {
+        margin-bottom: -25px !important;
+    }
+
 }
 
 @media screen and (max-width: 480px) {
-    .video-thumb, .tech-video-wrap iframe, .lastViewedExcerpt img ,.tech-video-wrap ,.play-button,
-    .site-content article .fluid-width-video-wrapper{
-        height: 150px !important;
-    }
-    .jssor_container {
-        margin-left:-20px !important;
-    }
-    .bjj-header #promotion-message {
-        width: 60%;
-    }
 
-    .tech-video-wrap{
-        margin-left: 3% !important;
+
+    .bjj-header #promotion-message {
+        width: 70%;
+    }
+    #content .wrapper{
+        margin: 0px;
+        width: 100%;
     }
     .next-move-title {
         font-size: 34px !important;
         margin-top:10px;
     }
+
+    .tech-video-wrap, article.post .entry-content>*:nth-child(n+3) {
+        margin-left: 0% !important;
+    }.tech-video-wrap {
+         position: relative;
+         width: 100% !important;
+         height: 260px;
+     }
 }
 
 

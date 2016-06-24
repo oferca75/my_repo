@@ -51,12 +51,12 @@ function headlineText($postTitle, $type = false)
     $dispStr = "";
     $mTitle = eliminateKeywords($postTitle);
     if (endsWith($postTitle, "sitions")) {
-        $dispStr .= $type == "next-move-title" ? "Choose a position" : ($type == "title" ? "Positions from the ".str_replace("Positions","",$mTitle) : "Click to watch one of the <strong>" . $mTitle . "</strong>");
+        $dispStr .= $type == "next-move-title" ? "Choose a position" : ($type == "title" ? "Positions from the ".str_replace("Positions","",$mTitle) : "Choose one of the <strong>" . $mTitle . "</strong>");
     } else
         if (endsWith($postTitle, "sition")) {
-            $dispStr .= $type == "next-move-title" ? "Choose next technique" : ( $type == "title" ? "The ".$mTitle." position" : "Click to watch a technique from the <strong>" . $mTitle . "</strong>");
+            $dispStr .= $type == "next-move-title" ? "Choose next technique" : ( $type == "title" ? "The ".$mTitle." position" : "Choose a technique from the <strong>" . $mTitle . "</strong>");
         } else {
-            $dispStr .= $type == "next-move-title" ? "Choose next move" : $type == "title" ? "The ". $mTitle ." technique" : 'Click to watch a possible move from the  <strong>' . $mTitle . "</strong>";
+            $dispStr .= $type == "next-move-title" ? "Choose next move" : $type == "title" ? "The ". $mTitle  : 'Choose a technique from the  <strong>' . $mTitle . "</strong>";
 
         };
     return $dispStr;

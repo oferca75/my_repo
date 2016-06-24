@@ -20,14 +20,15 @@ jQuery(document).ready(function ($) {
         // }
     };
 
+    setTimeout(function(){
+        $(".jssor_container").css("visibility","visible !important")
+    },0);
     $(".jssor_container").each(function(){
         var jssor_slider = new $JssorSlider$($(this).attr("id"), jssor_1_options);
         ScaleSlider(jssor_slider);
         $(window).bind("load", ScaleSlider(jssor_slider));
         $(window).bind("resize", ScaleSlider(jssor_slider));
         $(window).bind("orientationchange", ScaleSlider(jssor_slider));
-
-
     })
 
     //responsive code begin
@@ -36,7 +37,7 @@ jQuery(document).ready(function ($) {
         var jssor_width = 808;
         var refSize = location.pathname === "" ? screen.width: jssor_width;
         if (refSize) {
-            refSize = Math.min(refSize, screen.width < 600 ? screen.width*0.8 : screen.width*0.5);
+            refSize = Math.min(refSize, screen.width < 600 ? screen.width : screen.width*0.45);
             slider.$ScaleWidth(refSize);
             var factor = refSize*0.3/jssor_width;
             var scale = factor;
