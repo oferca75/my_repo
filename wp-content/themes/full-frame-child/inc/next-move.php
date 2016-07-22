@@ -61,7 +61,7 @@
 //                    else $nextPositionText = headlineText($postTitle, "next-move-title");
              ?>
              style="position: relative; margin: 0 auto;
-                 width: <?php echo $nextMoveWidth ?>; height: 300px;
+                 width: <?php echo $nextMoveWidth ?>; height: 250px;
                  overflow: hidden;">
             <?php
 
@@ -78,7 +78,7 @@
 
             <div data-u="slides"
                  style="cursor: default; position: relative;
-                 width: 650px; height: 380px; overflow: hidden;
+                 width: 650px; height: 200px; overflow: hidden;
                  margin-left:70px;
                  margin-top:20px;
                  ">
@@ -94,8 +94,7 @@
                     $nextMoveCounter++;
                     ?>
                     <div style="display: none;"><?php
-                      global $arrowSVG;
-                        echo '<div class="next-move next-arrow"><img src="'.get_stylesheet_directory_uri().'/img/arr1.png"/></div>';
+
                         ?>
                         <a class='yarpp-thumbnail' href='<?php echo get_permalink() ?>'
                            title='<?php echo the_title_attribute('echo=0') ?>'>

@@ -4,7 +4,7 @@
     }
 
     .yarpp-thumbnail-title {
-        font-size: 38px !important;
+        font-size: 30px !important;
         padding: 0px 5px 0px 5px !important;
     }
 
@@ -19,7 +19,7 @@
     }
 
     div[data-u="slides"], [data-u="slides"] > div {
-        height: 505px !important;
+        height: 345px !important;
     }
 
 
@@ -43,14 +43,15 @@
         width: 64%;
     }
 
+    .bjj-header img {
+        float: left;
+    }
     .video-thumb, .tech-video-wrap iframe, .lastViewedExcerpt img ,.tech-video-wrap ,.play-button,
     .site-content article .fluid-width-video-wrapper{
         height: 280px !important;
     }
     .fight-path > .widget_lastviewed > .widgettitle {
         margin-left:29% !important;
-        font-size: 15px !important;
-        line-height: 14px;
     }
     .fight-path > .widget_lastviewed > .widgettitle {
         width: 48%;}
@@ -71,11 +72,18 @@
 
 
     .jssor_container {
-        min-height: 280px !important;
+        min-height: 180px !important;
     }
     #feature-slider .entry-container, #promotion-message .section, #content .wrapper, .hentry, .no-results, .not-found, .sidebar,
     #comments, #nav-below, #infinite-handle, #supplementary .widget, #site-generator{
         padding: 0px !important;
+    }
+
+
+    .fight-path > .widget_lastviewed > .widgettitle {
+        height: 20px;
+        font-size: 15px;
+        line-height: 14px;
     }
 
     article.post .entry-content ul.some-facts, article.post .entry-content h2.some-facts{
@@ -91,21 +99,11 @@
     .history.next-arrow {
         margin-bottom: -25px !important;
     }
-    .entry-title {
-        font-size: 30px !important;
-        font-weight: bold;
-    }
 
 }
 
 @media screen and (max-width: 480px) {
 
-
-    .next-move.next-arrow {
-        transform: rotate(90deg) translateZ(0px) scale(1) !important;
-        margin-bottom:20px;
-        margin-top: 20px !important;
-    }
 
     .bjj-header #promotion-message {
         width: 70%;
@@ -136,11 +134,5 @@
     }
     .bjj-header #promotion-message {
         width: 45%;
-    }
-    .headTxt {
-        font-size: 18px !important;
-    }
-    #promotion-message p{
-        display: none !important;
     }
 }

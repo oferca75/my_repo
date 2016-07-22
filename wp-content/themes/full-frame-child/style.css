@@ -23,6 +23,7 @@
 }
 
 .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe,
+.single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe,
 .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed {
     /*     height: 380px; */
     position: relative;
@@ -158,22 +159,17 @@
 }
 
 .history.next-arrow {
-    transform: rotate(90deg) translateZ(0px) scale(0.53);
+    transform: rotate(270deg) translateZ(0px) scale(0.53);
     margin-top: 44px;
     margin-bottom: -70px;
 
 }
-
-.next-move.next-arrow {
-    transform: rotate(90deg) translateZ(0px) scale(0.7);
-  }
-
 .lastViewedList li:last-child .history.next-arrow{
     margin-bottom: -30px;
 }
 
 .next-step.next-arrow {
-    transform: rotate(90deg) translateZ(0px) scale(0.7);
+    transform: rotate(90deg) translateZ(0px) scale(0.53);
     top: 542px;
     height: 20px;
     left: 38%;
@@ -388,11 +384,14 @@ h2, .jssor_container h3 {
     font-style: italic;
     text-decoration: underline;
     margin-left: 44%;
+    border: 1px solid lightgrey;
+    background: whitesmoke;
     color: darkgreen;
     margin-top: 1%;
 }
 
 .fight-path > .widget_lastviewed > .widgettitle {
+    height: 27px;
     font-size: 18px;
     line-height: 22px;
 }
@@ -606,7 +605,7 @@ body.custom-background,.dummy-image {
 .headTxt{
     display:inline;
     font-size:26px;
-    font-family: dreammma;
+
 }
 
 
@@ -618,12 +617,11 @@ body.custom-background,.dummy-image {
    font-style: italic !important;
 }
 .bjj-header img {
-    width: 250px !important;
-    min-width: 250px !important;
+    width: 60px !important;
+    min-width: 60px !important;
 }
 .bjj-header .img-container {
     min-width: 60px !important;
-    display: inline;
 }
 
 
@@ -639,20 +637,4 @@ body.custom-background,.dummy-image {
 
 .fight-path .widget{
     margin: 0 0 0em;
-}
-
-@font-face {
-    font-family: 'dreammma';
-    src:  local('dmma'),
-        url("dmma.ttf") format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-.widget_lastviewed .widgettitle{
-    visibility: hidden;
-}
-
-#featured-content {
-    height: auto;
 }

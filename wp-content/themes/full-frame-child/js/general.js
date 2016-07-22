@@ -1,4 +1,3 @@
-isMobile = isMobile();
 function clickPar($el) {
     if ($el.find("i").hasClass("icon-plus-squared")) {
         $el.click();
@@ -44,7 +43,7 @@ function isMobile() {
 jQuery(document).ready(function ($) {
     // Fight Path
     if ($(".lastViewedList li").length == 0){
-        $(".widget_lastviewed .widgettitle").css("visibility","visible");
+        $(".widget_lastviewed .widgettitle").css("visibility","hidden");
     }
     else {
         $(".widget_lastviewed .widgettitle").click(function () {
@@ -58,7 +57,7 @@ jQuery(document).ready(function ($) {
     setTimeout(function () {
         jQuery.fx.off = false
         jQuery(".entry-header").css("visibility","visible");
-        if (isMobile)
+        if (isMobile())
             jQuery(".play-button").each(function(){
                 jQuery(this).hide();
                 jQuery(this).prev().remove();
