@@ -23,7 +23,6 @@
 }
 
 .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe,
-.single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe,
 .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed {
     /*     height: 380px; */
     position: relative;
@@ -159,17 +158,22 @@
 }
 
 .history.next-arrow {
-    transform: rotate(270deg) translateZ(0px) scale(0.53);
+    transform: rotate(90deg) translateZ(0px) scale(0.53);
     margin-top: 44px;
     margin-bottom: -70px;
 
 }
+
+.next-move.next-arrow {
+    transform: rotate(90deg) translateZ(0px) scale(0.7);
+  }
+
 .lastViewedList li:last-child .history.next-arrow{
     margin-bottom: -30px;
 }
 
 .next-step.next-arrow {
-    transform: rotate(90deg) translateZ(0px) scale(0.53);
+    transform: rotate(90deg) translateZ(0px) scale(0.7);
     top: 542px;
     height: 20px;
     left: 38%;
@@ -255,6 +259,7 @@ body, .yarpp-thumbnails-horizontal, .entry-footer {
     border-bottom: 1px solid #DDDDDD;
     line-height: 1.4;
     color: #316b1c !important;
+    margin-top: 15px;
 }
 
 #feature-slider .entry-title, #feature-slider .entry-title a, #promotion-message .section {
@@ -304,6 +309,7 @@ h2.next-move-title {
 .jssor_container {
     height: 200px;
     background: white;
+    visibility: hidden;
 
 }
 
@@ -374,27 +380,22 @@ h2, .jssor_container h3 {
 }
 
 .fight-path > .widget_lastviewed > .widgettitle {
-    width: 152px;
+    width: 116px;
     clear: none;
     text-align: center;
-    left: 48%;
-    /* position: absolute; */
-    /* margin-top: -45px; */
-    /* border: 1px solid darkgray; */
-    height: 27px;
-    font-size: 18px;
-    line-height: 22px;
+    left: 56%;
     cursor: pointer;
-    /* background: #EEEEEE; */
     font-style: italic;
     text-decoration: underline;
     margin-left: 44%;
-    /* margin-top: -23px; */
-    border: 1px solid lightgrey;
-    background: whitesmoke;
     color: darkgreen;
+    margin-top: 1%;
 }
 
+.fight-path > .widget_lastviewed > .widgettitle {
+    font-size: 18px;
+    line-height: 22px;
+}
 .page .fight-path > .widget_lastviewed > .widgettitle {
     visibility: hidden;
 }
@@ -565,7 +566,6 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     /*width: 64%;*/
     padding: 0px;
     color: black !important;
-    vertical-align: text-bottom;
 }
 
 .bjj-header .wrapper{
@@ -576,8 +576,6 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 
 .bjj-header img {
     height: auto;
-    width: 120px;
-    /*float: left;*/
     display: inline;
 
 }
@@ -595,4 +593,66 @@ body.custom-background,.dummy-image {
 
 .some-facts a{
     margin: 0px !important;
+}
+
+.some-facts li{
+   text-transform: lowercase;
+}
+
+.some-facts  li::first-letter,.some-facts  li b::first-letter{
+    text-transform: uppercase;
+}
+
+.headTxt{
+    display:inline;
+    font-size:26px;
+    font-family: dreammma;
+}
+
+
+.headTxt.part1{
+    color:black !important;
+    display:inline;
+}
+.headTxt.part2{
+   font-style: italic !important;
+}
+.bjj-header img {
+    width: 250px !important;
+    min-width: 250px !important;
+}
+.bjj-header .img-container {
+    min-width: 60px !important;
+    display: inline;
+}
+
+
+.bjj-header.wrapper,#promotion-message{
+    height: 70px !important;
+}
+#promotion-message .wrapper{
+    padding: 0px !important;
+}
+#promotion-message .section{
+      padding: 0px !important;
+  }
+
+.fight-path .widget{
+    margin: 0 0 0em;
+}
+
+@font-face {
+    font-family: 'dreammma';
+    src:  local('dmma'),
+        url("dmma.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.widget_lastviewed .widgettitle{
+    visibility: hidden;
+}
+
+#featured-content {
+    height: auto;
 }
