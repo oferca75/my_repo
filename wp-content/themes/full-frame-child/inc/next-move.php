@@ -1,53 +1,29 @@
 <?php
 
-/**
- * The template for displaying the Breadcrumb
- *
- * @package Catch Themes
- * @subpackage Full Frame
- * @since Full Frame 1.0
- */
-
-
-/**
- * Add breadcrumb.
- *
- * @action fullframe_after_header
- *
- * @since Fullframe 1.0
- */
-//if (!function_exists('next-move')) :
-
-//     function next_move()
-//     {
-        if(is_front_page()){
-            $dontDisplay = true;
-        }
-        $nextMoveWidth = "808px";
+        $nextMoveWidth = is_front_page() ? "1800px" : "808px";
+        $slidesWidth = is_front_page() ? "1600px" :"650px";
         $postTitle = get_the_title();
         $numberposts = 40;
         $postTitle = $postTitle == "Front" || $postTitle == "" ? "Top Positions" : $postTitle;
 
         $catId = get_cat_ID($postTitle);
+        $cats =  array($catId); 
         if(!$dontDisplay && $catId != 0) {
-            $args = array('category__in' => array($catId), 'numberposts' => $numberposts);
+            $args = is_front_page() ? array('posts_per_page'=>-1,'category__in' => array(get_cat_ID("Top Positions"),get_cat_ID("Bottom Positions")), 'numberposts' => 40) : array('category__in' => $cats, 'numberposts' => $numberposts);
+
             $loop = new WP_Query( $args );
         }
         $nextMoveTechniqueTitle = "";
         if ($loop->post_count<=1 && $_COOKIE["last_viewed"]) {
             $gameOver = true;
             $catId = get_cat_ID($_COOKIE["last_viewed"]);
-            $nextMoveLoopArgs = array('category__in' => array($catId), 'numberposts' => $numberposts);
+            $nextMoveLoopArgs = is_front_page() ? array('posts_per_page'=>-1,'category__in' => array(get_cat_ID("Top Positions"),get_cat_ID("Bottom Positions")), 'numberposts' => 40) : array('category__in' => array($catId), 'numberposts' => $numberposts);
             $loop = new WP_Query( $nextMoveLoopArgs );
             $nextMoveTechniqueTitle = $_COOKIE["last_viewed"];
-            $dispStr = "Watch more options from the <strong>" . eliminateKeywords($nextMoveTechniqueTitle)."</strong>";
         } else {
             $nextMoveTechniqueTitle = $postTitle;
             if ($_COOKIE["last_viewed"] != $postTitle){
                 setcookie("last_viewed", $nextMoveTechniqueTitle, time() + (60 * 60 * 24 * 30), "/"); // 30 days
-            }
-            if (function_exists("headlineText")) {
-                $dispStr = headlineText($nextMoveTechniqueTitle);
             }
         }
 
@@ -55,18 +31,17 @@
         ?>
 
 
-        <div id="jssor_<?php echo $jssor_id; ?>" class="jssor_container"
+        <div id="jssor_<?php echo $jssor_id; ?>" class="jssor_container tech-video-wrap"
              <?php
 //                if ($gameOver) $nextPositionText = 'Submission. Learn More';
 //                    else $nextPositionText = headlineText($postTitle, "next-move-title");
              ?>
              style="position: relative; margin: 0 auto;
-                 width: <?php echo $nextMoveWidth ?>; height: 250px;
-                 overflow: hidden;">
+                 width: <?php echo $nextMoveWidth ?>;">
             <?php
 
             // echo '<h2 class="next-move-title">'.$nextPositionText.'</h2><h4>'. $dispStr .':</h4>';
-            ?><div class="next-move-title"><?php echo $dispStr; ?></div>
+            ?>
 
             <!-- Loading Screen -->
             <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
@@ -78,7 +53,7 @@
 
             <div data-u="slides"
                  style="cursor: default; position: relative;
-                 width: 650px; height: 200px; overflow: hidden;
+                 width: <?php echo $slidesWidth; ?>;  overflow: hidden;
                  margin-left:70px;
                  margin-top:20px;
                  ">
@@ -103,8 +78,11 @@
 
                             $post_thumbnail_html = '<img src="http://img.youtube.com/vi/'.$video_id.'/0.jpg" />'
                             ?>
-
+                          <?php if (!is_front_page()){
+                              ?>
+                              <img class="next-arrow" src="<?php echo get_stylesheet_directory_uri()."/img/arr1.png";?>" />
                             <?php
+                            }
                             if (trim($post_thumbnail_html) != '')
                                 echo $post_thumbnail_html;
                             ?>

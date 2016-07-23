@@ -15,36 +15,11 @@
  */
 
 get_header(); ?>
-<main id="main" class="site-main" role="main">
-
-    <?php while (have_posts()) : the_post(); ?>
-
-        <?php get_template_part('content', 'page'); ?>
-
-        <?php
-        $post1 = get_page_by_title("Top Positions", "OBJECT", 'post');
-        $post = get_post($post1->ID);
-        global $overrideText;
-        include get_stylesheet_directory() . '/inc/next-move.php';
-
-        $post1 = get_page_by_title("Bottom Positions", "OBJECT", 'post');
-        $post = get_post($post1->ID);
-        global $jssor_id;
-        $jssor_id = 2;
-        include get_stylesheet_directory() . '/inc/next-move.php'; ?>
-
-        <?php
-        /**
-         * fullframe_comment_section hook
-         *
-         * @hooked fullframe_get_comment_section - 10
-         */
-        do_action('fullframe_comment_section');
-        ?>
-
-    <?php endwhile; // end of the loop. ?>
-
-</main><!-- #main -->
-
-<?php get_sidebar(); ?>
+ 
+<h1 class="entry-title"><br>
+        Latest Videos
+  <br>
+      </h1>
+<?php echo do_shortcode("[pt_view id=dbb00e0828]"); ?>
+<?php //get_sidebar(); ?>
 <?php get_footer(); ?>

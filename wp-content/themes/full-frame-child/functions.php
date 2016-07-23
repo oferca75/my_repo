@@ -68,8 +68,9 @@ function headlineText($postTitle, $type = false)
  */
 function front_page_scripts()
 {
-//    wp_enqueue_style( 'style-name', get_stylesheet_uri() );
+ if(is_front_page()){
     wp_enqueue_script('front-page.js', get_stylesheet_directory_uri() . '/js/front-page.js', array(), '1.0.0', true);
+ }
 }
 
 add_action('wp_enqueue_scripts', 'front_page_scripts');
@@ -79,7 +80,9 @@ function general_scripts()
     wp_enqueue_style('jssor', get_stylesheet_directory_uri() . '/css/jssor.css');
     wp_enqueue_style('resp', get_stylesheet_directory_uri() . '/css/responsive.css');
     wp_enqueue_script('carousel', get_stylesheet_directory_uri() . '/js/jssor/jssor.slider.mini.js', array(), '1.0.0', true);
-    wp_enqueue_script('jssor', get_stylesheet_directory_uri() . '/js/jssor-init.js', array(), '1.0.0', true);
+    if (!is_front_page()){
+      wp_enqueue_script('jssor', get_stylesheet_directory_uri() . '/js/jssor-init.js', array(), '1.0.0', true);
+    }
     wp_enqueue_script('general', get_stylesheet_directory_uri() . '/js/general.js', array(), '1.0.0', true);
 
 
@@ -215,4 +218,25 @@ function getQueryPostDesc($postTitle, $dontDisplay, $numberposts)
     return array($catId, $loop);
 }
 
-$jssor_id = 1;
+$jssor_id = 1;  
+
+require get_stylesheet_directory() . '/inc/front-moves.php';
+
+function get_next_moves_title(){
+  $nextMoveTechniqueTitle = "";
+        if ($loop->post_count<=1 && $_COOKIE["last_viewed"]) {
+         
+            $dispStr = "Watch more options from the <strong>" . eliminateKeywords($nextMoveTechniqueTitle)."</strong>";
+        } else {
+           
+            if (function_exists("headlineText")) {
+                $dispStr = headlineText($nextMoveTechniqueTitle);
+            }
+        }
+  
+  return $dispStr;
+}
+
+
+
+

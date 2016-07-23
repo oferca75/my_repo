@@ -13,13 +13,8 @@ jQuery(document).ready(function ($) {
             $Class: $JssorArrowNavigator$,
             $Steps: isMobile ? 2:4
         },
-        // $BulletNavigatorOptions: {
-        //     $Class: $JssorBulletNavigator$,
-        //     $SpacingX: 1,
-        //     $SpacingY: 1
-        // }
     };
-
+  
     setTimeout(function(){
         $(".jssor_container").css("visibility","visible !important")
     },0);

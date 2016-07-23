@@ -46,8 +46,12 @@
     cursor: pointer;
     background: url('img/a03.png') no-repeat;
     overflow: hidden;
-    top: 70px !important;
 
+}
+
+body:not(.home) .jssora03l, body:not(.home) .jssora03r {
+  
+    top: 204px !important;
 }
 .jssora03l { background-position: -3px -33px; }
 .jssora03r { background-position: -63px -33px; }

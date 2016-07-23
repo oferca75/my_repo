@@ -19,6 +19,7 @@ do_action('fullframe_doctype'); ?>
 
     <head>
         <?php
+			
         /**
          * fullframe_before_wp_head hook
          *
@@ -27,7 +28,8 @@ do_action('fullframe_doctype'); ?>
          */
         do_action('fullframe_before_wp_head');
 
-        wp_head(); ?>
+        wp_head(); 
+			?>
     </head>
 
 <body <?php body_class(); ?>>
@@ -37,6 +39,7 @@ do_action('fullframe_doctype'); ?>
  *
  */
 do_action('fullframe_before');
+	
 
 /**
  * fullframe_site_branding hook
@@ -51,11 +54,13 @@ do_action('fullframe_before');
  * @hooked fullframe_fixed_header_end - 80
  *
  */
+
 do_action('fullframe_header');
 
 /**
  * fullframe_after_header hook
  */
+
 do_action('fullframe_after_header');
 
 /**
@@ -67,8 +72,8 @@ do_action('fullframe_after_header');
  * @hooked fullframe_promotion_headline - 40
  * @hooked fullframe_featured_content_display (move featured content above homepage posts - default option) - 50
  */
-do_action('fullframe_before_content');
 
+do_action('fullframe_before_content');
 /**
  * fullframe_main hook
  *

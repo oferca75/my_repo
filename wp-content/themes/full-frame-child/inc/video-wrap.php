@@ -1,4 +1,7 @@
 <?php
+
+$postId = get_the_ID();
+
 $video_id = get_metadata('post', $postId, "video_id", true);
 $post_thumbnail_html = '<img src="http://img.youtube.com/vi/' . $video_id . '/0.jpg" />'
 
@@ -12,5 +15,6 @@ $post_thumbnail_html = '<img src="http://img.youtube.com/vi/' . $video_id . '/0.
              jQuery(this).parent().append("<iframe src=\"https://www.youtube.com/embed/<?php echo $video_id; ?>?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>");
              '
     />
-
 </div>
+
+<div class="next-move-title"><?php echo get_next_moves_title(); ?></div>

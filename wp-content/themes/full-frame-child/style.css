@@ -23,7 +23,6 @@
 }
 
 .archive .entry-content > p:first-child, .archive .entry-content > p:first-child > .fluid-width-video-wrapper iframe,
-.single .entry-content > p:first-child, .entry-content > p > .fluid-width-video-wrapper iframe,
 .entry-content > p > .fluid-width-video-wrapper object, .entry-content > p > .fluid-width-video-wrapper embed {
     /*     height: 380px; */
     position: relative;
@@ -125,6 +124,9 @@
     padding: 0px 10px 0px 10px;
 }
 
+.home .yarpp-thumbnail-title {
+  font-size: 13px;
+}
 .yarpp-related-none {
     display: none;
 }
@@ -159,17 +161,22 @@
 }
 
 .history.next-arrow {
-    transform: rotate(270deg) translateZ(0px) scale(0.53);
+    transform: rotate(90deg) translateZ(0px) scale(0.53);
     margin-top: 44px;
     margin-bottom: -70px;
 
 }
+
+.next-arrow {
+    transform: rotate(90deg) translateZ(0px) scale(0.7);
+  }
+
 .lastViewedList li:last-child .history.next-arrow{
     margin-bottom: -30px;
 }
 
 .next-step.next-arrow {
-    transform: rotate(90deg) translateZ(0px) scale(0.53);
+    transform: rotate(90deg) translateZ(0px) scale(0.7);
     top: 542px;
     height: 20px;
     left: 38%;
@@ -298,15 +305,23 @@ h2.next-move-title {
     color: #316b1c;
 }
 
-.home .jssor_container {
-    display: none
-}
 
-.jssor_container {
-    height: 200px;
+body:not(.home) .jssor_container {
+    width: 77% !important;
     background: white;
     visibility: hidden;
+    margin-left: 4% !important;
+    
+}
+.jssor_container,div[data-u="slides"] {
+    height: 380px;
+}
 
+.home .jssor_container {
+   
+    background: white;
+    visibility: hidden;
+    height: 122px;
 }
 
 .jssor_container > div {
@@ -384,14 +399,11 @@ h2, .jssor_container h3 {
     font-style: italic;
     text-decoration: underline;
     margin-left: 44%;
-    border: 1px solid lightgrey;
-    background: whitesmoke;
     color: darkgreen;
     margin-top: 1%;
 }
 
 .fight-path > .widget_lastviewed > .widgettitle {
-    height: 27px;
     font-size: 18px;
     line-height: 22px;
 }
@@ -498,21 +510,26 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 
 
 .next-move-title {
-    font-style: italic;
+   font-style: italic;
     font-weight: bold;
     font-style: italic;
-    color: black;
-    width: 810px;
+    padding: 0px;
     font-size: 18px;
+  color: white !important;
+   background: black;
 }
 @keyframes blink {
     from { color: black; }to { color: darkgreen; }
 }
 
 .next-move-title {
-    color: black;
+/*     color: black;
     animation: blink 5s steps(50, start) infinite;
-    transition: 0.52s all;
+    transition: 0.52s all; */
+  
+    /* animation: blink 5s steps(50, start) infinite; */
+    /* transition: 0.52s all; */
+  
 }
 #content article {
     padding-left: 45px;
@@ -520,17 +537,18 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 
 }
 
-.tech-video-wrap, article.post .entry-content>*:nth-child(n+3){
+.tech-video-wrap, article.post .entry-content>*:nth-child(n+3),.next-move-title{
     position: relative;
     width: 70%;
     margin-left: 15%;
-    text-align: left;
+}
+article.post .entry-content>*:nth-child(n+6){
+  text-align:left !important;
 }
 
 
-
 .tech-video-wrap, .play-button{
-    height: 414px;
+    height: 440px;
 }
 .play-button{
     position: absolute;
@@ -605,7 +623,7 @@ body.custom-background,.dummy-image {
 .headTxt{
     display:inline;
     font-size:26px;
-
+    font-family: dreammma;
 }
 
 
@@ -617,11 +635,12 @@ body.custom-background,.dummy-image {
    font-style: italic !important;
 }
 .bjj-header img {
-    width: 60px !important;
-    min-width: 60px !important;
+    width: 250px !important;
+    min-width: 250px !important;
 }
 .bjj-header .img-container {
     min-width: 60px !important;
+    display: inline;
 }
 
 
@@ -638,3 +657,25 @@ body.custom-background,.dummy-image {
 .fight-path .widget{
     margin: 0 0 0em;
 }
+
+@font-face {
+    font-family: 'dreammma';
+    src:  local('dmma'),
+        url("dmma.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.widget_lastviewed .widgettitle{
+    visibility: hidden;
+}
+
+#featured-content {
+    height: auto;
+}
+
+.pt-cv-content{
+  width: 80%;
+    margin-left: 10%;
+}
+

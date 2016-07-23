@@ -26,9 +26,9 @@
             </a>
 
             <header class="entry-header">
-                <h1 class="entry-title"><a href="<?php the_permalink(); ?>"
-                                           rel="bookmark"><?php echo eliminateKeywords(get_the_title()); ?></a></h1>
-
+<!--                 <h1 class="entry-title"><a href="<?php //the_permalink(); ?>"
+                                           rel="bookmark"><?php //echo eliminateKeywords(get_the_title()); ?></a></h1>
+ -->
                 <?php if ('post' == get_post_type()) : ?>
 
                     <?php fullframe_entry_meta(); ?>
@@ -41,8 +41,12 @@
 
             if (is_search() || 'full-content' != $options['content_layout']) : // Only display Excerpts for Search and if 'full-content' is not selected 
                 ?>
+
                 <div class="entry-summary">
-                    <?php the_content(); ?>
+                     <?php
+                        $disableNextMove = true;
+                      require get_stylesheet_directory() . '/inc/get-article.php'; 
+                  ?>
                 </div><!-- .entry-summary -->
             <?php else : ?>
                 <div class="entry-content">
