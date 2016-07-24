@@ -16,5 +16,3 @@ $post_thumbnail_html = '<img src="http://img.youtube.com/vi/' . $video_id . '/0.
              '
     />
 </div>
-
-<div class="next-move-title"><?php echo get_next_moves_title(); ?></div>

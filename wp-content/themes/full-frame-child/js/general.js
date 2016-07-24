@@ -69,7 +69,7 @@ jQuery(document).ready(function ($) {
     jQuery(".icon-minus-squared").parent().click();
     var lastViewedArray = jQuery(".lastViewedcontent .lastViewedTitle");
     if (lastViewedArray.length == 0){
-        jQuery(jQuery(".icon-plus-squared")[0]).parent().click();
+        jQuery(".Top-Positions").prev().click();
     }
     lastViewedArray.each(function () {
         catTreeNreadcrmbHighlight.call(this, true);

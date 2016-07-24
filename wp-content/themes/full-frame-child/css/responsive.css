@@ -1,5 +1,42 @@
 @media screen and (max-width: 780px) {
    
+    .mobile-only-ad{
+      display:block !important;
+    }
+  
+  
+.start-with{
+  display:block; 
+  position:relative; 
+  float:left; 
+  background:white;
+  margin:3px;
+  width: 100% !important;
+  margin-left: 0px !important;
+  
+}
+  .start-with.full-hierarchy>div:not(h3),.start-with.ebay-scraper>div:not(h3){
+    padding-left:18%;
+  }
+  .start-with>div:not(h3){
+    padding-right:4%;
+  }
+.jssor_container .jssora03r{
+  right: 8px !important;
+}
+  .home .start-with{
+        margin-left: 14%;
+  }
+  .home .ebay-scraper{
+      margin: 2%;
+     margin-left: 22%;
+  }
+    .desktop-only-ad{
+      display:none !important;
+    }
+/*    .bjj-header.wrapper, #promotion-message {
+    height: 230px !important;
+} */
     #feature-slider .entry-title {
         font-size: 13px !important;
     }

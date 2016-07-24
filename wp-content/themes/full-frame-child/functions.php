@@ -222,8 +222,8 @@ $jssor_id = 1;
 
 require get_stylesheet_directory() . '/inc/front-moves.php';
 
-function get_next_moves_title(){
-  $nextMoveTechniqueTitle = "";
+function get_next_moves_title($loop, $nextMoveTechniqueTitle){
+  
         if ($loop->post_count<=1 && $_COOKIE["last_viewed"]) {
          
             $dispStr = "Watch more options from the <strong>" . eliminateKeywords($nextMoveTechniqueTitle)."</strong>";

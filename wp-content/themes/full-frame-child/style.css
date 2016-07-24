@@ -261,7 +261,6 @@ body, .yarpp-thumbnails-horizontal, .entry-footer {
 .widget-title, .entry-container > .entry-header > .entry-title, .archive {
     border-bottom: 1px solid #DDDDDD;
     line-height: 1.4;
-    color: #316b1c !important;
     margin-top: 15px;
 }
 
@@ -305,6 +304,9 @@ h2.next-move-title {
     color: #316b1c;
 }
 
+.home .jssor_container,.home .site-content:first-child {
+ border: 1px solid lightgray; 
+}
 
 body:not(.home) .jssor_container {
     width: 77% !important;
@@ -313,7 +315,7 @@ body:not(.home) .jssor_container {
     margin-left: 4% !important;
     
 }
-.jssor_container,div[data-u="slides"] {
+body:not(.home) .jssor_container,body:not(.home) div[data-u="slides"] {
     height: 380px;
 }
 
@@ -321,8 +323,19 @@ body:not(.home) .jssor_container {
    
     background: white;
     visibility: hidden;
-    height: 122px;
+    
 }
+
+
+.home .jssor_container, .home div[data-u="slides"] {
+  height: 142px;
+    width: 100% !important;
+
+}
+.home .jssor_container .jssor_container{
+  border-right: none;
+}
+   
 
 .jssor_container > div {
     /*padding: 0px 10px 0px 10px !important;*/
@@ -496,7 +509,7 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
     color: #81af6e;
 }
 
-.cat-item a, .widget_categories h4 {
+.cat-item a {
     color: #81af6e
 }
 
@@ -645,7 +658,9 @@ body.custom-background,.dummy-image {
 
 
 .bjj-header.wrapper,#promotion-message{
-    height: 70px !important;
+    height: 100px !important;
+    padding-top: 6px;
+    padding-right: 89px;
 }
 #promotion-message .wrapper{
     padding: 0px !important;
@@ -679,3 +694,44 @@ body.custom-background,.dummy-image {
     margin-left: 10%;
 }
 
+.textwidget{
+ padding-left : 22%;
+}
+
+.mobile-only-ad{
+  display:none;
+}
+.desktop-only-ad{
+  display:block;
+}
+.desktop-only-ad {
+    float: left;
+    display: inline;
+    width: 500px;
+}
+.jssora03r{
+  right: -150px !important;
+}
+
+.ebay-scraper div{
+  border:none !important;
+}
+
+.start-with{
+  display:inline; 
+  position:relative; 
+  float:left; 
+  min-height:670px;
+  background:white;
+  margin:3px;
+}
+
+.start-with h3,.entry-title,.widget-title{
+  color: black;
+  font-weight: bold;
+  border-bottom:2px solid #EEEEEE;
+  height:75px;
+  line-height:75px;
+  font-style:italic;
+  text-align: center;
+}

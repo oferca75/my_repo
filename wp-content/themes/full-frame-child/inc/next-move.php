@@ -30,12 +30,10 @@
             global $jssor_id;
         ?>
 
+<div class="next-move-title"><?php echo get_next_moves_title($loop,$nextMoveTechniqueTitle); ?></div>
 
         <div id="jssor_<?php echo $jssor_id; ?>" class="jssor_container tech-video-wrap"
-             <?php
-//                if ($gameOver) $nextPositionText = 'Submission. Learn More';
-//                    else $nextPositionText = headlineText($postTitle, "next-move-title");
-             ?>
+          
              style="position: relative; margin: 0 auto;
                  width: <?php echo $nextMoveWidth ?>;">
             <?php
