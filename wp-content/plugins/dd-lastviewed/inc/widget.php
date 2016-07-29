@@ -275,7 +275,6 @@ class lastviewed extends WP_Widget
             $last_id = get_the_ID();
             while ($my_query->have_posts()) : $my_query->the_post();
                 //Ofer Begin
-
                 ob_start();
                 $id = get_the_ID();
                 $title = get_the_title();

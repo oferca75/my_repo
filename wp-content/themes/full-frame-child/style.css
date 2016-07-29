@@ -437,6 +437,8 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 
 .home .site-content {
     background: #eeeeee;
+  clear: both;
+    position: relative;
 }
 
 /*.wrapper {*/
@@ -506,11 +508,15 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 
 .cat-item i {
     /*color: #316b1c;*/
-    color: #81af6e;
+/*     color: #81af6e; */
+  color: darkred;
+  
 }
 
 .cat-item a {
-    color: #81af6e
+    color: black;
+    margin: 0px;
+  margin-left:2px;
 }
 
 .demo-image a {

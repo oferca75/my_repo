@@ -6,7 +6,7 @@ jQuery(document).ready(function ($) {
         $SlideDuration: 260,
         $SlideWidth: isMobile ? 300 : 150,
         // $SlideHeight: 140,
-        $Idle: isMobile ? 4000 :8000,
+        $Idle: isMobile ? 4000 :4000,
         $SlideSpacing:isMobile ? 25: 15,
         $Cols: isMobile ? 2: 8,
         $ArrowNavigatorOptions: {

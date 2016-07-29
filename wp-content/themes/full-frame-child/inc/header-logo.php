@@ -30,12 +30,12 @@ if (!function_exists('header_logo')) :
             </a>
 
           
-          <script type="text/javascript" src='http://adn.ebay.com/files/js/min/ebay_activeContent-min.js'></script>
+<!--           <script type="text/javascript" src='http://adn.ebay.com/files/js/min/ebay_activeContent-min.js'></script>
           <div class="desktop-only-ad">
             <script charset="utf-8" type="text/javascript">
             document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=1&campId=5337925220&toolId=10026&customId=22222&keyword=%28bjj%2Cgi%2Ckimono%29&width=728&height=90&font=1&textColor=333366&linkColor=333333&arrowColor=FFAF5E&color1=63769A&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=y&itemsWithPayPal=n&descriptionSearch=y&showKwCatLink=n&excludeCatId=&excludeKeyword=&catId=&disWithin=200&ctx=n&autoscroll=n&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' );
             </script>
-          </div>
+          </div> -->
 <!--           
           <div class="mobile-only-ad" style="margin-left: 10%;margin-top: 10px !important;"> 
               <script charset="utf-8" type="text/javascript">
@@ -44,12 +44,22 @@ if (!function_exists('header_logo')) :
 
 
           </div> -->
-
+        <?php
+          
+          if (is_front_page()){
+            ?>
+          <p>
+            Welcome to JJTechniques.com,
+          </p>
+          <?php
+          }
+          
+          ?>
 
         </div>
 
         <?php
-
+    
     }
 
 endif;
