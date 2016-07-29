@@ -741,3 +741,16 @@ body.custom-background,.dummy-image {
   font-style:italic;
   text-align: center;
 }
+
+
+.bjj-header p{
+  clear: both;
+}
+
+.widget_categories a{
+  opacity:0;
+}
+
+a{
+  color:black;
+}

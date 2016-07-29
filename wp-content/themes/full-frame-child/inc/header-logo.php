@@ -46,10 +46,11 @@ if (!function_exists('header_logo')) :
           </div> -->
         <?php
           
-          if (is_front_page()){
+          //if (is_front_page())
+          {
             ?>
           <p>
-            Welcome to JJTechniques.com,
+            <strong>Welcome to JJTechniques.com ! your home for<a href="<?php echo get_site_url() ?>/bjj-introduction/">Brazilian Jiu Jitsu</a>references and techniques </strong>
           </p>
           <?php
           }
