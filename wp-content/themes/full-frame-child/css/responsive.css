@@ -1,5 +1,10 @@
 @media screen and (max-width: 780px) {
-   
+   #page .bjj-header.wrapper{
+        height: 125px !important;
+    padding-right: 0%;
+    text-align: center;
+     padding-top:10px;
+  }
     .mobile-only-ad{
       display:block !important;
     }

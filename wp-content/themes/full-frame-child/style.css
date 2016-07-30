@@ -427,7 +427,7 @@ h2, .jssor_container h3 {
     margin-top: -16px;
     margin-bottom: 22px;
 }
-.widget_categories .cat-item:first-child {
+.widget_categories>.widget-wrap>ul>li:first-child {
     display: none;
 }
 
