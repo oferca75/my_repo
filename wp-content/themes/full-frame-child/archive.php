@@ -6,7 +6,7 @@ global $post;
 $postContent = getPostContent($post1->ID);
 
 get_header();
-
+get_sidebar();
 $postId = $post1->ID;
 $post = get_post($postId);
 
@@ -26,6 +26,6 @@ $post = get_post($postId);
 
 </main><!-- #main -->
 
-<?php get_sidebar(); ?>
+<?php  ?>
 <?php get_footer(); ?>
 

@@ -53,7 +53,6 @@
                  style="cursor: default; position: relative;
                  width: <?php echo $slidesWidth; ?>;  overflow: hidden;
                  margin-left:70px;
-                 margin-top:20px;
                  ">
                 <?php
                 ob_start();
@@ -78,7 +77,7 @@
                             ?>
                           <?php if (!is_front_page()){
                               ?>
-                              <img class="next-arrow" src="<?php echo get_stylesheet_directory_uri()."/img/arr1.png";?>" />
+                              <img class="next-arrow" src="<?php echo get_stylesheet_directory_uri()."/img/arr9.png";?>" />
                             <?php
                             }
                             if (trim($post_thumbnail_html) != '')

@@ -7,7 +7,9 @@
  * @since Full Frame 1.0
  */
 
-get_header(); ?>
+get_header(); 
+
+get_sidebar(); ?>
 
     <main id="main" class="site-main" role="main">
 
@@ -34,5 +36,4 @@ get_header(); ?>
 
     </main><!-- #main -->
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

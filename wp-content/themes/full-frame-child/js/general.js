@@ -36,7 +36,7 @@ function catTreeNreadcrmbHighlight(click) {
         clickPar.call(this, $el);
       }
       if (!vertex && !click)
-        jQuery($el).next().css("background", "yellow");
+          highlightElem(jQuery($el).next());
 
       vertex = true;
 
@@ -127,7 +127,7 @@ function doHilighting(lastVisited) {
     if (!lastHighlighted || $visitedPosition.parent().find("." + lastHighlighted).length > 0) {
 
       if (!lastHighlighted) {
-        jQuery($visitedPosition).css("background", "yellow");
+        highlightElem(jQuery($visitedPosition));
       }
       jQuery($visitedPosition).css("font-weight", "bold");
       jQuery($visitedPosition).css("font-weight", "19px");
@@ -139,10 +139,15 @@ function doHilighting(lastVisited) {
   return lastPositions;
 
 }
+
+function highlightElem($el){
+  $el.css("background", "#7E1418").css("color", "white").css("line-height", "32px").css("padding", "3px 8px").css("font-weight", "bolder").css("font-size", "18px").css("border-radius", "3px")
+}
+
 function highlight(lastVisited) {
   var firstTime = true;
   var $visitedPosition = jQuery(".widget_categories ." + lastVisited);
-  jQuery($visitedPosition).css("background", "yellow");
+  highlightElem(jQuery($visitedPosition));
   while($visitedPosition.parent().hasClass("cat-item")){
     jQuery($visitedPosition).css("font-weight", "bold");
     jQuery($visitedPosition).css("font-weight", "19px");
