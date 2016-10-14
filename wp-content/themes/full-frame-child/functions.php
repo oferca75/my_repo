@@ -68,13 +68,17 @@ function headlineText($postTitle, $type = false)
 {
     $dispStr = "";
     $mTitle = eliminateKeywords($postTitle);
-    if (endsWith($postTitle, "sitions") || endsWith($postTitle, "akedowns")) {
+    if (endsWith($postTitle, "sitions")) {
         $dispStr .= $type == "next-move-title" ? "Choose a position" : ($type == "title" ? "Positions from the ".str_replace("Positions","",$mTitle) : "Choose one of the <strong>" . $mTitle . "</strong>");
     } else
         if (endsWith($postTitle, "sition")) {
             $dispStr .= $type == "next-move-title" ? "Choose next technique" : ( $type == "title" ? "The ".$mTitle." position" : "Choose a technique from the <strong>" . $mTitle . "</strong>");
         } else {
-            $dispStr .= $type == "next-move-title" ? "Choose next move" : $type == "title" ? "The ". $mTitle  : 'Choose a technique from the  <strong>' . $mTitle . "</strong>";
+          if (endsWith($postTitle, "akedowns") || endsWith($postTitle, "hokes")){
+            $dispStr .=  'Choose one of the <strong>' . $mTitle . "</strong>";
+          }else{
+             $dispStr .= $type == "next-move-title" ? "Choose next move" : $type == "title" ? "The ". $mTitle  : 'Choose a technique from the  <strong>' . $mTitle . "</strong>";
+          }
 
         };
     return $dispStr;
@@ -250,8 +254,14 @@ function create_category_for_position( $post_id ) {
   $parent_cat_id = $post_category[0]->cat_ID;
   //die(print_r($post_category,true));
   $new_cat_id = wp_create_category($post_title, $parent_cat_id);
-  $arr = array($new_cat_id);
-  wp_set_post_categories( $post_id,$arr , true );
+  $cat_arr = array($new_cat_id);
+  $post_title_lc = strtolower($post_title);
+  
+  if (strpos($post_title_lc, 'choke')) {
+    array_push($cat_arr,get_cat_ID( "Chokes" ) );
+  }
+  
+  wp_set_post_categories( $post_id,$cat_arr , true );
 }
 add_action( 'publish_post', 'create_category_for_position' );
 

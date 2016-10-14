@@ -13,7 +13,6 @@
         ?>
         <header class="entry-header">
           <?php
-            require get_stylesheet_directory() . '/inc/fight-path.php';
             $title = get_the_title();
             $newTitle = headlineText($title, "title");
             if (function_exists("getTrueTitle")) {

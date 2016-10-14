@@ -11,7 +11,7 @@ String.prototype.replaceAll = function(search, replacement) {
   return target.replace(new RegExp(search, 'g'), replacement);
 };
 replaceAll = function(target, search, replacement) {
-  if (target)
+  if (target)  
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
