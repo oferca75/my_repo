@@ -47,14 +47,14 @@ body{
 .next-overlay {
     background: white;
     width: 171px;
-    height: 110px;
+    height: 140px;
     position: absolute;
     float: left;
     z-index: 99999;
     cursor: pointer;
     margin-left: 0px;
     transition: 0.5s all;
-    margin-top: 138px;
+    margin-top: 163px;
 }
 .next-overlay {
     opacity: 0.12;
@@ -99,7 +99,29 @@ body{
     width: 100% !important;
     color: #7E1418;
 }
+.yarpp-thumbnail img.yrp-thumb{
+  opacity: 0.9;
+  transition: 0.5s all;
+}
+.yarpp-thumbnail img.yrp-thumb:hover{
+  opacity: 1;
+}
 
+.thumbnail-container.clicked .yarpp-thumbnail, .thumbnail-container.clicked .yarpp-thumbnail-title{
+  transition: 2s all;
+}
+.thumbnail-container.clicked{
+    background: #7E1418;
+    opacity: 0.4;
+    transition: 2s all;
+    border-radius: 20px;
+}
+.thumbnail-container.clicked.clicked2{
+    background: white;
+    opacity: 0.1;
+    transition: 2s all;
+    border-radius: 100px;
+}
 .yarpp-thumbnails-horizontal .yarpp-thumbnail {
     height: 200px !important;
 }
@@ -119,10 +141,14 @@ body{
 .yarpp-thumbnail-title {
     width: 100%;
     font-size: 18px;
-    color: #7E1418 !important;
     text-align: left;
     float: left;
     padding: 0px 10px 0px 10px;
+    font-weight:bolder;
+    border: 1px solid;
+    min-height: 73px;
+    color: white;
+    background: #7E1418;
 }
 
 .home .yarpp-thumbnail-title {
@@ -162,14 +188,14 @@ body{
 }
 
 .history.next-arrow {
-    transform: rotate(90deg) translateZ(0px) scale(0.53);
+    transform: rotate(0deg) translateZ(0px) scale(0.53);
     margin-top: 44px;
     margin-bottom: -70px;
 
 }
 
 .next-arrow {
-    transform: rotate(90deg) translateX(0px) scale(0.75);
+    transform: rotate(0deg) translateY(-12px) scale(0.7);
   }
 
 .lastViewedList li:last-child .history.next-arrow{
@@ -319,7 +345,7 @@ body:not(.home) .jssor_container {
     
 }
 body:not(.home) .jssor_container,body:not(.home) div[data-u="slides"] {
-    height: 380px;
+    height: 400px;
 }
 
 .home .jssor_container {
@@ -331,7 +357,7 @@ body:not(.home) .jssor_container,body:not(.home) div[data-u="slides"] {
 
 
 .home .jssor_container, .home div[data-u="slides"] {
-  height: 142px;
+  height: 162px;
     width: 100% !important;
 
 }
@@ -531,13 +557,11 @@ div [data-u="numbertemplate"], div [data-u="prototype"] {
 
 
 .next-move-title {
-   font-style: italic;
-    font-weight: bold;
+  font-style: italic;
     font-style: italic;
-    padding: 0px;
-    font-size: 18px;
-  color: white !important;
-   background: black;
+    padding: 5px;
+    background: #7E1418 !important;
+    color: white;
 }
 @keyframes blink {
     from { color: black; }to { color: darkgreen; }
@@ -678,7 +702,15 @@ article.post .entry-content>*:nth-child(n+6){
 @font-face {
     font-family: 'dreammma';
     src:  local('dmma'),
-        url("dmma.ttf") format('truetype');
+        url("ttf/dmma.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'art';
+    src:  local('art'),
+        url("ttf/Art_Class.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -754,4 +786,22 @@ a{
 
 .cat-item-1{
   display:none;
+}
+
+.some-facts{
+  text-transform: initial;
+}
+
+.youarehere{
+  position: absolute;
+    height: 100px;
+    margin-top: -95px;
+    margin-left: -32px;
+  transition: all 0.5s;
+}
+
+
+.youarehere:hover{
+  opacity:0.3;
+  
 }

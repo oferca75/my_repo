@@ -14,10 +14,10 @@ function eliminateKeywords($postTitle, $moreWords = array())
       
         $postTitle = eliminateIfEndsWith($postTitle, $moreWords);
 
-        $words = array("Position", "Positions");
+        $words = array("Position", "Positions","Position", "Positions");
         $postTitle = eliminateIfEndsWith($postTitle, $words);
 
-        $words = array("Top", "Bottom");
+        $words = array("Top", "Bottom","top", "bottom");
         $postTitle = eliminateIfEndsWith($postTitle, $words);
 
 
@@ -72,12 +72,12 @@ function headlineText($postTitle, $type = false)
         $dispStr .= $type == "next-move-title" ? "Choose a position" : ($type == "title" ? "Positions from the ".str_replace("Positions","",$mTitle) : "Choose one of the <strong>" . $mTitle . "</strong>");
     } else
         if (endsWith($postTitle, "sition")) {
-            $dispStr .= $type == "next-move-title" ? "Choose next technique" : ( $type == "title" ? "The ".$mTitle." position" : "Choose a technique from the <strong>" . $mTitle . "</strong>");
+            $dispStr .= $type == "next-move-title" ? "Next move" : ( $type == "title" ? "The ".$mTitle : "What to do from the <strong>" . $mTitle . "</strong>:");
         } else {
           if (endsWith($postTitle, "akedowns") || endsWith($postTitle, "hokes")){
             $dispStr .=  'Choose one of the <strong>' . $mTitle . "</strong>";
           }else{
-             $dispStr .= $type == "next-move-title" ? "Choose next move" : $type == "title" ? "The ". $mTitle  : 'Choose a technique from the  <strong>' . $mTitle . "</strong>";
+             $dispStr .= $type == "next-move-title" ? "Next move" : $type == "title" ? "The ". $mTitle  : 'What to do from the  <strong>' . $mTitle . "</strong>:";
           }
 
         };

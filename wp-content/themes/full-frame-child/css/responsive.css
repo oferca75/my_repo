@@ -103,7 +103,7 @@
     }
 
     div[data-u="slides"], [data-u="slides"] > div {
-        height: 650px !important;
+        height: 1000px !important;
     }
 
 
@@ -148,6 +148,7 @@
         width: 83% !important;
         margin-left: 7%;
         height: 380px;
+        margin-top:80px;
     }
     .video-thumb{
         visibility: hidden;

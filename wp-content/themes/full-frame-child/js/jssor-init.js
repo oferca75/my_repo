@@ -25,6 +25,15 @@ jQuery(document).ready(function ($) {
         $(window).bind("resize", ScaleSlider(jssor_slider));
         $(window).bind("orientationchange", ScaleSlider(jssor_slider));
     })
+    
+    // Vanish on click effect 
+    $(".yarpp-thumbnail").click(function(){
+      $self = $(this);
+      $(this).parent().addClass("clicked");
+      setTimeout(function(){
+        $self.parent().addClass("clicked2")
+      },1000)
+    });
 
     //responsive code begin
     //you can remove responsive code if you don't want the slider scales while window resizing

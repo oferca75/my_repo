@@ -30,7 +30,7 @@
             global $jssor_id;
         ?>
 
-<div class="next-move-title"><?php echo get_next_moves_title($loop,$nextMoveTechniqueTitle); ?></div>
+<h3 class="next-move-title"><?php echo get_next_moves_title($loop,$nextMoveTechniqueTitle); ?></h3>
 
         <div id="jssor_<?php echo $jssor_id; ?>" class="jssor_container tech-video-wrap"
           
@@ -65,19 +65,19 @@
                         continue;
                     $nextMoveCounter++;
                     ?>
-                    <div style="display: none;"><?php
+                    <div style="display: none;" class="thumbnail-container"><?php
 
                         ?>
                         <a class='yarpp-thumbnail' href='<?php echo get_permalink() ?>'
                            title='<?php echo the_title_attribute('echo=0') ?>'>
-                            <div class='next-overlay'></div>
+                            <!-- div class='next-overlay'></div -->
                             <?php $video_id = get_metadata('post', get_the_ID(), "video_id", true);
 
-                            $post_thumbnail_html = '<img src="http://img.youtube.com/vi/'.$video_id.'/0.jpg" />'
+                            $post_thumbnail_html = '<img class="yrp-thumb" src="http://img.youtube.com/vi/'.$video_id.'/0.jpg" />'
                             ?>
                           <?php if (!is_front_page()){
                               ?>
-                              <img class="next-arrow" src="<?php echo get_stylesheet_directory_uri()."/img/arr9.png";?>" />
+                              <img class="next-arrow" src="<?php echo get_stylesheet_directory_uri()."/img/reda.png";?>" />
                             <?php
                             }
                             if (trim($post_thumbnail_html) != '')
